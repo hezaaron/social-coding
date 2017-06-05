@@ -3,30 +3,34 @@ package org.onlinetest.model;
 import javax.persistence.Entity;
 import java.io.Serializable;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
 import javax.persistence.Version;
 
 @Entity
+@Table(name = "user")
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id", updatable = false, nullable = false)
+	@Column(name = "user_id", updatable = false, nullable = false)
 	private Long id;
+	
 	@Version
 	@Column(name = "version")
 	private int version;
 
-	@Column
+	@Column(name="full_name")
 	private String fullName;
 
-	@Column
+	@Column(name="user_name")
 	private String userName;
 
-	@Column
+	@Column(name="user_password")
 	private String userPassword;
 
 	public Long getId() {

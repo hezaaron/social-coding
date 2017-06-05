@@ -2,32 +2,41 @@ package org.onlinetest.model;
 
 import javax.persistence.Entity;
 import java.io.Serializable;
+import java.sql.Date;
+
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
 import javax.persistence.Version;
 
 @Entity
+@Table(name = "grade_result")
 public class GradeResult implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id", updatable = false, nullable = false)
+	@Column(name = "result_id", updatable = false, nullable = false)
 	private Long id;
+
 	@Version
 	@Column(name = "version")
 	private int version;
 
-	@Column
-	private String userName;
+	@Column(name="user_id")
+	private int userId;
 
-	@Column
-	private TestExam testExam;
+	@Column(name="exam_id")
+	private int examId;
 
 	@Column
 	private int grade;
+
+	@Column(name="exam_date")
+	private Date examDate;
 
 	public Long getId() {
 		return this.id;
@@ -45,21 +54,20 @@ public class GradeResult implements Serializable {
 		this.version = version;
 	}
 
-	
-	public String getUserName() {
-		return userName;
+	public int getUserId() {
+		return userId;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
-	public TestExam getTestExam() {
-		return testExam;
+	public int getExamId() {
+		return examId;
 	}
 
-	public void setTestExam(TestExam testExam) {
-		this.testExam = testExam;
+	public void setExamId(int examId) {
+		this.examId = examId;
 	}
 
 	public int getGrade() {
@@ -69,18 +77,25 @@ public class GradeResult implements Serializable {
 	public void setGrade(int grade) {
 		this.grade = grade;
 	}
+	
+	public Date getExamDate() {
+		return examDate;
+	}
 
+	public void setExamDate(Date examDate) {
+		this.examDate = examDate;
+	}
+	
 	@Override
 	public String toString() {
 		String result = getClass().getSimpleName() + " ";
-		if (userName != null && !userName.trim().isEmpty())
-			result += "userName: " + userName;
-		if (testExam != null)
-			result += ", testExam: " + testExam;
+		result += "userId: " + userId;
+		result += "examId: " + examId;
 		result += ", grade: " + grade;
+		result += ", examDate: " + examDate;
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {

@@ -5,19 +5,23 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
 import javax.persistence.Version;
 
 @Entity
+@Table(name = "test_exam")
 public class TestExam implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id", updatable = false, nullable = false)
+	@Column(name = "exam_id", updatable = false, nullable = false)
 	private Long id;
+	
 	@Version
 	@Column(name = "version")
 	private int version;
@@ -28,16 +32,15 @@ public class TestExam implements Serializable {
 	@Column(length = 2000)
 	private String description;
 
-	@Column
+	@Column(name="pass_score")
 	private int passScore;
 
-	@Column
+	@Column(name="total_score")
 	private int totalScore;
 
-	@Column
+	@Column(name="exam_duration")
 	private int examDuration;
 
-	@Column
 	private Question[] questions;
 
 	public Long getId() {
