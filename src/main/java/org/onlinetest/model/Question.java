@@ -3,19 +3,23 @@ package org.onlinetest.model;
 import javax.persistence.Entity;
 import java.io.Serializable;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
 import javax.persistence.Version;
 
 @Entity
+@Table(name = "question")
 public class Question implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id", updatable = false, nullable = false)
+	@Column(name = "question_id", updatable = false, nullable = false)
 	private Long id;
+	
 	@Version
 	@Column(name = "version")
 	private int version;
@@ -23,17 +27,17 @@ public class Question implements Serializable {
 	@Column
 	private String title;
 
-	@Column
+	@Column(name="problem_description")
 	private String problemDescription;
 
-	@Column
+	@Column(name="multi_answer")
 	private int multiAnswer;
 
 	@Column
 	private String answer;
 
 	@Column
-	private QuestionChoice[] choices;
+	private AnswerChoice[] choices;
 
 	public Long getId() {
 		return this.id;
@@ -83,11 +87,11 @@ public class Question implements Serializable {
 		this.answer = answer;
 	}
 
-	public QuestionChoice[] getChoices() {
+	public AnswerChoice[] getChoices() {
 		return choices;
 	}
 
-	public void setChoices(QuestionChoice[] choices) {
+	public void setChoices(AnswerChoice[] choices) {
 		this.choices = choices;
 	}
 
