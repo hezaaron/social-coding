@@ -4,5 +4,5 @@ import org.onlinetest.model.User;
 
 public interface UserAccountDao {
 
-	public User login(User user);
+	public User findByUserName(String userName);
 }

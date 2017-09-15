@@ -2,41 +2,31 @@ package org.onlinetest.model;
 
 import javax.persistence.Entity;
 import java.io.Serializable;
-import java.util.Set;
-
-import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
 import javax.persistence.Version;
 
 @Entity
-@Table(name = "user")
-public class User implements Serializable {
+@Table(name = "user_role")
+public class UserRole implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "user_id", updatable = false, nullable = false)
+	@Column(name = "id", updatable = false, nullable = false)
 	private Long id;
-
 	@Version
 	@Column(name = "version")
 	private int version;
 
-	@Column(name = "full_name")
-	private String fullName;
-
 	@Column(name = "user_name")
-	private String userName;
+	private User userName;
 
-	@Column(name = "user_password")
-	private String password;
-
-	@Column
-	private Set<UserRole> role;
+	@Column(name = "role_name")
+	private String role;
 
 	public Long getId() {
 		return this.id;
@@ -53,36 +43,20 @@ public class User implements Serializable {
 	public void setVersion(final int version) {
 		this.version = version;
 	}
-
-	public String getFullName() {
-		return fullName;
-	}
-
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
-
-	public String getUserName() {
+	
+	public User getUser() {
 		return userName;
 	}
 
-	public void setUserName(String userName) {
+	public void setUser(User userName) {
 		this.userName = userName;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String userPassword) {
-		this.password = userPassword;
-	}
-	
-	public Set<UserRole> getRole() {
+	public String getRole() {
 		return role;
 	}
 
-	public void setRole(Set<UserRole> role) {
+	public void setRole(String role) {
 		this.role = role;
 	}
 
@@ -91,10 +65,10 @@ public class User implements Serializable {
 		if (this == obj) {
 			return true;
 		}
-		if (!(obj instanceof User)) {
+		if (!(obj instanceof UserRole)) {
 			return false;
 		}
-		User other = (User) obj;
+		UserRole other = (UserRole) obj;
 		if (id != null) {
 			if (!id.equals(other.id)) {
 				return false;
@@ -114,11 +88,9 @@ public class User implements Serializable {
 	@Override
 	public String toString() {
 		String result = getClass().getSimpleName() + " ";
-		if (fullName != null && !fullName.trim().isEmpty())
-			result += "fullName: " + fullName;
-		if (userName != null && !userName.trim().isEmpty())
-			result += ", userName: " + userName;
+		result += "userName: " + userName;
+		if (role != null && !role.trim().isEmpty())
+			result += ", role: " + role;
 		return result;
 	}
-
 }
