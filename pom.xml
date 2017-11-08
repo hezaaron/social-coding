@@ -23,7 +23,7 @@
 				<!-- Spring -->
     <dependency>
       <groupId>org.springframework</groupId>
-      <artifactId>spring-oxm</artifactId>
+      <artifactId>spring-orm</artifactId>
       <version>${spring.version}</version>
       <scope>compile</scope>
     </dependency>
