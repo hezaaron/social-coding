@@ -1,4 +1,4 @@
-package org.onlinetest.model;
+package org.onlinetest.entity;
 
 import javax.persistence.Entity;
 import java.io.Serializable;
@@ -10,23 +10,20 @@ import javax.persistence.Column;
 import javax.persistence.Version;
 
 @Entity
-@Table(name = "user_role")
-public class UserRole implements Serializable {
+@Table(name = "answer_choice")
+public class AnswerChoice implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id", updatable = false, nullable = false)
+	@Column(name = "answer_choice_id", updatable = false, nullable = false)
 	private Long id;
 	@Version
 	@Column(name = "version")
 	private int version;
 
-	@Column(name = "user_name")
-	private User userName;
-
-	@Column(name = "role_name")
-	private String role;
+	@Column(name="choice_text")
+	private String choiceText;
 
 	public Long getId() {
 		return this.id;
@@ -44,20 +41,20 @@ public class UserRole implements Serializable {
 		this.version = version;
 	}
 	
-	public User getUser() {
-		return userName;
+	public String getChoiceText() {
+		return choiceText;
 	}
 
-	public void setUser(User userName) {
-		this.userName = userName;
+	public void setChoiceText(String choiceText) {
+		this.choiceText = choiceText;
 	}
 
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
+	@Override
+	public String toString() {
+		String result = getClass().getSimpleName() + " ";
+		if (choiceText != null && !choiceText.trim().isEmpty())
+			result += "choiceText: " + choiceText;
+		return result;
 	}
 
 	@Override
@@ -65,10 +62,10 @@ public class UserRole implements Serializable {
 		if (this == obj) {
 			return true;
 		}
-		if (!(obj instanceof UserRole)) {
+		if (!(obj instanceof AnswerChoice)) {
 			return false;
 		}
-		UserRole other = (UserRole) obj;
+		AnswerChoice other = (AnswerChoice) obj;
 		if (id != null) {
 			if (!id.equals(other.id)) {
 				return false;
@@ -85,12 +82,4 @@ public class UserRole implements Serializable {
 		return result;
 	}
 
-	@Override
-	public String toString() {
-		String result = getClass().getSimpleName() + " ";
-		result += "userName: " + userName;
-		if (role != null && !role.trim().isEmpty())
-			result += ", role: " + role;
-		return result;
-	}
 }

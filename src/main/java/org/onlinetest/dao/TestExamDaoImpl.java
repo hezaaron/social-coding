@@ -4,22 +4,53 @@ import java.util.Hashtable;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.onlinetest.model.TestExam;
-import org.onlinetest.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.criterion.Restrictions;
+import org.onlinetest.entity.TestExam;
+import org.onlinetest.entity.User;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class TestExamDaoImpl implements TestExamDao {
+public class TestExamDaoImpl extends AbstractDao<Integer, TestExam> implements TestExamDao {
 
-	@Autowired
-	private SessionFactory sessionFactory;
-	private static final Logger log = LogManager.getLogger(TestExamDaoImpl.class);
+	private static final Logger logger = LogManager.getLogger(TestExamDaoImpl.class);
 	
-	protected Session getSession(){
-		return sessionFactory.getCurrentSession();
+	@Override
+	public TestExam findExamByName(String name) {
+		logger.info("ExamId : {}", name);
+		Criteria criteria = createEntityCriteria();
+		criteria.add(Restrictions.eq("name", name));
+		return (TestExam)criteria.uniqueResult();
+	}
+	
+	private TestExam findExam(int id) {
+		logger.info("ExamId : {}", id);
+		Criteria criteria = createEntityCriteria();
+		criteria.add(Restrictions.eq("id", id));
+		return (TestExam)criteria.uniqueResult();
+	}
+	
+	@Override
+	public String getExamName(int examId) {
+		TestExam exam = this.findExam(examId);
+		logger.info("ExamName : {}", exam.getName());
+		String hql = "select name from TestExam as t where t.id = :id";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("id", examId);
+		String result = (String) query.uniqueResult();
+		return result;
+	}
+	
+	@Override
+	public String getExamDescription(int examId) {
+		TestExam exam = this.findExam(examId);
+		logger.info("Fetching {} exam description", exam.getName());
+		String hql = "select description from TestExam as t where t.id = :id";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("id", examId);
+		String result = (String) query.uniqueResult();
+		return result;
 	}
 	
 	@Override

@@ -1,4 +1,4 @@
-package org.onlinetest.model;
+package org.onlinetest.entity;
 
 import javax.persistence.Entity;
 import java.io.Serializable;

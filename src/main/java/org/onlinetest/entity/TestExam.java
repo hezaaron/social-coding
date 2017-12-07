@@ -1,15 +1,13 @@
-package org.onlinetest.model;
+package org.onlinetest.entity;
 
-import javax.persistence.Entity;
 import java.io.Serializable;
-import java.util.Arrays;
 
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Column;
-import javax.persistence.Version;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "test_exam")
@@ -19,13 +17,9 @@ public class TestExam implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "exam_id", updatable = false, nullable = false)
-	private Long id;
+	@Column(name = "id", updatable = false, nullable = false)
+	private Integer id;
 	
-	@Version
-	@Column(name = "version")
-	private int version;
-
 	@Column
 	private String name;
 
@@ -41,22 +35,14 @@ public class TestExam implements Serializable {
 	@Column(name="exam_duration")
 	private int examDuration;
 
-	private Question[] questions;
+	//private Question[] questions;
 
-	public Long getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(final Long id) {
+	public void setId(final int id) {
 		this.id = id;
-	}
-
-	public int getVersion() {
-		return this.version;
-	}
-
-	public void setVersion(final int version) {
-		this.version = version;
 	}
 
 	public String getName() {
@@ -99,28 +85,14 @@ public class TestExam implements Serializable {
 		this.examDuration = examDuration;
 	}
 
-	public Question[] getQuestions() {
+	/*public Question[] getQuestions() {
 		return questions;
 	}
 
 	public void setQuestions(Question[] questions) {
 		this.questions = questions;
-	}
+	}*/
 
-	@Override
-	public String toString() {
-		String result = getClass().getSimpleName() + " ";
-		if (name != null && !name.trim().isEmpty())
-			result += "name: " + name;
-		if (description != null && !description.trim().isEmpty())
-			result += ", description: " + description;
-		result += ", passScore: " + passScore;
-		result += ", totalScore: " + totalScore;
-		result += ", examDuration: " + examDuration;
-		result += ", questions: " + Arrays.toString(questions);
-		return result;
-	}
-	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -146,4 +118,9 @@ public class TestExam implements Serializable {
 		return result;
 	}
 	
+	@Override
+	public String toString() {
+		return "TestExam [id="+id+ ", name="+name+ ", description="+description+ ", passScore="+passScore+ //
+				", totalScore="+totalScore+ ", examDuration="+examDuration+"]";
+	}
 }
