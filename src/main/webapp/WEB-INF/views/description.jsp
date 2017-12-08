@@ -5,49 +5,47 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Exam Description</title>
+	<link href="<c:url value='/static/app.css'/>" rel="stylesheet"></link>
 </head>
 <body>
-	<div id=nav-logout>
-		<ul class="nav">
-			<c:url var="logoutUrl" value="/logout"/>
-			<li><a href="${logoutUrl}">Logout</a></li>
-		</ul>
-	</div>
-	
-	<div class="page-title">
-		<h3>${examName}</h3>
-		<p>${examDescription}</p>
-	</div>
-	
-	<c:url value="/description" var="loginUrl"/>
-	<form action="${loginUrl}" method="post">
-		<c:if test="${param.error != null}">
-			<div class="alert alert-error">
-				Failed to login.
-				<c:if test="${SPRING_SECURITY_LAST_EXCEPTION != null}">
-					Reason: <c:out value="${SPRING_SECURITY_LAST_EXCEPTION. message}" />
-				</c:if>
-			</div>
-		</c:if>
-		<c:if test="${param.logout != null}">
-			<div class="alert alert-success">
-				You have been logged out.
-			</div>
-		</c:if>
-		<label for="username">Username</label>
-		<input type="text" id="username" name="username"/>
-		<label for="password">Password</label>
-		<input type="password" id="password" name="password"/>
-		<div class="input-group input-sm">
-        	<div class="checkbox">
-            	<label><input type="checkbox" id="rememberme" name="remember-me"> Remember Me</label>  
-            </div>
-        </div>
-        <input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />
-		
-		<div class="form-action">
-			<input id="submit" class="btn" name="submit" type="submit" value="Log in"/>
+	<div class="main-wrapper">
+		<div class="page-title">
+			<h3>${examName}</h3>
+			<c:out value="${examDescription}" />
 		</div>
-	</form>
+		<div class="login-container">
+			<c:url value="/description" var="loginUrl"/>
+			<form action="${loginUrl}" method="post">
+				<c:if test="${param.error != null}">
+					<div class="alert alert-error">
+						Failed to login.
+						<c:if test="${SPRING_SECURITY_LAST_EXCEPTION != null}">
+							Reason: <c:out value="${SPRING_SECURITY_LAST_EXCEPTION. message}" />
+						</c:if>
+					</div>
+				</c:if>
+				<c:if test="${param.logout != null}">
+					<div class="alert alert-success">
+						You have been logged out.
+					</div>
+				</c:if>
+				<div class="input-group">
+					<label class="input-group-addon" for="username">Username</label>
+					<input class="login-input" type="text" id="username" name="username"/>
+				</div>
+				<div class="input-group">
+					<label class="input-group-addon" for="password">Password</label>
+					<input class="login-input" type="password" id="password" name="password"/>
+				</div>
+				<div class="input-group">
+		        	<label><input type="checkbox" id="rememberme" name="remember-me"> Remember Me</label>  
+		        </div>
+		        <input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />
+				<div class="form-action">
+					<input id="submit" class="btn" name="submit" type="submit" value="Log in"/>
+				</div>
+			</form>
+		</div>	
+	</div>
 </body>
 </html>

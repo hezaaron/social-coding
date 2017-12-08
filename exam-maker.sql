@@ -30,7 +30,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`first_name`, `last_name`, `full_name`, `user_name`, `password`, `email`)
-VALUES ();
+VALUES ('Sean', 'Jill', 'Sean Jill', 'sjill', '$2a$10$zI237fusXLAZ9l3J6006xuGg3lKtgg2ymkYVe4GF8tPE5VOcu3FiG', 'sjill@mail.com');
 
 
 --
@@ -64,7 +64,7 @@ CREATE TABLE `user_user_profile` (
     `user_profile_id` BIGINT NOT NULL,
     PRIMARY KEY (`user_id`, `user_profile_id`),
     CONSTRAINT FK_user FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
-    CONSTRAINT FK_USER_PROFILE FOREIGN KEY (`user_profile_id`) REFERENCES `user_profile (id)
+    CONSTRAINT FK_USER_PROFILE FOREIGN KEY (`user_profile_id`) REFERENCES `user_profile` (`id`)
 )ENGINE=InnoDB;
 
 

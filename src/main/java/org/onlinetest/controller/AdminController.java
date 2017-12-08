@@ -111,6 +111,11 @@ public class AdminController {
             return "redirect:/question";  
         }
     }
+    
+    @RequestMapping(value = { "/question"}, method = RequestMethod.GET)
+    public String examQuestion(ModelMap model) {
+        return "question";
+    }
  
     /**
      * This method handles logout requests.
