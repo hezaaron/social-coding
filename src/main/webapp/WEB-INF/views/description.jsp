@@ -10,11 +10,11 @@
 <body>
 	<div class="main-wrapper">
 		<div class="page-title">
-			<h3>${examName}</h3>
+			<h3><c:out value="${examName}"/></h3>
 			<c:out value="${examDescription}" />
 		</div>
 		<div class="login-container">
-			<c:url value="/description" var="loginUrl"/>
+			<c:url value="/login" var="loginUrl"/>
 			<form action="${loginUrl}" method="post">
 				<c:if test="${param.error != null}">
 					<div class="alert alert-error">
@@ -31,11 +31,11 @@
 				</c:if>
 				<div class="input-group">
 					<label class="input-group-addon" for="username">Username</label>
-					<input class="login-input" type="text" id="username" name="username"/>
+					<input class="login-input" type="text" id="username" name="userName" placeholder="Enter Username" required>
 				</div>
 				<div class="input-group">
 					<label class="input-group-addon" for="password">Password</label>
-					<input class="login-input" type="password" id="password" name="password"/>
+					<input class="login-input" type="password" id="password" name="password" placeholder="Enter Password" required>
 				</div>
 				<div class="input-group">
 		        	<label><input type="checkbox" id="rememberme" name="remember-me"> Remember Me</label>  

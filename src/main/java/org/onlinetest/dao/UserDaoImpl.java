@@ -13,7 +13,6 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 	
 	private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
 	
-	@Override
 	public User findByUserName(String userName) {
 		logger.info("UserName : {}", userName);
 		Criteria criteria = createEntityCriteria();

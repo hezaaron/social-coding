@@ -13,7 +13,7 @@
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-	`id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+	`id` INTEGER NOT NULL AUTO_INCREMENT,
 	`first_name` VARCHAR(40) NOT NULL,
 	`last_name` VARCHAR(40) NOT NULL,
 	`full_name` VARCHAR(50) NOT NULL,
@@ -60,14 +60,22 @@ VALUES ('USER'), ('ADMIN'), ('DBA');
 
 DROP TABLE IF EXISTS `user_user_profile`;
 CREATE TABLE `user_user_profile` (
-    `user_id` BIGINT NOT NULL,
-    `user_profile_id` BIGINT NOT NULL,
+    `user_id` INTEGER NOT NULL,
+    `user_profile_id` INTEGER NOT NULL,
     PRIMARY KEY (`user_id`, `user_profile_id`),
     CONSTRAINT FK_user FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
-    CONSTRAINT FK_USER_PROFILE FOREIGN KEY (`user_profile_id`) REFERENCES `user_profile` (`id`)
+    CONSTRAINT FK_user_profile FOREIGN KEY (`user_profile_id`) REFERENCES `user_profile` (`id`)
 )ENGINE=InnoDB;
 
+--
+--Dumping data for table `user_user_profile`
+--
 
+INSERT INTO `user_user_profile` (user_id, user_profile_id)
+	SELECT u.id, p.id FROM `user` u, `user_profile` p
+	where u.user_name='sjill' and p.type='USER';
+
+  
 --
 --Table structure for table `persistent_logins` to store rememberme flag
 --

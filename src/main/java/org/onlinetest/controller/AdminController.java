@@ -64,16 +64,10 @@ public class AdminController {
 	     if (result.hasErrors()) {
 	    	 return "registration";
 	     }
-	     /*
-	     * Preferred way to achieve uniqueness of field [username] should be implementing custom @Unique annotation
-	     * and applying it on field [username] of Model class [User].
-	     *
-	     * Below mentioned piece of code [if block] is to demonstrate that you can fill custom errors outside the
-	     * framework while still using internationalized messages.
-	     *
-	     */
+	     
+	     // Check that userName is not unique and provide custom error with internationalised messages
 	     if(!userService.isUserNameUnique(user.getId(), user.getUserName())){
-		     FieldError userNameError =new FieldError("user", "userName",messageSource.getMessage( "non.unique.username", new String[]{user.getUserName()}, Locale.getDefault()));
+		     FieldError userNameError = new FieldError("user", "userName",messageSource.getMessage( "non.unique.username", new String[]{user.getUserName()}, Locale.getDefault()));
 		     result.addError(userNameError);
 		     return "registration";
 	     }
@@ -84,19 +78,10 @@ public class AdminController {
 	     //return "success";
 	     return "registrationsuccess" ;
      }
-     
-    /**
-     * This method handles Access-Denied redirect.
-     */
-    @RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)
-    public String accessDeniedPage(ModelMap model) {
-        model.addAttribute("loggedinuser", getPrincipal());
-        return "accessDenied";
-    }
  
     /**
      * This method handles login GET requests.
-     * If users is already logged-in and tries to goto login page again, will be redirected to list page.
+     * If user is already logged-in and tries to go to login page again, will be redirected to 'testexamquestions' page.
      */
     @RequestMapping(value = "/description", method = RequestMethod.GET)
     public String homePage(ModelMap model) {
@@ -108,18 +93,30 @@ public class AdminController {
     	if (isCurrentAuthenticationAnonymous()) {
             return "description";
         } else {
-            return "redirect:/question";  
+            return "redirect:/testexamquestions";  
         }
     }
     
-    @RequestMapping(value = { "/question"}, method = RequestMethod.GET)
+    /**
+     * This method handles Access-Denied redirect.
+     */
+    @RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)
+    public String accessDeniedPage(ModelMap model) {
+        model.addAttribute("loggedinuser", getPrincipal());
+        return "accessDenied";
+    }
+    
+    /**
+     * *This method provides test exam questions and their multiple choice questions one at a time
+     */
+    @RequestMapping(value = "/testexamquestions", method = RequestMethod.GET)
     public String examQuestion(ModelMap model) {
-        return "question";
+    	model.addAttribute("loggedinuser", getPrincipal());
+        return "testexamquestions";
     }
  
     /**
      * This method handles logout requests.
-     * Toggle the handlers if the RememberMe functionality is useless in your app.
      */
     @RequestMapping(value="/logout", method = RequestMethod.GET)
     public String logoutPage (HttpServletRequest request, HttpServletResponse response){
@@ -133,7 +130,7 @@ public class AdminController {
     }
  
     /**
-     * This method returns the principal[user-name] of logged-in user.
+     * This method returns the principal (user-name) of logged-in user.
      */
     private String getPrincipal(){
         String userName = null;
@@ -148,7 +145,7 @@ public class AdminController {
     }
      
     /**
-     * This method returns true if users are already authenticated [logged-in], else false.
+     * This method returns true if users are already authenticated (logged-in), else false.
      */
     private boolean isCurrentAuthenticationAnonymous() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

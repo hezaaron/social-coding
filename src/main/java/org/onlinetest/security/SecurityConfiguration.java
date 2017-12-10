@@ -1,7 +1,6 @@
 package org.onlinetest.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
@@ -22,7 +21,6 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	@Qualifier("customUserDetailsService")
 	UserDetailsService userDetailsService;
 	@Autowired
 	PersistentTokenRepository tokenRepository;
@@ -36,11 +34,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSec) throws Exception {
 		httpSec.authorizeRequests()
-				.antMatchers("/", "/TestExamList").access("hasRole('USER') or hasRole('ADMIN') or hasRole('DBA')")
+				.antMatchers("/", "/testexamlist","/testexamquestions").access("hasRole('USER') or hasRole('ADMIN') or hasRole('DBA')")
 				.antMatchers("/newtestexam/**", "/delete-testexam-*").access("hasRole('ADMIN')")
-				.antMatchers("/edit-testexam-*").access("hasRole('ADMIN') or hasRole('DBA')").and().formLogin().loginPage("/description")
-				.loginProcessingUrl("/description").usernameParameter("userName").passwordParameter("password").and()
-				.rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository).tokenValiditySeconds(86400)
+				.antMatchers("/edit-testexam-*").access("hasRole('ADMIN') or hasRole('DBA')")
+				.and().formLogin().loginProcessingUrl("/login").loginPage("/description")
+				.defaultSuccessUrl("/testexamquestions", true).usernameParameter("userName").passwordParameter("password")
+				.and().rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository).tokenValiditySeconds(86400)
 				.and().csrf().and().exceptionHandling().accessDeniedPage("/Access_Denied");
 	}
 	

@@ -15,7 +15,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -39,9 +38,8 @@ public class User implements Serializable {
 	private String lastName;
 	
 	@Generated(value=GenerationTime.ALWAYS)
-	@Formula(value="concat(firstName, '', lastName)")
 	@Column(name="full_name", nullable=false)
-	private String fullName;
+	private String fullName = firstName + lastName;
 	
 	@NotEmpty
 	@Column(name="email", nullable=false)
@@ -52,7 +50,7 @@ public class User implements Serializable {
 	private String userName;
 
 	@NotEmpty
-	@Column(name = "user_password", nullable=false)
+	@Column(name = "password", nullable=false)
 	private String password;
 
 	@NotEmpty
