@@ -105,15 +105,6 @@ public class AdminController {
         model.addAttribute("loggedinuser", getPrincipal());
         return "accessDenied";
     }
-    
-    /**
-     * *This method provides test exam questions and their multiple choice questions one at a time
-     */
-    @RequestMapping(value = "/testexamquestions", method = RequestMethod.GET)
-    public String examQuestion(ModelMap model) {
-    	model.addAttribute("loggedinuser", getPrincipal());
-        return "testexamquestions";
-    }
  
     /**
      * This method handles logout requests.
@@ -126,7 +117,7 @@ public class AdminController {
             persistentTokenBasedRememberMeServices.logout(request, response, authentication);
             SecurityContextHolder.getContext().setAuthentication(null);
         }
-        return "redirect:/login?logout";
+        return "redirect:/description?logout";
     }
  
     /**

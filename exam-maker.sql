@@ -5,8 +5,6 @@
 -- Server version: 5.7.20 - community
 
 
-
-
 --
 -- Table structure for table `user`
 --
@@ -80,8 +78,9 @@ INSERT INTO `user_user_profile` (user_id, user_profile_id)
 --Table structure for table `persistent_logins` to store rememberme flag
 --
 
+DROP TABLE IF EXISTS `persistent_logins`;
 CREATE TABLE `persistent_logins` (
-    `username` VARCHAR(64) NOT NULL,
+    `user_name` VARCHAR(64) NOT NULL,
     `series` VARCHAR(64) NOT NULL,
     `token` VARCHAR(64) NOT NULL,
     `last_used` TIMESTAMP NOT NULL,
