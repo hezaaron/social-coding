@@ -10,69 +10,57 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "question")
-public class Question implements Serializable {
+@Table(name = "question_choice")
+public class QuestionChoice implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id", updatable = false, nullable = false)
 	private Integer id;
 	
+	@Column(name = "question_id")
+	private Integer questionId;
+	
 	@Column(name = "exam_id")
 	private Integer examId;
-
-	@Column
-	private String title;
-
-	@Column(name="problem_description")
-	private String problemDescription;
-
-	@Column(name="multi_answer")
-	private String multiAnswer;
-
-	@Column
+	
+	@Column(name="choice")
+	private String choiceText;
+	
+	@Column(name="answer")
 	private String answer;
 
 	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(final Integer id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	public String getTitle() {
-		return title;
+	
+	public String getChoiceText() {
+		return choiceText;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setChoiceText(String choiceText) {
+		this.choiceText = choiceText;
 	}
-
-	public String getProblemDescription() {
-		return problemDescription;
-	}
-
-	public void setProblemDescription(String problemDescription) {
-		this.problemDescription = problemDescription;
-	}
-
-	public String getMultiAnswer() {
-		return multiAnswer;
-	}
-
-	public void setMultiAnswer(String multiAnswer) {
-		this.multiAnswer = multiAnswer;
-	}
-
+	
 	public String getAnswer() {
 		return answer;
 	}
 
 	public void setAnswer(String answer) {
 		this.answer = answer;
+	}
+
+	public Integer getQuestionId() {
+		return questionId;
+	}
+
+	public void setQuestionId(Integer questionId) {
+		this.questionId = questionId;
 	}
 
 	public Integer getExamId() {
@@ -82,16 +70,16 @@ public class Question implements Serializable {
 	public void setExamId(Integer examId) {
 		this.examId = examId;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
 		}
-		if (!(obj instanceof Question)) {
+		if (!(obj instanceof QuestionChoice)) {
 			return false;
 		}
-		Question other = (Question) obj;
+		QuestionChoice other = (QuestionChoice) obj;
 		if (id != null) {
 			if (!id.equals(other.id)) {
 				return false;
@@ -110,7 +98,7 @@ public class Question implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Result [examId="+examId+", title="+title+", problemDescription="+problemDescription+", multiAnswer="+multiAnswer+", answer="+answer+"]";
+		return "result [questionId="+questionId+", examId="+examId+", choice:"+choiceText+", answer:"+answer+"]";
 	}
 
 }

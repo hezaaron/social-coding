@@ -1,15 +1,14 @@
 package org.onlinetest.entity;
 
-import javax.persistence.Entity;
 import java.io.Serializable;
 import java.sql.Date;
 
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Column;
-import javax.persistence.Version;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "grade_result")
@@ -20,11 +19,7 @@ public class GradeResult implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "result_id", updatable = false, nullable = false)
-	private Long id;
-
-	@Version
-	@Column(name = "version")
-	private int version;
+	private Integer id;
 
 	@Column(name="user_id")
 	private int userId;
@@ -38,20 +33,12 @@ public class GradeResult implements Serializable {
 	@Column(name="exam_date")
 	private Date examDate;
 
-	public Long getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(final Long id) {
+	public void setId(final Integer id) {
 		this.id = id;
-	}
-
-	public int getVersion() {
-		return this.version;
-	}
-
-	public void setVersion(final int version) {
-		this.version = version;
 	}
 
 	public int getUserId() {
@@ -87,16 +74,6 @@ public class GradeResult implements Serializable {
 	}
 	
 	@Override
-	public String toString() {
-		String result = getClass().getSimpleName() + " ";
-		result += "userId: " + userId;
-		result += "examId: " + examId;
-		result += ", grade: " + grade;
-		result += ", examDate: " + examDate;
-		return result;
-	}
-
-	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
@@ -119,6 +96,11 @@ public class GradeResult implements Serializable {
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		return "GradeResult [userId="+userId+ ", examId="+examId+ ", grade="+grade+ ", examDate="+examDate+"]";
 	}
 
 }

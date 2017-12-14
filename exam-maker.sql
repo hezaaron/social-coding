@@ -94,7 +94,7 @@ CREATE TABLE `persistent_logins` (
 
 DROP TABLE IF EXISTS `test_exam`;
 CREATE TABLE `test_exam` (
-	`id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+	`id` INTEGER NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(45) NOT NULL,
 	`description` MEDIUMTEXT NOT NULL,
 	`pass_score` INTEGER NOT NULL,
@@ -110,8 +110,8 @@ CREATE TABLE `test_exam` (
 --
 
 INSERT INTO `test_exam` (`name`, `description`, `pass_score`, `total_score`, `exam_duration`)
-VALUES ('Java Entry Level', 'This exam is designed to test candidate applying for the Java entry level position. It consists of 10 questions to be answered in 30 minutes', 60, 100, 30),
-	('Java Intermediate Level', 'This exam is designed to test candidate applying for the Java intermediate level position. It consists of 10 questions to be answered in 30 minutes', 60, 100, 30);
+VALUES ('Java Entry Level', 'This exam is designed to test candidate applying for the Java entry level position. It consists of 10 questions to be answered in 20 minutes. Please login to take the exam.', 70, 100, 30),
+	('Java Intermediate Level', 'This exam is designed to test candidate applying for the Java intermediate level position. It consists of 10 questions to be answered in 20 minutes. Please login to take the exam.', 70, 100, 30);
 
 
 --
@@ -120,50 +120,105 @@ VALUES ('Java Entry Level', 'This exam is designed to test candidate applying fo
 
 DROP TABLE IF EXISTS `question`;
 CREATE TABLE `question` (
-	`id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-	`title` VARCHAR(10) NOT NULL,
+	`id` INTEGER NOT NULL AUTO_INCREMENT,
+	`exam_id` INTEGER NOT NULL,
+	`title` VARCHAR(40) NOT NULL,
 	`problem_description` BLOB NOT NULL,
-	`multi_answer` INTEGER NOT NULL,
-	`answer` VARCHAR(40),
-	PRIMARY KEY(`id`),
-	UNIQUE(`title`)
-) ENGINE=InnoDB
+	`multi_answer` CHAR(1) NOT NULL,
+	`answer` VARCHAR(255) NOT NULL,
+	PRIMARY KEY(`id`, `exam_id`),
+	CONSTRAINT FK_question FOREIGN KEY (`exam_id`) REFERENCES `test_exam` (`id`)
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `question`
 --
 
-INSERT INTO `questions` (`id`, `title`, `problem_description`, `multi_answer`, `answer`)
-VALUES (1, 'qtn1','What is the importance of main method in java', 1, )
-
-
---
--- Table structure for table `answer_choice`
---
-
-DROP TABLE IF EXISTS `question_answer`;
-CREATE TABLE `question_answer` (
-  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  `answer_text` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`)
-  );
-
+INSERT INTO `question` (`exam_id`, `title`, `problem_description`, `multi_answer`, `answer`)
+VALUES (1, 'Java Language', 'Java is platform independent, what does it mean?', 'N', 'A java program can run on any operating system'),
+		(1, 'Development Environment', 'What is JVM', 'N', 'Java Virtual Machine responsible for converting byte code into machine readable code'),
+		(1, 'Development Environment', 'What is JDK', 'N', 'Java Development Kit provides the tools, executables and binaries to compile, debug and, execute a java program'),
+		(1, 'Development Environment', 'What is the difference between JVM and JDK', 'N', 'JVM is the part of JDK (Java Development Kit) that executes java programs' ),
+		(1, 'Development Environment', 'What is JRE', 'N', 'Java Runtime Environment is the implementation of JVM'),
+		(1, 'Classes and Objects', 'Which class is the super class of all classes', 'N', 'java.lang.Object is the root class/superclass of all java classes'),
+		(1, 'Classes and Objects', 'What is Composition', 'N', 'Composition is a class having references to objects of other classes as memebers'),
+		(1, 'Classes and Objects', 'What is Enimeration', 'N', 'Enumeration defines a set of contants represented as unique identifiers'),
+		(1, 'Object Oriented Programming', 'What is inheritance', 'N', 'Inheritance is a form of software reuse in which a new class is created by absorbing an existing class members'),
+		(1, 'Object Oriented Programming', 'What is Polymorphism', 'N', 'Polymorphism is enables you to write programs that process objects that share the same superclass');
  
 
 --
--- Table structure for table `question_choices`
+-- Definition of table `question_choice`
 --
 
-DROP TABLE IF EXISTS `question_choices`;
-CREATE TABLE `question_choices` (
-	`sequence` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-	`question_id` INTEGER UNSIGNED NOT NULL,
-	`choice_text` VARCHAR(100) NOT NULL DEFAULT '',
-	`correct_choice` VARCHAR(40),
-	PRIMARY KEY(`sequence`, `question_id`),
-	CONSTRAINT FK_question_choice FOREIGN KEY(`question_id`) REFERENCES question (`id`),
-) ENGINE=InnoDB
+DROP TABLE IF EXISTS `question_choice`;
+CREATE TABLE `question_choice` (
+	`id` INTEGER NOT NULL AUTO_INCREMENT,
+	`question_id` INTEGER NOT NULL,
+	`exam_id` INTEGER NOT NULL,
+	`choice` VARCHAR(255) NOT NULL,
+	`answer` CHAR(1) NOT NULL,
+	PRIMARY KEY(`id`),
+	CONSTRAINT FK_question_choice FOREIGN KEY(`question_id`) REFERENCES `question`(`id`),
+	CONSTRAINT FK_question_choice2 FOREIGN KEY(`exam_id`) REFERENCES `test_exam`(`id`)
+) ENGINE=InnoDB;
 
+
+--
+-- Dumping data for table `question_choice`
+--
+
+INSERT INTO `question_choice` (`question_id`, `exam_id`, `choice`, `answer`)
+VALUES (1, 1, 'A java program can run on any operating system', 'Y'),
+        (1, 1, 'A java program can be referenced by other program', 'N'),
+        (1, 1, 'A java program can run on many computer', 'N'),
+        (2, 1, 'Java Virtual Machine translates java source code into bytecodes', 'N'),
+        (2, 1, 'Java Virtual Machine responsible for converting byte code into machine readable code', 'Y'),
+        (2, 1, 'Java Virtual Machine compiles java source code', 'N'),
+        (3, 1, 'Java Development Kit provides the tools, executables and binaries to compile, debug and, execute a java program', 'Y'),
+        (3, 1, 'Java Development Kit interpretes java byte code', 'N'),
+        (3, 1, 'Java Development Kit loads class file from disc to a computer or network', 'N'),
+        (4, 1, 'JDK is the part of JVM that compiles a java program', 'N'),
+        (4, 1, 'JDK is invoked by java command to execute java application while JVM is used for development', 'N'),
+        (4, 1, 'JVM is the part of JDK (Java Development Kit) that executes java programs', 'Y'),
+        (5, 1, 'Java Runtime Environment is the implementation of JVM', 'Y'),
+        (5, 1, 'Java Runtime Environment is the bytecode verifier for java classes', 'N'),
+        (5, 1, 'Java Runtime Environment complies and runs java application', 'N'),
+        (6, 1, 'java.lang.Object is the root class/superclass of all java classes', 'Y'),
+        (6, 1, 'java.lang.string is the root class/superclass of all java classes', 'N'),
+        (6, 1, 'java.util.Scanner is the root class/superclass of all java classes', 'N'),
+        (7, 1, 'Composition is a class that absorbs members of other classes', 'N'),
+        (7, 1, 'Composition is a class having references to objects of other classes as memebers', 'Y'),
+        (7, 1, 'Composition is when a class extends other classes to use their memebers', 'N'),
+        (8, 1, 'Enumeration defines a set of setter and getter methods', 'N'),
+        (8, 1, 'Enumeration is a group of variables containing value that all have the same types', 'N'),
+        (8, 1, 'Enumeration defines a set of contants represented as unique identifiers', 'Y'),
+		(9, 1, 'Inheritance is a form of software reuse in which a new class is created by absorbing an existing class members', 'Y'),
+		(9, 1, 'Inheritance is a blueprint for a software object', 'N'),
+		(9, 1, 'Inheritance is a collection of methods with no implementation', 'N'),
+		(10, 1, 'Polymorphism is a namespace that organises classes and interfaces', 'N'),
+		(10, 1, 'Polymorphism enables you to write programs that process objects that share the same superclass', 'Y'),
+		(10, 1, 'Polymorphism is a technique for hiding internal data from the outside world', 'Y');
+ 
+
+--
+-- Table structure for table `question_choice_answer`
+--
+
+DROP TABLE IF EXISTS `question_choice_answer`;
+CREATE TABLE `question_choice_answer` (
+	`sequence` BIGINT NOT NULL AUTO_INCREMENT,
+	`user_id` INTEGER NOT NULL,
+	`exam_id` INTEGER NOT NULL,
+	`question_id` INTEGER NOT NULL,
+	`choice_text` VARCHAR(100) NOT NULL,
+	`display_order` VARCHAR(100) NOT NULL,
+	`correct_choice` CHAR(1) NOT NULL,
+	PRIMARY KEY(`sequence`, `question_id`),
+	CONSTRAINT FK_question_choice FOREIGN KEY(`user_id`) REFERENCES `user` (`id`),
+	CONSTRAINT FK_question_choice FOREIGN KEY(`exam_id`) REFERENCES `exam_id` (`id`),
+	CONSTRAINT FK_question_choice FOREIGN KEY(`question_id`) REFERENCES `question` (`id`)
+) ENGINE=InnoDB
 
 
 --
@@ -172,9 +227,9 @@ CREATE TABLE `question_choices` (
 
 DROP TABLE IF EXISTS `grade_result`;
 CREATE TABLE `grade_result` (
-	`id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-	`user_id` INTEGER UNSIGNED NOT NULL,
-	`exam_id` INTEGER UNSIGNED NOT NULL,
+	`id` INTEGER NOT NULL AUTO_INCREMENT,
+	`user_id` INTEGER NOT NULL,
+	`exam_id` INTEGER NOT NULL,
 	`grade` INTEGER NOT NULL,
 	`exam_date` DATETIME NOT NULL,
 	PRIMARY KEY(`user_id`, `exam_id`, `exam_date`),

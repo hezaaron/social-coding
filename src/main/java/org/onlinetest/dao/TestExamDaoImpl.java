@@ -1,12 +1,15 @@
 package org.onlinetest.dao;
 
 import java.util.Hashtable;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
+import org.onlinetest.entity.Question;
+import org.onlinetest.entity.QuestionChoice;
 import org.onlinetest.entity.TestExam;
 import org.onlinetest.entity.User;
 import org.springframework.stereotype.Repository;
@@ -18,16 +21,9 @@ public class TestExamDaoImpl extends AbstractDao<Integer, TestExam> implements T
 	
 	@Override
 	public TestExam findExamByName(String name) {
-		logger.info("ExamId : {}", name);
+		logger.info("ExamName : {}", name);
 		Criteria criteria = createEntityCriteria();
 		criteria.add(Restrictions.eq("name", name));
-		return (TestExam)criteria.uniqueResult();
-	}
-	
-	private TestExam findExam(int id) {
-		logger.info("ExamId : {}", id);
-		Criteria criteria = createEntityCriteria();
-		criteria.add(Restrictions.eq("id", id));
 		return (TestExam)criteria.uniqueResult();
 	}
 	
@@ -35,29 +31,36 @@ public class TestExamDaoImpl extends AbstractDao<Integer, TestExam> implements T
 	public String getExamName(int examId) {
 		TestExam exam = this.findExam(examId);
 		logger.info("ExamName : {}", exam.getName());
-		String hql = "select name from TestExam as t where t.id = :id";
-		Query query = getSession().createQuery(hql);
-		query.setParameter("id", examId);
-		String result = (String) query.uniqueResult();
-		return result;
+		return exam.getName();
 	}
 	
 	@Override
 	public String getExamDescription(int examId) {
 		TestExam exam = this.findExam(examId);
 		logger.info("Fetching {} exam description", exam.getName());
-		String hql = "select description from TestExam as t where t.id = :id";
-		Query query = getSession().createQuery(hql);
-		query.setParameter("id", examId);
-		String result = (String) query.uniqueResult();
-		return result;
+		return exam.getDescription();
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
-	public TestExam[] loadNewExam(User user) {
-		// TODO Auto-generated method stub
-		
-		return null;
+	public List<Question> loadExam(int examId) {
+		TestExam exam = this.findExam(examId);
+		logger.info("Fetching {} exam questions", exam.getName());
+		String hql = "from Question q where q.examId = :examId order by q.id asc";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("examId", examId);
+		return query.list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<QuestionChoice> getQuestionChoices(int examId) {
+		TestExam exam = this.findExam(examId);
+		logger.info("Fetching {} exam question options", exam.getName());
+		String hql = "from QuestionChoice qc where qc.examId = :examId order by qc.questionId asc";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("examId", examId);
+		return query.list();
 	}
 
 	@Override
@@ -70,6 +73,13 @@ public class TestExamDaoImpl extends AbstractDao<Integer, TestExam> implements T
 	public void saveExamScore(User user, int totalScore) {
 		// TODO Auto-generated method stub
 
+	}
+	
+	private TestExam findExam(int id) {
+		logger.info("ExamId : {}", id);
+		Criteria criteria = createEntityCriteria();
+		criteria.add(Restrictions.eq("id", id));
+		return (TestExam)criteria.uniqueResult();
 	}
 
 }

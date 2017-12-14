@@ -35,8 +35,6 @@ public class TestExam implements Serializable {
 	@Column(name="exam_duration")
 	private int examDuration;
 
-	//private Question[] questions;
-
 	public Integer getId() {
 		return this.id;
 	}
@@ -84,14 +82,6 @@ public class TestExam implements Serializable {
 	public void setExamDuration(int examDuration) {
 		this.examDuration = examDuration;
 	}
-
-	/*public Question[] getQuestions() {
-		return questions;
-	}
-
-	public void setQuestions(Question[] questions) {
-		this.questions = questions;
-	}*/
 
 	@Override
 	public boolean equals(Object obj) {

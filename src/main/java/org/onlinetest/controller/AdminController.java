@@ -17,7 +17,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -37,6 +36,8 @@ public class AdminController {
 	private UserService userService;
 	@Autowired
     private UserProfileService userProfileService;
+	@Autowired
+	private PrincipalProvider principalProvider;
 	@Autowired
 	MessageSource messageSource;
     @Autowired
@@ -74,7 +75,7 @@ public class AdminController {
 	     
 	     userService.saveUser(user);
 	     model.addAttribute( "success", "User " + user.getFirstName() + " "+ user.getLastName() + " registered successfully");
-	     model.addAttribute( "loggedinuser", getPrincipal());
+	     model.addAttribute( "loggedinuser", principalProvider.getPrincipal());
 	     //return "success";
 	     return "registrationsuccess" ;
      }
@@ -85,9 +86,9 @@ public class AdminController {
      */
     @RequestMapping(value = "/description", method = RequestMethod.GET)
     public String homePage(ModelMap model) {
-    	int id = 1;
-    	String examName = testExamService.getExamName(id);
-    	String examDescription = testExamService.getExamDescription(id);
+    	int examId = 1;
+    	String examName = testExamService.getExamName(examId);
+    	String examDescription = testExamService.getExamDescription(examId);
     	model.addAttribute("examName", examName);
     	model.addAttribute("examDescription", examDescription);
     	if (isCurrentAuthenticationAnonymous()) {
@@ -102,7 +103,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)
     public String accessDeniedPage(ModelMap model) {
-        model.addAttribute("loggedinuser", getPrincipal());
+        model.addAttribute("loggedinuser", principalProvider.getPrincipal());
         return "accessDenied";
     }
  
@@ -118,21 +119,6 @@ public class AdminController {
             SecurityContextHolder.getContext().setAuthentication(null);
         }
         return "redirect:/description?logout";
-    }
- 
-    /**
-     * This method returns the principal (user-name) of logged-in user.
-     */
-    private String getPrincipal(){
-        String userName = null;
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
- 
-        if (principal instanceof UserDetails) {
-            userName = ((UserDetails)principal).getUsername();
-        } else {
-            userName = principal.toString();
-        }
-        return userName;
     }
      
     /**

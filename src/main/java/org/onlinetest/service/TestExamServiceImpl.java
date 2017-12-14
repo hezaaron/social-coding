@@ -1,8 +1,11 @@
 package org.onlinetest.service;
 
 import java.util.Hashtable;
+import java.util.List;
 
 import org.onlinetest.dao.TestExamDao;
+import org.onlinetest.entity.Question;
+import org.onlinetest.entity.QuestionChoice;
 import org.onlinetest.entity.TestExam;
 import org.onlinetest.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +35,12 @@ public class TestExamServiceImpl implements TestExamService {
 	}
 
 	@Override
-	public TestExam[] loadNewExam(User user) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Question> loadExam(int examId) {
+		return testExamDao.loadExam(examId);
+	}
+	
+	public List<QuestionChoice> getQuestionChoices(int examId) {
+		return testExamDao.getQuestionChoices(examId);
 	}
 
 	@Override
