@@ -9,15 +9,15 @@
 </head>
 <body>
 	<div class="main-wrapper">
-		<div class="page-title">
-			<h3><c:out value="${examName}"/></h3>
-			<c:out value="${examDescription}" />
+		<h3><c:out value="${examName}"/></h3>
+		<div class="description">
+			<p><c:out value="${examDescription}" /></p>
 		</div>
-		<div class="login-container">
+		<div class="login-container" style="width:300px;">
 			<c:url value="/login" var="loginUrl"/>
 			<form action="${loginUrl}" method="post">
 				<c:if test="${param.error != null}">
-					<div class="alert alert-error">
+					<div class="text-center" id="alert alert-error">
 						Failed to login.
 						<c:if test="${SPRING_SECURITY_LAST_EXCEPTION != null}">
 							Reason: <c:out value="${SPRING_SECURITY_LAST_EXCEPTION. message}" />
@@ -25,8 +25,8 @@
 					</div>
 				</c:if>
 				<c:if test="${param.logout != null}">
-					<div class="alert alert-success">
-						You have been logged out.
+					<div class="text-center" id="alert alert-success">
+						You have successfully logged out.
 					</div>
 				</c:if>
 				<div class="input-group">
@@ -41,7 +41,7 @@
 		        	<label><input type="checkbox" id="rememberme" name="remember-me"> Remember Me</label>  
 		        </div>
 		        <input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />
-				<div class="form-action">
+				<div class="text-center">
 					<input id="submit" class="btn" name="submit" type="submit" value="Log in"/>
 				</div>
 			</form>

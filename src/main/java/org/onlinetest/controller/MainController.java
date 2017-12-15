@@ -23,7 +23,7 @@ public class MainController {
 	private TestExamService testExamService;
 	
 	 /**
-     * *This method provides test exam questions and their multiple choice questions one at a time
+     * *This method provides test exam questions and their multiple choice one at a time
      */
     @RequestMapping(value = "/testexamquestions", method = RequestMethod.GET)
     public String examQuestion(ModelMap model) {

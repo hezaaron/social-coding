@@ -10,7 +10,7 @@
 <body>
 	<div class=wrapper>
 		<div class="authbar">
-    		<span>Welcome <strong>${loggedinuser}</strong></span> <span class="floatRight"><a href="<c:url value="/logout" />">Logout</a></span>
+    		<span>Welcome <strong>${loggedinuser}</strong></span> <span class="floatRight"><a href="<c:url value="/logout" />"> Logout</a></span>
 		</div>
 		<div class="switch-question">
 			<form action="" method="post">
