@@ -5,6 +5,7 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.onlinetest.entity.User;
@@ -82,11 +83,12 @@ public class AdminController {
  
     /**
      * This method handles login GET requests.
-     * If user is already logged-in and tries to go to login page again, will be redirected to 'testexamquestions' page.
+     * If user is already logged-in and tries to go to login page again, will be redirected to 'question' page.
      */
     @RequestMapping(value = "/description", method = RequestMethod.GET)
-    public String homePage(ModelMap model) {
+    public String homePage(ModelMap model, HttpSession session) {
     	int examId = 1;
+    	session.setAttribute("examId", examId);
     	String examName = testExamService.getExamName(examId);
     	String examDescription = testExamService.getExamDescription(examId);
     	model.addAttribute("examName", examName);
@@ -94,7 +96,7 @@ public class AdminController {
     	if (isCurrentAuthenticationAnonymous()) {
             return "description";
         } else {
-            return "redirect:/testexamquestions";  
+            return "redirect:/question";  
         }
     }
     

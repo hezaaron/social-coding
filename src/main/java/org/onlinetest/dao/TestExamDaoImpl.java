@@ -37,13 +37,13 @@ public class TestExamDaoImpl extends AbstractDao<Integer, TestExam> implements T
 	@Override
 	public String getExamDescription(int examId) {
 		TestExam exam = this.findExam(examId);
-		logger.info("Fetching {} exam description", exam.getName());
+		logger.info("ExamDescription: {}", exam.getName());
 		return exam.getDescription();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Question> loadExam(int examId) {
+	public List<Question> getQuestions(int examId) {
 		TestExam exam = this.findExam(examId);
 		logger.info("Fetching {} exam questions", exam.getName());
 		String hql = "from Question q where q.examId = :examId order by q.id asc";
@@ -54,15 +54,14 @@ public class TestExamDaoImpl extends AbstractDao<Integer, TestExam> implements T
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<QuestionChoice> getQuestionChoices(int examId) {
-		TestExam exam = this.findExam(examId);
-		logger.info("Fetching {} exam question options", exam.getName());
-		String hql = "from QuestionChoice qc where qc.examId = :examId order by qc.questionId asc";
+	public List<QuestionChoice> getQuestionChoices(int questionId) {
+		logger.info("Fetching choices for question {}", questionId);
+		String hql = "from QuestionChoice qc where qc.questionId = :questionId";
 		Query query = getSession().createQuery(hql);
-		query.setParameter("examId", examId);
+		query.setParameter("questionId", questionId);
 		return query.list();
 	}
-
+	
 	@Override
 	public void saveExamAnswer(User user, Hashtable<Integer, String> answer, int totalScore) {
 		// TODO Auto-generated method stub
@@ -81,5 +80,4 @@ public class TestExamDaoImpl extends AbstractDao<Integer, TestExam> implements T
 		criteria.add(Restrictions.eq("id", id));
 		return (TestExam)criteria.uniqueResult();
 	}
-
 }

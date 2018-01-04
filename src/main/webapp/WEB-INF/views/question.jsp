@@ -1,34 +1,38 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<!DOCTYPE html>
 <html>
 <head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Exam Questions</title>
-		<link href="<c:url value='/static/app.css'/>" rel="stylesheet"></link>
+		<link rel="stylesheet" href="<c:url value='/static/css/app.css'/>" />
+		<script src="/online-test-exam-maker/static/js/jquery-3.2.1.js" type="text/javascript"></script>
+		<script src="/online-test-exam-maker/static/js/app.js" type="text/javascript"></script>
 </head>
 <body>
 	<div class=wrapper>
 		<div class="authbar">
     		<span>Welcome <strong>${loggedinuser}</strong></span> <span class="floatRight"><a href="<c:url value="/logout" />"> Logout</a></span>
+			<input type="hidden" id="examid" value="${examId}" />
 		</div>
+		
 		<div class="switch-question">
-			<form action="" method="post">
+			<form action="question" method="post">
 				<div class="combobox">
-					<fieldset>
-							<legend>Switch to another question</legend>
-						<c:forEach items="${examQuestions}" var="question">
-							<label><input type="radio" id="question1" name="switch" value="${question.id}"/>${question.id}</label>
-						</c:forEach>
-					</fieldset>
+					<label for="switchQuestion">Switch Question:</label>
+					<select id="switchQuestion"></select>
 				</div>
 				<div class="combobox-action">
 					<input name="submit" type="submit" value="Go"/>
 				</div>
 			</form>
 		</div>
-		<div class="question_board">
-			
+		
+		<div class="question-board">
+			<div><h3 id="question"></h3></div>
+			<div id="choices"></div>
+			<div><p><input id="next" type="button" value="next question"/></p></div>
 		</div>
 	</div>
 </body>

@@ -33,12 +33,13 @@ public class TestExamServiceImpl implements TestExamService {
 	public String getExamDescription(int id) {
 		return testExamDao.getExamDescription(id);
 	}
-
+	
 	@Override
-	public List<Question> loadExam(int examId) {
-		return testExamDao.loadExam(examId);
+	public List<Question> getQuestions(int examId) {
+		return testExamDao.getQuestions(examId);
 	}
 	
+	@Override
 	public List<QuestionChoice> getQuestionChoices(int examId) {
 		return testExamDao.getQuestionChoices(examId);
 	}

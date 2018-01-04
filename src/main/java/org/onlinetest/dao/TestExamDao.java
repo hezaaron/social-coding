@@ -13,8 +13,8 @@ public interface TestExamDao {
 	TestExam findExamByName(String name);
 	String getExamName(int examId);
 	String getExamDescription(int examId);
-	List<Question> loadExam(int examId);
-	List<QuestionChoice> getQuestionChoices(int examId);
+	List<Question> getQuestions(int examId);
+	List<QuestionChoice> getQuestionChoices(int questionId);
 	void saveExamAnswer(User user, Hashtable<Integer, String> answer, int totalScore);
 	void saveExamScore(User user, int totalScore);
 }

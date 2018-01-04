@@ -28,8 +28,8 @@ public class QuestionChoice implements Serializable {
 	@Column(name="choice")
 	private String choiceText;
 	
-	@Column(name="answer")
-	private String answer;
+	@Column(name="correct_choice")
+	private boolean correctChoice;
 
 	public Integer getId() {
 		return this.id;
@@ -39,21 +39,6 @@ public class QuestionChoice implements Serializable {
 		this.id = id;
 	}
 	
-	public String getChoiceText() {
-		return choiceText;
-	}
-
-	public void setChoiceText(String choiceText) {
-		this.choiceText = choiceText;
-	}
-	
-	public String getAnswer() {
-		return answer;
-	}
-
-	public void setAnswer(String answer) {
-		this.answer = answer;
-	}
 
 	public Integer getQuestionId() {
 		return questionId;
@@ -69,6 +54,22 @@ public class QuestionChoice implements Serializable {
 
 	public void setExamId(Integer examId) {
 		this.examId = examId;
+	}
+	
+	public String getChoiceText() {
+		return choiceText;
+	}
+
+	public void setChoiceText(String choiceText) {
+		this.choiceText = choiceText;
+	}
+	
+	public boolean getCorrectChoice() {
+		return correctChoice;
+	}
+
+	public void setAnswer(boolean correctChoice) {
+		this.correctChoice = correctChoice;
 	}
 
 	@Override
@@ -98,7 +99,7 @@ public class QuestionChoice implements Serializable {
 
 	@Override
 	public String toString() {
-		return "result [questionId="+questionId+", examId="+examId+", choice:"+choiceText+", answer:"+answer+"]";
+		return "result [questionId="+questionId+", examId="+examId+", choice:"+choiceText+", correctChoice:"+correctChoice+"]";
 	}
 
 }

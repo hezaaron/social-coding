@@ -34,11 +34,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSec) throws Exception {
 		httpSec.authorizeRequests()
-				.antMatchers("/", "/testexamlist","/testexamquestions").access("hasRole('USER') or hasRole('ADMIN') or hasRole('DBA')")
+				.antMatchers("/", "/testexamlist","/question").access("hasRole('USER') or hasRole('ADMIN') or hasRole('DBA')")
 				.antMatchers("/newtestexam/**", "/delete-testexam-*").access("hasRole('ADMIN')")
 				.antMatchers("/edit-testexam-*").access("hasRole('ADMIN') or hasRole('DBA')")
 				.and().formLogin().loginProcessingUrl("/login").loginPage("/description")
-				.defaultSuccessUrl("/testexamquestions", true).usernameParameter("userName").passwordParameter("password")
+				.defaultSuccessUrl("/question", true).usernameParameter("userName").passwordParameter("password")
 				.and().rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository).tokenValiditySeconds(86400)
 				.and().csrf().and().exceptionHandling().accessDeniedPage("/Access_Denied");
 	}

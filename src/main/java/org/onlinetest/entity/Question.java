@@ -30,7 +30,7 @@ public class Question implements Serializable {
 	private String problemDescription;
 
 	@Column(name="multi_answer")
-	private String multiAnswer;
+	private boolean multiAnswer;
 
 	@Column
 	private String answer;
@@ -41,6 +41,14 @@ public class Question implements Serializable {
 
 	public void setId(final Integer id) {
 		this.id = id;
+	}
+	
+	public Integer getExamId() {
+		return examId;
+	}
+
+	public void setExamId(Integer examId) {
+		this.examId = examId;
 	}
 
 	public String getTitle() {
@@ -59,11 +67,11 @@ public class Question implements Serializable {
 		this.problemDescription = problemDescription;
 	}
 
-	public String getMultiAnswer() {
+	public boolean getMultiAnswer() {
 		return multiAnswer;
 	}
 
-	public void setMultiAnswer(String multiAnswer) {
+	public void setMultiAnswer(boolean multiAnswer) {
 		this.multiAnswer = multiAnswer;
 	}
 
@@ -73,14 +81,6 @@ public class Question implements Serializable {
 
 	public void setAnswer(String answer) {
 		this.answer = answer;
-	}
-
-	public Integer getExamId() {
-		return examId;
-	}
-
-	public void setExamId(Integer examId) {
-		this.examId = examId;
 	}
 	
 	@Override
