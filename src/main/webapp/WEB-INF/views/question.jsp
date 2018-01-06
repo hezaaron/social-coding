@@ -23,16 +23,16 @@
 					<label for="switchQuestion">Switch Question:</label>
 					<select id="switchQuestion"></select>
 				</div>
-				<div class="combobox-action">
-					<input name="submit" type="submit" value="Go"/>
+				<div id="go-btn">
+					<input id="go" type="button" value="Go" />
 				</div>
 			</form>
 		</div>
 		
 		<div class="question-board">
-			<div><h3 id="question"></h3></div>
+			<div><h4 id="question"></h4></div>
 			<div id="choices"></div>
-			<div><p><input id="next" type="button" value="next question"/></p></div>
+			<div><p><input id="next" type="button" value="next question" /></p></div>
 		</div>
 	</div>
 </body>

@@ -58,8 +58,8 @@ body {
 .switch-question {
 	width: 210px;
 	top: 80px;
-}*
-.combobox-action {
+}
+#go {
 	margin-top: 5px;
 }
 .question-board {
