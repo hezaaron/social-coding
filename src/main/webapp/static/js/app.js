@@ -5,13 +5,12 @@ $(document).ready(function() {
 	
 	var userChoices = {};
 	var id = $('#examid').val();
-	var q = $('#switchQuestion');
 	var qNum;
 	
 	loadQuestions(id, function(question){
 		for(var i in question) {
 			qNum = Number(i) + 1;
-			q.append($('<option />').val(question[i].id).text(qNum));
+			$('#switchQuestion').append($('<option />').val(question[i].id).text(qNum));
 		}
 		qNum = 1;
 		$('#question').text(qNum +'. '+ question[0].problemDescription);
@@ -19,17 +18,40 @@ $(document).ready(function() {
 	});
 	
 	$('#go').click(handleCombo);
+	$('#next').click(handleNext);
 
 	function handleCombo() {
 		var elem = $('#switchQuestion option:selected');
 		var index = elem.index();
 		qNum = Number(index) + 1;
-		loadQuestions(id, function(questions){
-			$('#question').text(qNum +'. '+ questions[index].problemDescription);
-			loadChoices(questions[index].id, questions[index].multiAnswer);
+		loadQuestions(id, function(question){
+			$('#question').text(qNum +'. '+ question[index].problemDescription);
+			loadChoices(question[index].id, question[index].multiAnswer);
+		});
+	}
+	
+	function handleNext() {
+		var choices = $('#choices').children('input'),
+		length = $('#switchQuestion').children('option').length,
+		question = $('#question').text().slice(0,2);
+		if(question >= 10){
+			qNum = Number(question)
+		}else{
+			qNum = Number(question.charAt(0));
+		}
+		
+		$.each(choices, function(i, elem) {
+			userChoices[elem.id] = elem.checked;
 		})
 		
-		$('switchQuestion').change();
+		if(qNum < length){
+			var nextQuestion = qNum + 1;
+			loadQuestions(id, function(question){
+				$('#question').text(nextQuestion +'. '+ question[qNum].problemDescription);
+				loadChoices(question[qNum].id, question[qNum].multiAnswer);
+			});
+		}
+		
 	}
 	
 	function loadQuestions(id, callback) {
@@ -54,7 +76,6 @@ $(document).ready(function() {
 	function loadChoices(id, isMulti) {
 		var choices = $('#choices');
 		choices.empty();
-		
 		$.ajax({
 			url: location.protocol + '//' + location.host + '/online-test-exam-maker' +'/choices/' + id,
 			dataType: 'json',
@@ -73,25 +94,5 @@ $(document).ready(function() {
 			error: function(){
 			}
 		});
-	}
-	
-	function handleNext() {
-		var choices = $('#choices').children('input');
-		$.each(choices, function(i, elem) {
-			userChoices[elem.id] = elem.checked;
-		})
-		
-		var elem = $('#switchQuestion option:selected');
-		var length = $('#switchQuestion').children('option').length;
-		var index = elem.index;
-		
-		if(index == (length - 1)) {
-			$('#switchQuestion option:first-child').attr('selected', 'selected');
-		}
-		else{
-			$('#switchQuestion option:selected').next('option').attr('selected', 'selected');
-		}
-		
-		$('#switchQuestion').change();
 	}
 });
