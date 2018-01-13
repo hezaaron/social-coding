@@ -14,8 +14,11 @@
 	<div class=wrapper>
 		<div class="authbar">
     		<span>Welcome <strong>${loggedinuser}</strong></span> <span class="floatRight"><a href="<c:url value="/logout" />"> Logout</a></span>
-			<input type="hidden" id="examid" value="${examId}" />
+			<input type="hidden" id="examid" value="${examid}" />
+			<input type="hidden" id="examtime" value="${examtime}">
 		</div>
+		
+		<div id="timer">Remaining time: <span id="time"></span></div>
 		
 		<div class="switch-question">
 			<form action="question" method="post">
@@ -32,7 +35,8 @@
 		<div class="question-board">
 			<div><h4 id="question"></h4></div>
 			<div id="choices"></div>
-			<div><p><input id="next" type="button" value="next question" /></p></div>
+			<div><input id="next" type="button" value="Next question" /></div>
+			<div><input id="finish" type="button" value="Finish exam" /></div>
 		</div>
 	</div>
 </body>

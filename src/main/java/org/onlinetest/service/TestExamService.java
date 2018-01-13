@@ -1,12 +1,10 @@
 package org.onlinetest.service;
 
-import java.util.Hashtable;
 import java.util.List;
 
 import org.onlinetest.entity.Question;
 import org.onlinetest.entity.QuestionChoice;
 import org.onlinetest.entity.TestExam;
-import org.onlinetest.entity.User;
 
 public interface TestExamService {
 
@@ -15,6 +13,5 @@ public interface TestExamService {
 	String getExamDescription(int examId);
 	List<Question> getQuestions(int examId);
 	List<QuestionChoice> getQuestionChoices(int examId);
-	void saveExamAnswer(User user, Hashtable<Integer, String> answer, int totalScore);
-	void saveExamScore(User user, int totalScore);
+	List<QuestionChoice> getCorrectChoices(int examId, boolean isCorrect);
 }

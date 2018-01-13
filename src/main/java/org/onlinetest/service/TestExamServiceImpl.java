@@ -1,13 +1,11 @@
 package org.onlinetest.service;
 
-import java.util.Hashtable;
 import java.util.List;
 
 import org.onlinetest.dao.TestExamDao;
 import org.onlinetest.entity.Question;
 import org.onlinetest.entity.QuestionChoice;
 import org.onlinetest.entity.TestExam;
-import org.onlinetest.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,15 +43,7 @@ public class TestExamServiceImpl implements TestExamService {
 	}
 
 	@Override
-	public void saveExamAnswer(User user, Hashtable<Integer, String> answer, int totalScore) {
-		// TODO Auto-generated method stub
-
+	public List<QuestionChoice> getCorrectChoices(int examId, boolean isCorrect) {
+		return testExamDao.getCorrectChoices(examId, isCorrect);
 	}
-
-	@Override
-	public void saveExamScore(User user, int totalScore) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

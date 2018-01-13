@@ -1,18 +1,14 @@
 package org.onlinetest.controller;
 
 import java.util.List;
-import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
-import org.onlinetest.entity.User;
 import org.onlinetest.entity.UserProfile;
 import org.onlinetest.service.TestExamService;
 import org.onlinetest.service.UserProfileService;
-import org.onlinetest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
@@ -21,8 +17,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,8 +27,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @SessionAttributes("roles")
 public class AdminController {
 
-	@Autowired
-	private UserService userService;
 	@Autowired
     private UserProfileService userProfileService;
 	@Autowired
@@ -58,30 +50,6 @@ public class AdminController {
     }
     
     /**
-     * This method will be called on form submission, handling POST request for
-     * saving user in database. It also validates the user input
-     */
-     @RequestMapping(value = { "/newuser" }, method = RequestMethod.POST)
-     public String saveUser( @Valid User user, BindingResult result, ModelMap model) {
-	     if (result.hasErrors()) {
-	    	 return "registration";
-	     }
-	     
-	     // Check that userName is not unique and provide custom error with internationalised messages
-	     if(!userService.isUserNameUnique(user.getId(), user.getUserName())){
-		     FieldError userNameError = new FieldError("user", "userName",messageSource.getMessage( "non.unique.username", new String[]{user.getUserName()}, Locale.getDefault()));
-		     result.addError(userNameError);
-		     return "registration";
-	     }
-	     
-	     userService.saveUser(user);
-	     model.addAttribute( "success", "User " + user.getFirstName() + " "+ user.getLastName() + " registered successfully");
-	     model.addAttribute( "loggedinuser", principalProvider.getPrincipal());
-	     //return "success";
-	     return "registrationsuccess" ;
-     }
- 
-    /**
      * This method handles login GET requests.
      * If user is already logged-in and tries to go to login page again, will be redirected to 'question' page.
      */
@@ -91,8 +59,10 @@ public class AdminController {
     	session.setAttribute("examId", examId);
     	String examName = testExamService.getExamName(examId);
     	String examDescription = testExamService.getExamDescription(examId);
+    	
     	model.addAttribute("examName", examName);
     	model.addAttribute("examDescription", examDescription);
+    	
     	if (isCurrentAuthenticationAnonymous()) {
             return "description";
         } else {
@@ -124,7 +94,7 @@ public class AdminController {
     }
      
     /**
-     * This method returns true if users are already authenticated (logged-in), else false.
+     * This method returns true if user is not already authenticated (logged-in), else false.
      */
     private boolean isCurrentAuthenticationAnonymous() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

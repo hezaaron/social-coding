@@ -20,7 +20,7 @@ public class ExamPractice implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "result_id", updatable = false, nullable = false)
+	@Column(name = "id", updatable = false, nullable = false)
 	private Integer id;
 
 	@Column(name="user_id")
@@ -41,7 +41,7 @@ public class ExamPractice implements Serializable {
 	private Integer questionCount;
 	
 	@Column(name="correct_answers")
-	private Integer correctAnswer;
+	private Integer correctAnswers;
 	
 	@Column
 	private Integer grade;
@@ -95,12 +95,12 @@ public class ExamPractice implements Serializable {
 		this.questionCount = questionCount;
 	}
 
-	public Integer getCorrectAnswer() {
-		return correctAnswer;
+	public Integer getCorrectAnswers() {
+		return correctAnswers;
 	}
 
-	public void setCorrectAnswer(Integer correctAnswer) {
-		this.correctAnswer = correctAnswer;
+	public void setCorrectAnswers(Integer correctAnswers) {
+		this.correctAnswers = correctAnswers;
 	}
 
 	public Integer getGrade() {
@@ -138,9 +138,9 @@ public class ExamPractice implements Serializable {
 
 	@Override
 	public String toString() {
-		return "GradeResult [user="+user+ ", exam="+exam+ ", start="+start+
+		return "ExamPractice [user="+user+ ", exam="+exam+ ", start="+start+
 							", finish="+finish+", questionCount="+questionCount+
-							", correctAnswer="+correctAnswer+", grade="+grade+ "]";
+							", correctAnswers="+correctAnswers+", grade="+grade+ "]";
 	}
 
 }

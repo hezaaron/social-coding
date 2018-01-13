@@ -202,40 +202,19 @@ VALUES (1, 1, 'A java program can run on any operating system', 1),
  
 
 --
--- Table structure for table `question_choice_answer`
---
-
-DROP TABLE IF EXISTS `question_choice_answer`;
-CREATE TABLE `question_choice_answer` (
-	`sequence` BIGINT NOT NULL AUTO_INCREMENT,
-	`user_id` INTEGER NOT NULL,
-	`exam_id` INTEGER NOT NULL,
-	`question_id` INTEGER NOT NULL,
-	`choice_text` VARCHAR(100) NOT NULL,
-	`display_order` VARCHAR(100) NOT NULL,
-	`correct_choice` CHAR(1) NOT NULL,
-	PRIMARY KEY(`sequence`, `question_id`),
-	CONSTRAINT FK_question_choice FOREIGN KEY(`user_id`) REFERENCES `user` (`id`),
-	CONSTRAINT FK_question_choice FOREIGN KEY(`exam_id`) REFERENCES `exam_id` (`id`),
-	CONSTRAINT FK_question_choice FOREIGN KEY(`question_id`) REFERENCES `question` (`id`)
-) ENGINE=InnoDB
-
-
---
 -- Definition of table `grade_result`
 --
 
 DROP TABLE IF EXISTS `grade_result`;
 CREATE TABLE `grade_result` (
-	`id` INTEGER NOT NULL AUTO_INCREMENT,
+	`id` INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`user_id` INTEGER NOT NULL,
 	`exam_id` INTEGER NOT NULL,
 	`start` DATETIME NOT NULL,
-	`finish` DATETIME NOT NULL,
-	`question_count` INTEGER NOT NULL,
-	`correct_answer` INTEGER NOT NULL,
-	`grade` INTEGER NOT NULL,
-	PRIMARY KEY(`id`, `user_id`, `exam_id`),
+	`finish` DATETIME,
+	`question_count` INTEGER,
+	`correct_answers` INTEGER,
+	`grade` INTEGER,
 	CONSTRAINT FK_grade_result FOREIGN KEY(`user_id`) REFERENCES `user`(`id`),
 	CONSTRAINT FK_grade_result2 FOREIGN KEY(`exam_id`) REFERENCES `test_exam`(`id`)
 ) ENGINE=InnoDB

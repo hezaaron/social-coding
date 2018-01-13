@@ -61,11 +61,19 @@ body {
 }
 #go {
 	margin-top: 5px;
+	cursor:pointer;
 }
 .question-board {
 	width: 550px;
 	top: 80px;
 	left: 380px;
+}
+#next {
+	cursor: pointer;
+}
+#finish {
+	float: right;
+	cursor: pointer;
 }
 .text-center {
 	text-align: center;

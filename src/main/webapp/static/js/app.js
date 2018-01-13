@@ -2,7 +2,7 @@
  * 
  */
 $(document).ready(function() {
-	
+
 	var userChoices = {};
 	var id = $('#examid').val();
 	var qNum;
@@ -16,9 +16,10 @@ $(document).ready(function() {
 		$('#question').text(qNum +'. '+ question[0].problemDescription);
 		loadChoices(question[0].id, question[0].multiAnswer);
 	});
-	
+			
 	$('#go').click(handleCombo);
 	$('#next').click(handleNext);
+	$('#finish').click(handleFinish);
 
 	function handleCombo() {
 		var elem = $('#switchQuestion option:selected');
@@ -34,24 +35,24 @@ $(document).ready(function() {
 		var choices = $('#choices').children('input'),
 		length = $('#switchQuestion').children('option').length,
 		question = $('#question').text().slice(0,2);
-		if(question >= 10){
+		if(question >= 10) {
 			qNum = Number(question)
-		}else{
+		}else {
 			qNum = Number(question.charAt(0));
 		}
 		
 		$.each(choices, function(i, elem) {
 			userChoices[elem.id] = elem.checked;
-		})
-		
-		if(qNum < length){
+		});
+				
+		if(qNum < length) {
 			var nextQuestion = qNum + 1;
 			loadQuestions(id, function(question){
 				$('#question').text(nextQuestion +'. '+ question[qNum].problemDescription);
 				loadChoices(question[qNum].id, question[qNum].multiAnswer);
 			});
 		}
-		
+		if(qNum == 9) $('#next').hide();
 	}
 	
 	function loadQuestions(id, callback) {
@@ -95,4 +96,28 @@ $(document).ready(function() {
 			}
 		});
 	}
+	
+	
+	function handleFinish() {
+		window.location = 'http://localhost:8080/online-test-exam-maker/endexam';
+	}
+	
+	function timerFunction() {
+		var countDownTimer = parseInt($('#examtime').val());
+		
+		setInterval(function() {
+			if(--countDownTimer < 0){
+				$('#finish').click();
+			}
+		}, 1000);
+		
+		setInterval(function(){
+			var min = ((countDownTimer / 60) >> 0);
+			var sec = (countDownTimer % 60);
+			
+			$('#time').text(('00' + min).slice(-2) + ':' + ('00' + sec).slice(-2))
+		}, 2000);
+	}
+
+	timerFunction();
 });

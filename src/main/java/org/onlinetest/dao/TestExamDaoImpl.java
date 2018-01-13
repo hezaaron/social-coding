@@ -1,6 +1,5 @@
 package org.onlinetest.dao;
 
-import java.util.Hashtable;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -11,7 +10,6 @@ import org.hibernate.criterion.Restrictions;
 import org.onlinetest.entity.Question;
 import org.onlinetest.entity.QuestionChoice;
 import org.onlinetest.entity.TestExam;
-import org.onlinetest.entity.User;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -62,16 +60,15 @@ public class TestExamDaoImpl extends AbstractDao<Integer, TestExam> implements T
 		return query.list();
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
-	public void saveExamAnswer(User user, Hashtable<Integer, String> answer, int totalScore) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void saveExamScore(User user, int totalScore) {
-		// TODO Auto-generated method stub
-
+	public List<QuestionChoice> getCorrectChoices(int examId, boolean isCorrect) {
+		logger.info("Fetching correct choice answers for exam {}", examId);
+		String hql = "from QuestionChoice qc where qc.examId = :examId and qc.correctChoice = :correctChoice";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("examId", examId);
+		query.setParameter("correctChoice", isCorrect);
+		return query.list();
 	}
 	
 	private TestExam findExam(int id) {
