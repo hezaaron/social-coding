@@ -83,7 +83,7 @@ public class ExamController {
     	return testExamService.getQuestionChoices(questionId);
     }
     
-    @RequestMapping(value = "/endexam", method = RequestMethod.GET)
+    @RequestMapping(value = "/finish", method = RequestMethod.GET)
     public String endExam(ModelMap model, HttpSession session) {
     	String loggedInUser = principalProvider.getPrincipal();
     	int examId = (int)session.getAttribute("examId");

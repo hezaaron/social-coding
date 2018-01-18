@@ -1,12 +1,10 @@
 /**
  * 
  */
-$(document).ready(function() {
 
-	var userChoices = {};
-	var id = $('#examid').val();
-	var qNum;
-	
+$(document).ready(function() {
+	var userChoices = {}, unAnswered = [], id = $('#examid').val(), qNum;
+		
 	loadQuestions(id, function(question){
 		for(var i in question) {
 			qNum = Number(i) + 1;
@@ -16,11 +14,39 @@ $(document).ready(function() {
 		$('#question').text(qNum +'. '+ question[0].problemDescription);
 		loadChoices(question[0].id, question[0].multiAnswer);
 	});
-			
+	
 	$('#go').click(handleCombo);
 	$('#next').click(handleNext);
-	$('#finish').click(handleFinish);
+	//$('#finish').click(handleFinish);
+	
+	var feature = (function() {
+		var noSelection = [], qNumber;		
+		return {
+			questionNumber: function(question) {
+				if(question < 10) {
+					qNumber = Number(question.charAt(0))
+				}else {
+					qNumber = Number(question);
+				}
+				return qNumber; 
+			},
+		
+			getUserChoices: function(choices, question) {
+				$.each(choices, function(i,elem){
+					userChoices[elem.id] = elem.checked;
+					noSelection[elem.id] = elem.checked;
+				});
 
+				if((noSelection.filter(i => i === false).length === choices.length) && ($.inArray(this.questionNumber(question), unAnswered) == -1)){
+					unAnswered.push(this.questionNumber(question));
+				} else if((noSelection.filter(i => i === false).length !== choices.length) && ($.inArray(this.questionNumber(question), unAnswered) != -1)){
+					unAnswered = unAnswered.filter(val => val !== this.questionNumber(question));
+				}
+				noSelection.length = 0;
+			}
+		};
+	})();
+		
 	function handleCombo() {
 		var elem = $('#switchQuestion option:selected');
 		var index = elem.index();
@@ -33,18 +59,12 @@ $(document).ready(function() {
 	
 	function handleNext() {
 		var choices = $('#choices').children('input'),
-		length = $('#switchQuestion').children('option').length,
-		question = $('#question').text().slice(0,2);
-		if(question >= 10) {
-			qNum = Number(question)
-		}else {
-			qNum = Number(question.charAt(0));
-		}
+		question = $('#question').text().slice(0,2),
+		length = $('#switchQuestion').children('option').length;
 		
-		$.each(choices, function(i, elem) {
-			userChoices[elem.id] = elem.checked;
-		});
-				
+		feature.getUserChoices(choices, question);
+		qNum = feature.questionNumber(question);
+										
 		if(qNum < length) {
 			var nextQuestion = qNum + 1;
 			loadQuestions(id, function(question){
@@ -52,7 +72,7 @@ $(document).ready(function() {
 				loadChoices(question[qNum].id, question[qNum].multiAnswer);
 			});
 		}
-		if(qNum == 9) $('#next').hide();
+		if(qNum == (length - 1)) $('#next').hide();
 	}
 	
 	function loadQuestions(id, callback) {
@@ -96,12 +116,28 @@ $(document).ready(function() {
 			}
 		});
 	}
-	
-	
+		
 	function handleFinish() {
-		window.location = 'http://localhost:8080/online-test-exam-maker/endexam';
+		var choices = $('#choices').children('input'),
+		question = $('#question').text().slice(0,2),
+		length = $('#switchQuestion').children('option').length;
+		
+		feature.getUserChoices(choices, question);
+		qNum = feature.questionNumber(question);
+		
+		if(unAnswered.length > 0) {
+			var msg = '';
+			for(var i in unAnswered) {
+				msg += unAnswered[i]+', ';
+			}
+			localStorage.setItem('message','You have not answered question(s) ' + msg);
+		}else {
+			localStorage.setItem('message', 'Welldone! You have answered all questions');
+		}
 	}
 	
+	$('#message').append(localStorage.getItem('message'));
+
 	function timerFunction() {
 		var countDownTimer = parseInt($('#examtime').val());
 		

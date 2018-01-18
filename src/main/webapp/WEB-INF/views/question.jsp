@@ -7,7 +7,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Exam Questions</title>
 		<link rel="stylesheet" href="<c:url value='/static/css/app.css'/>" />
-		<script src="/online-test-exam-maker/static/js/jquery-3.2.1.js" type="text/javascript"></script>
+		<script src="/online-test-exam-maker/static/js/lib/jquery-3.2.1.js" type="text/javascript"></script>
 		<script src="/online-test-exam-maker/static/js/app.js" type="text/javascript"></script>
 </head>
 <body>
@@ -36,8 +36,11 @@
 			<div><h4 id="question"></h4></div>
 			<div id="choices"></div>
 			<div><input id="next" type="button" value="Next question" /></div>
-			<div><input id="finish" type="button" value="Finish exam" /></div>
+			<form action="finish">
+				<input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />
+				<input id="finish" type="submit" value="Finish exam" />
+			</form>
 		</div>
-	</div>
+	</div>	
 </body>
 </html>

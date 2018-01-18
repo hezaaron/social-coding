@@ -7,7 +7,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>End Exam</title>
 	<link rel="stylesheet" href="<c:url value='/static/css/app.css'/>" />
-	<script src="/online-test-exam-maker/static/js/jquery-3.2.1.js" type="text/javascript"></script>
+	<script src="/online-test-exam-maker/static/js/lib/jquery-3.2.1.js" type="text/javascript"></script>
 	<script src="/online-test-exam-maker/static/js/app.js" type="text/javascript"></script>
 </head>
 <body>
@@ -15,9 +15,10 @@
 	    <div class="authbar">
     		<span>Welcome <strong>${loggedinuser}</strong></span> <span class="floatRight"><a href="<c:url value="/logout" />"> Logout</a></span>
 		</div>	
+		<div id="message"></div>
 		<div>
 			<c:url value="/endexam" var="resultUrl"/>
-			<form:form name="submitexam" action="${resultUrl}" modelAttribute="results" method="post">
+			<form:form name="submitexam" action="" modelAttribute="results" method="post">
 				<input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />
 				
 				<form:input type="hidden" id="id" path="id" />
