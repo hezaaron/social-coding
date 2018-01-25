@@ -33,8 +33,8 @@ public class ExamPracticeServiceImpl implements ExamPracticeService {
 	}
 
 	@Override
-	public ExamPractice update(ExamPractice examPractice) {
-		return examPracticeDao.updateExam(examPractice);
+	public void update(ExamPractice examPractice) {
+		examPracticeDao.updateExam(examPractice);
 	}
 
 	@Override

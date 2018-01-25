@@ -6,7 +6,7 @@ public interface ExamPracticeDao {
 
 	ExamPractice saveExam(ExamPractice ExamPractice);
 	int saveAndGetId(ExamPractice examPractice);
-	ExamPractice updateExam(ExamPractice examPractice);
+	void updateExam(ExamPractice examPractice);
 	ExamPractice getExamPractice(int id);
 		
 }

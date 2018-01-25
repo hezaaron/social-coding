@@ -17,7 +17,7 @@ $(document).ready(function() {
 	
 	$('#go').click(handleCombo);
 	$('#next').click(handleNext);
-	//$('#finish').click(handleFinish);
+	$('#finish').click(handleFinish);
 	
 	var feature = (function() {
 		var noSelection = [], qNumber;		

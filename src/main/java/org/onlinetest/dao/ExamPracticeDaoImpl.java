@@ -20,8 +20,8 @@ public class ExamPracticeDaoImpl extends AbstractDao<Integer, ExamPractice> impl
 	}
 
 	@Override
-	public ExamPractice updateExam(ExamPractice examPractice) {
-		return saveExam(examPractice);
+	public void updateExam(ExamPractice examPractice) {
+		update(examPractice);
 	}
 
 	@Override

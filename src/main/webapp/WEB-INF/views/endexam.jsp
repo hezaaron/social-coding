@@ -18,7 +18,7 @@
 		<div id="message"></div>
 		<div>
 			<c:url value="/endexam" var="resultUrl"/>
-			<form:form name="submitexam" action="" modelAttribute="results" method="post">
+			<form:form name="submitexam" action="${resultUrl}" modelAttribute="results" method="post">
 				<input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />
 				
 				<form:input type="hidden" id="id" path="id" />
