@@ -49,12 +49,16 @@ public class AdminController {
         return userProfileService.findAll();
     }
     
+    @RequestMapping(value={"/", "/index"}, method=RequestMethod.GET)
+    public String homePage() {
+    	return "index";
+    }
     /**
      * This method handles login GET requests.
      * If user is already logged-in and tries to go to login page again, will be redirected to 'question' page.
      */
     @RequestMapping(value = "/description", method = RequestMethod.GET)
-    public String homePage(ModelMap model, HttpSession session) {
+    public String login(ModelMap model, HttpSession session) {
     	int examId = 1;
     	session.setAttribute("examId", examId);
     	String examName = testExamService.getExamName(examId);

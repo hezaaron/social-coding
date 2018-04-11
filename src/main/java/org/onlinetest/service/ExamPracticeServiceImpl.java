@@ -67,7 +67,7 @@ public class ExamPracticeServiceImpl implements ExamPracticeService {
 		}
 		
 		//fix for multiAnswers questions
-		correctCount.removeAll(correctCount);
+		correctCount.removeAll(incorrectCount);
 		
 		examPractice.setCorrectAnswers(correctCount.size());
 		examPractice.setGrade((int) Math.round(grade));

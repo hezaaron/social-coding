@@ -34,7 +34,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSec) throws Exception {
 		httpSec.authorizeRequests()
-				.antMatchers("/", "/testexamlist","/question").access("hasRole('USER') or hasRole('ADMIN') or hasRole('DBA')")
+				.antMatchers("/", "/index", "/testexams").permitAll()
+				.antMatchers("/question").access("hasRole('USER') or hasRole('ADMIN') or hasRole('DBA')")
 				.antMatchers("/newtestexam/**", "/delete-testexam-*").access("hasRole('ADMIN')")
 				.antMatchers("/edit-testexam-*").access("hasRole('ADMIN') or hasRole('DBA')")
 				.and().formLogin().loginProcessingUrl("/login").loginPage("/description")

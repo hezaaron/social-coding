@@ -116,23 +116,23 @@
       <artifactId>jackson-databind</artifactId>
       <version>2.9.3</version>
 	</dependency>
-				<!-- Servlet + Jsp + Jstl -->
+				<!-- Servlet + Thymeleaf -->
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
       <version>3.1.0</version>
     </dependency>
-
-    <dependency>
-      <groupId>javax.servlet.jsp</groupId>
-      <artifactId>javax.servlet.jsp-api</artifactId>
-      <version>2.3.1</version>
-    </dependency>
-    
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>jstl</artifactId>
-      <version>1.2</version>
+	
+	<dependency>
+      <groupId>org.thymeleaf</groupId>
+      <artifactId>thymeleaf</artifactId>
+      <version>3.0.9.RELEASE</version>
+	</dependency>
+	
+	<dependency>
+      <groupId>org.thymeleaf</groupId>
+      <artifactId>thymeleaf-spring4</artifactId>
+      <version>3.0.9.RELEASE</version>
 	</dependency>
 				<!-- log4j -->
     <dependency>
