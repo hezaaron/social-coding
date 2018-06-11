@@ -1,5 +1,7 @@
 package org.onlinetest.config;
 
+import javax.servlet.ServletContext;
+
 import org.onlinetest.converter.RoleToUserProfileConverter;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,9 @@ import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 @Configuration
 @EnableWebMvc
@@ -48,10 +52,10 @@ public class AppConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 	
 	@Bean
 	public TemplateEngine templateEngine() {
-		SpringTemplateEngine engine = new SpringTemplateEngine();
-		engine.setEnableSpringELCompiler(true);
-		engine.setTemplateResolver(templateResolver());
-		return engine;
+		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+		//templateEngine.setEnableSpringELCompiler(true);
+		templateEngine.setTemplateResolver(templateResolver());
+		return templateEngine;
 	}
 	
 	private ITemplateResolver templateResolver() {
@@ -71,7 +75,7 @@ public class AppConfig extends WebMvcConfigurerAdapter implements ApplicationCon
     }
      
     /**
-     * Configure Converter to convert string values[Roles] to UserProfiles in newUser.jsp
+     * Configure Converter to convert string values[Roles] to UserProfiles in newUser
      */
     @Override
     public void addFormatters(FormatterRegistry registry) {

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Exam Questions</title>
 		
-		<link rel="stylesheet" href="/static/css/app.css" />
+		<title>Exam Questions</title>
+		<link rel="stylesheet" href="static/css/reset.css" />
+		<link rel="stylesheet" href="static/css/app.css" />
 		<!-- [if lt IE 9]>
 			<script src="/online-test-exam-maker/static/js/lib/html5shive.js"></script>
 			<script src="/online-test-exam-maker/static/js/lib/html5shive-printshiv.js"></script>
@@ -17,7 +18,7 @@
 <body>
 	<div class=wrapper>
 		<div class="authbar">
-    		<span>Welcome <strong>th:text="${loggedinuser}"</strong></span> <span class="floatRight"><a href="/logout"/>"> Logout</a></span>
+    		<span> Welcome <strong th:text="${loggedinuser}"></strong></span> <span class="floatRight"><a href="/logout">log out</a></span>
 			<input type="hidden" id="examid" th:value="${examid}"/>
 			<input type="hidden" id="examtime" th:value="${examtime}"/>
 		</div>

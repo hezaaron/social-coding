@@ -5,7 +5,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 	<title>Exam Description</title>
-	<link rel="stylesheet" href="/static/css/app.css" />
+	<link rel="stylesheet" href="static/css/reset.css" />
+	<link rel="stylesheet" href="static/css/app.css" />
 	<!-- [if lt IE 9]>
 		<script src="/online-test-exam-maker/static/js/lib/html5shive.js"></script>
 		<script src="/online-test-exam-maker/static/js/lib/html5shive-printshiv.js"></script>
@@ -13,23 +14,24 @@
 </head>
 <body>
 	<div class="main-wrapper">
-		<h3 id="exam-name">th:text="${examName}"</h3>
-		<div class="description">
-			<p>th:text="${examDescription}"</p>
+		<h3 th:id="exam-name" th:text="${examName}"></h3>
+		<div th:id="description">
+			<p th:text="${examDescription}"></p>
 		</div>
 		
-		<div class="login-container" style="width:300px;">
+		<div th:id="login-container" style="width:300px;">
+			
+			<th:block th:if="${#session != null && #session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}">
+				<div th:if="${param.error}" th:class="text-center" style="color: red; margin: 10px 0px;">
+					Failed to login! <span th:text="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}"></span>
+				</div>
+					
+				<div th:if="${param.logout}" th:class="text-center">
+					You have successfully logged out.
+				</div>
+			</th:block>
+			
 			<form th:action="@{/login}" th:method="post">
-				th:if text="${param.error}
-					<div class="text-center" id="alert alert-error">
-						Failed to login.
-						th:if test="${SPRING_SECURITY_LAST_EXCEPTION}
-							Reason: th:text="${SPRING_SECURITY_LAST_EXCEPTION.message}
-					</div>
-				th:if test="${param.logout}"
-					<div class="text-center" id="alert alert-success">
-						You have successfully logged out.
-					</div>
 				<div class="input-group">
 					<label class="input-group-addon" for="username">Username</label>
 					<input autofocus class="login-input" type="text" id="username" name="userName" placeholder="Your username" required>
