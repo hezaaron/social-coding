@@ -1,9 +1,22 @@
-<link href="https://ok1static.oktacdn.com/assets/js/sdk/okta-signin-widget/2.6.0/css/okta-sign-in.min.css"
-	  type="text/css" rel="stylesheet" />
-<link href="https://ok1static.oktacdn.com/assets/js/sdk/okta-signin-widget/2.6.0/css/okta-theme.css"
-	  type="text/css" rel="stylesheet" />
+<div *ngIf="isAuthenticated">
+	<nav class="navbar navbar-expand-lg navbar-light">
+		<div class="container"><a class="navbar-brand" href="/">Iplusplus Exams</a>
+			<div class="d-flex ml-auto">
+            	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            </div>
+	        <div class="collapse navbar-collapse">
+		        <ul class="navbar-nav mr-auto">
+		        	<li class="nav-item"><a class="nav-link" href=""></a></li>
+		            <li class="nav-item"><a class="nav-link" href=""></a></li>
+		        </ul>
+		        <ul class="navbar-nav d-none d-lg-flex ml-2 order-3">
+		        	<li class="nav-item"><button class="nav-link" id="button-link" (click)="logout()">Logout</button></li>
+		        </ul>
+		    </div>
+		</div>
+	</nav>
+</div>
 
-<div *ngIf="!isAuthenticated" routerLink="/login"></div>
-<div *ngIf="isAuthenticated"><button (click)="logout()">Logout</button></div>
-
-<router-outlet></router-outlet>
+<main id="main" class="site-main">
+	<router-outlet></router-outlet>
+</main>

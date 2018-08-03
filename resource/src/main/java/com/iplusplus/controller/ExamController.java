@@ -12,7 +12,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,7 +28,7 @@ import com.iplusplus.service.ExamService;
 import com.iplusplus.util.Converter;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/testexams")
 public class ExamController {
 	
 	private static final Logger logger = LogManager.getLogger(ExamController.class);
@@ -40,12 +39,12 @@ public class ExamController {
     @Autowired
     private ExamService examService;
 
-    @GetMapping("/testexams")
+    @GetMapping
     public Collection<Exam> getTestExams() {
     	return examService.getTestExams();
     }
     
-    @GetMapping("/testexam/{id}")
+    @GetMapping("/exam/{id}")
     public Map<String, Object> getExam(@PathVariable("id") Integer examId, HttpServletRequest request) {
     	
     	final Exam exam = examService.getExam(examId);

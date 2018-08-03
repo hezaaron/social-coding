@@ -5,7 +5,12 @@ import * as OktaSignIn from '@okta/okta-signin-widget';
 
 @Component({
     selector: 'app-secure',
-    template: `<div id="okta-signin-container"></div>`
+    template: `
+        <div class="site-main">
+            <h2>Ipusplus Test Exam</h2>
+            <p>Iplusplus exams are multiple choice questions<br>that will help you prepare for your technical interview</p>
+        </div>
+        <div id="okta-signin-container"></div>`
 })
 
 export class LoginComponent {
@@ -22,7 +27,7 @@ export class LoginComponent {
                 switch(event.url) {
                   case '/login':
                     break;
-                  case '/protected':
+                  case '/testexams':
                     break;
                   default:
                     this.widget.remove();

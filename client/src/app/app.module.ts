@@ -1,11 +1,16 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { ProtectedComponent } from './protected.component';
 import { LoginComponent } from './login.component';
 import { OktaAuthModule, OktaAuthGuard, OktaCallbackComponent } from '@okta/okta-angular';
+
+import { ExamService } from './shared/exam/exam.service';
+import { AuthInterceptor } from './shared/okta/auth.interceptor';
+import { ExamListComponent } from './exam-list/exam-list.component';
 
 
 export function onAuthRequired({oktaAuth, router}) {
@@ -20,12 +25,17 @@ const oktaConfig = {
 
 const appRoutes: Routes = [
     {
-        path: '',
-        component: ProtectedComponent,
+        path: 'testexams',
+        component: ExamListComponent,
         canActivate: [ OktaAuthGuard],
         data: {
             onAuthRequired
         }
+    },
+    {
+        path: '',
+        redirectTo: 'testexams',
+        pathMatch: 'full'
     },
     {
         path: 'login',
@@ -40,15 +50,16 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    ProtectedComponent,
-    LoginComponent
+    LoginComponent,
+    ExamListComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     RouterModule.forRoot(appRoutes),
     OktaAuthModule.initAuth(oktaConfig)
   ],
-  providers: [],
+  providers: [ExamService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

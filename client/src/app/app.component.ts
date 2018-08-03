@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  title = 'Iplusplus Test Exams'
   isAuthenticated: boolean;
 
   constructor(public oktaAuth: OktaAuthService, public router: Router) {

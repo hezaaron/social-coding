@@ -1,0 +1,9 @@
+<div class="container">
+	<h2 style="text-align: center">Exams List</h2>
+	<ul class="exams-list">
+		<div *ngFor="let exam of exams"> 
+			<h4><a href='#'>{{exam.name}}</a></h4>
+			<p>{{exam.description}}</p>
+		</div>
+	</ul>
+</div>
