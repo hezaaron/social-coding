@@ -26,6 +26,9 @@ public final class Question extends AbstractPersistable<Integer> {
     @Column
     private String name;
     
+    @Column
+    private String code;
+    
     @Column(name = "MULTI_ANSWER", nullable = false)
     private boolean multiAnswer = false;
 	

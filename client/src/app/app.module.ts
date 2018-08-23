@@ -7,10 +7,12 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login.component';
 import { OktaAuthModule, OktaAuthGuard, OktaCallbackComponent } from '@okta/okta-angular';
+import { HighlightModule } from 'ngx-highlightjs';
 
 import { ExamService } from './shared/exam/exam.service';
 import { AuthInterceptor } from './shared/okta/auth.interceptor';
 import { ExamListComponent } from './exam-list/exam-list.component';
+import { ExamComponent } from './exam/exam.component';
 
 
 export function onAuthRequired({oktaAuth, router}) {
@@ -25,25 +27,25 @@ const oktaConfig = {
 
 const appRoutes: Routes = [
     {
-        path: 'testexams',
-        component: ExamListComponent,
-        canActivate: [ OktaAuthGuard],
+        path: 'testexams', component: ExamListComponent, canActivate: [ OktaAuthGuard],
         data: {
             onAuthRequired
         }
     },
     {
-        path: '',
-        redirectTo: 'testexams',
-        pathMatch: 'full'
+        path: '', redirectTo: 'testexams', pathMatch: 'full'
     },
     {
-        path: 'login',
-        component: LoginComponent
+        path: 'testexams/:id', component: ExamComponent, canActivate: [ OktaAuthGuard],
+        data: {
+            onAuthRequired
+        }
     },
     {
-        path: 'implicit/callback',
-        component: OktaCallbackComponent
+        path: 'login', component: LoginComponent
+    },
+    {
+        path: 'implicit/callback', component: OktaCallbackComponent
     }
 ]
 
@@ -51,13 +53,15 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     LoginComponent,
-    ExamListComponent
+    ExamListComponent,
+    ExamComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
-    OktaAuthModule.initAuth(oktaConfig)
+    OktaAuthModule.initAuth(oktaConfig),
+    HighlightModule.forRoot({theme: 'grayscale'})
   ],
   providers: [ExamService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]

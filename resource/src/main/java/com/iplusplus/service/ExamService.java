@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -20,8 +18,8 @@ import com.iplusplus.domain.Exam;
 import com.iplusplus.domain.ExamResult;
 import com.iplusplus.domain.Question;
 import com.iplusplus.repository.AnswerRepository;
-import com.iplusplus.repository.ExamResultRepository;
 import com.iplusplus.repository.ExamRepository;
+import com.iplusplus.repository.ExamResultRepository;
 import com.iplusplus.repository.QuestionRepository;
 
 @Service
@@ -48,7 +46,8 @@ public class ExamService {
         					 .collect(Collectors.toList());
     }
 
-    @Transactional
+    @SuppressWarnings("unused")
+	@Transactional
     public int insertExam(ExamResult result) {
     	final ExamResult er = resultRepository.save(result);
     	resultRepository.flush();
@@ -61,13 +60,11 @@ public class ExamService {
     }
 
     public List<Question> getQuestionsForExam(int examId) {
-        final List<Question> questions = questionRepository.findByExamId(examId);
-        return questions;
+        return questionRepository.findByExamId(examId);
     }
 
     public List<Answer> getAnswersForQuestion(int questionId) {
-        final List<Answer> answers = answerRepository.findByQuestionId(questionId);
-        return answers;
+        return answerRepository.findByQuestionId(questionId);
     }
 
     public Question getNextQuestion(Exam exam, Set<Integer> ids) {
@@ -84,8 +81,7 @@ public class ExamService {
     }
 
     public ExamResult getExamResult(int resultId) {
-        ExamResult result = resultRepository.getOne(resultId);
-        return result;
+        return resultRepository.getOne(resultId);
     }
     
     public Map<String, Object> stats(final Integer resultId) {

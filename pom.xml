@@ -10,6 +10,7 @@
     
     <modules>
         <module>resource</module>
+        <module>client</module>
     </modules>
 
 </project>

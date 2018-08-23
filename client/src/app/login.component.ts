@@ -6,7 +6,7 @@ import * as OktaSignIn from '@okta/okta-signin-widget';
 @Component({
     selector: 'app-secure',
     template: `
-        <div class="site-main">
+        <div class="site-main" style="text-align: center">
             <h2>Ipusplus Test Exam</h2>
             <p>Iplusplus exams are multiple choice questions<br>that will help you prepare for your technical interview</p>
         </div>

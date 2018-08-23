@@ -1,0 +1,19 @@
+<div class="text-sm-center">
+	<p>{{welcomeMsg}}</p>
+	<hr>
+	<div class="badge badge-info">Question {{pager.index + 1}} of {{pager.count}}</div>
+	<h5>{{pager.index + 1}}. <span>{{questionName}}</span></h5>
+</div>
+<div class="code-block">
+	<pre><code highlight [code]=questionCode></code></pre>
+	<div class="form-check" *ngFor="let option of questionOptions">
+		<label class="form-check-label">
+			<input type="radio" class="form-check-input" name="optradio">{{option.name}}
+		</label>
+	</div>
+</div>
+<hr>
+<div class="text-sm-center">
+	<button class="btn btn-primary" (click)="nextQuestion(pager.index + 1);">Next question</button>
+	<button class="btn btn-default" (click)="onSubmit();">Submit</button>
+</div>

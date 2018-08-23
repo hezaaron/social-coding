@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,13 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.iplusplus.domain.Answer;
 import com.iplusplus.domain.Exam;
 import com.iplusplus.domain.ExamResult;
 import com.iplusplus.domain.Question;
-import com.iplusplus.dto.EntryDTO;
 import com.iplusplus.dto.ExamDTO;
 import com.iplusplus.service.ExamService;
-import com.iplusplus.util.Converter;
 
 @RestController
 @RequestMapping("/testexams")
@@ -44,8 +44,8 @@ public class ExamController {
     	return examService.getTestExams();
     }
     
-    @GetMapping("/exam/{id}")
-    public Map<String, Object> getExam(@PathVariable("id") Integer examId, HttpServletRequest request) {
+    @GetMapping("/{id}")
+    public List<Object> getExam(@PathVariable("id") Integer examId, HttpServletRequest request) {
     	
     	final Exam exam = examService.getExam(examId);
     	final List<Question> questions = examService.getQuestionsForExam(examId);
@@ -59,8 +59,7 @@ public class ExamController {
         Map<String, Object> map = new HashMap<>();
 
         map.put("results", new ExamDTO(resultId, examId));
-        map.put("examName", String.format("Welcome to \"%s\"!", exam.getName()));
-        map.put("questions", Converter.questionsToDTO(questions));
+        map.put("examName", String.format("Welcome to '%s'!", exam.getName()));
 
         request.getSession().setAttribute("examId", examId);
         request.getSession().setAttribute("examStarted", examResult.getStart().getTime());
@@ -68,7 +67,7 @@ public class ExamController {
         
         map.put("examTime", remaining);
 
-        return map;
+        return map.entrySet().stream().map(entry -> entry.getValue()).collect(Collectors.toList());
     }
 
     private int getRemainingTime(HttpServletRequest request) {
@@ -83,8 +82,8 @@ public class ExamController {
     }
 
     @GetMapping("/answers/{id}")
-    public List<EntryDTO> getAnswersForQuestion(@PathVariable("id") Integer questionId) {
-        return Converter.answersToDTO(examService.getAnswersForQuestion(questionId));
+    public List<Answer> getAnswersForQuestion(@PathVariable("id") Integer questionId) {
+        return examService.getAnswersForQuestion(questionId);
     }
 
     @PostMapping("/results")
@@ -98,6 +97,7 @@ public class ExamController {
 
         examService.calcGrade(examResult, frm.getExamId(), frm.getAnswers());
         logger.info("Submit: {}", examResult);
+        
         return examService.updateExamResult(examResult);
     }
 
@@ -106,7 +106,6 @@ public class ExamController {
         return examService.stats(resultId);
     }
 
-    @GetMapping("/time")
     public Integer timer(HttpServletRequest request) {
         return getRemainingTime(request);
     }

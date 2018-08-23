@@ -4,14 +4,21 @@
 
 .site-main {
 	padding-top: 30px;
-	max-width: 94em;
-}
-.exams-list {
-	padding: 3rem 1.5rem;
+	max-width: 104em;
 }
 #button-link {
 	background-color: transparent;
 	border: none;
 	outline: none;
 	cursor: pointer;
+}
+.exams-list {
+	padding: 3rem 1.5rem;
+}
+.exam-list-page {
+	border-bottom: 1px solid #C6C6C6;
+}
+.code-block {
+	width: 400px;
+	margin: 0 auto;
 }
