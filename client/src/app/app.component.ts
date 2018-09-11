@@ -10,13 +10,14 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'Iplusplus Test Exams'
   isAuthenticated: boolean;
+  isNavbarCollapsed = true;
 
-  constructor(public oktaAuth: OktaAuthService, public router: Router) {
-      this.oktaAuth.$authenticationState.subscribe((isAuthenticated: boolean) => this.isAuthenticated = isAuthenticated);
+  constructor(private oktaAuth: OktaAuthService, private router: Router) {
   }
   
   async ngOnInit(){
       this.isAuthenticated = await this.oktaAuth.isAuthenticated();
+      this.oktaAuth.$authenticationState.subscribe((isAuthenticated: boolean) => this.isAuthenticated = isAuthenticated);
   }
   
   login() {

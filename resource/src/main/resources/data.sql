@@ -228,7 +228,9 @@ INSERT INTO QUESTION (exam_id, name, code, multi_answer) VALUES (3, 'What is the
         for(int z = 0; z < 7; z ++ ) {
           z = z + b;
           System.out.print("-z" + z);
-          if(z > 3) {break one;
+          if(z > 3) {
+            break one;
+          }
         }
       }
     }

@@ -1,19 +1,30 @@
 <div class="text-sm-center">
 	<p>{{welcomeMsg}}</p>
-	<hr>
 	<div class="badge badge-info">Question {{pager.index + 1}} of {{pager.count}}</div>
-	<h5>{{pager.index + 1}}. <span>{{questionName}}</span></h5>
 </div>
-<div class="code-block">
-	<pre><code highlight [code]=questionCode></code></pre>
-	<div class="form-check" *ngFor="let option of questionOptions">
+<div class="mx-auto" style="width: 400px" *ngFor="let question of filteredQuestion">
+    <div>Remaining time: <span>{{countDown | async | formatTime}}</span></div>
+	<h6>{{pager.index + 1}}. <span>{{question.name}}</span></h6>
+	<pre><code class="border border-secondary rounded" style="height: 400px" highlight [code]=question.code></code></pre>
+	<div class="form-check" *ngFor="let option of questionOptions; let i = index">
 		<label class="form-check-label">
-			<input type="radio" class="form-check-input" name="optradio">{{option.name}}
+			<input class="form-check-input" type="radio" name="optradio" [(ngModel)]="optionIndex"
+					[value]="i" (ngModelChange)="optionClicked();">
+			{{option.name}}
 		</label>
 	</div>
 </div>
 <hr>
 <div class="text-sm-center">
-	<button class="btn btn-primary" (click)="nextQuestion(pager.index + 1);">Next question</button>
-	<button class="btn btn-default" (click)="onSubmit();">Submit</button>
+	<div class="d-inline-block">
+		<button class="btn btn-primary mr-sm-5" (click)="nextQuestion(pager.index + 1);">Next question</button>
+	</div>
+	<div class="d-inline-block">
+		<form [formGroup]="resultForm" (ngSubmit)="submit()">	
+			<input type="hidden" name="id" formControlName="id">
+			<input type="hidden" name="examId" formControlName="examId">
+			<input type="hidden" name="answers" formControlName="answers">
+			<button class="btn btn-default" type="submit">Submit</button>
+		</form>
+	</div>
 </div>

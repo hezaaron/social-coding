@@ -1,10 +1,10 @@
 <div class="container">
-	<h2 style="text-align: center">Exams List</h2>
-	<hr>
-	<ul class="exams-list">
-		<div class="exam-list-page" *ngFor="let exam of exams"> 
+	<h2 class="text-sm-center">Exams List</h2>
+	<div class="py-sm-5 px-sm-4 mt-4">
+		<div *ngIf="!exams">Loading...</div>
+		<div style="border-bottom: 1px solid #C6C6C6" *ngFor="let exam of exams"> 
 			<h5><a [routerLink]="[exam.id]">{{exam.name}}</a></h5>
 			<p>{{exam.description}}</p>
 		</div>
-	</ul>
+	</div>
 </div>

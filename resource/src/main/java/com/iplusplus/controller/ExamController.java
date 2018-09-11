@@ -13,11 +13,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iplusplus.domain.Answer;
@@ -70,12 +71,6 @@ public class ExamController {
         return map.entrySet().stream().map(entry -> entry.getValue()).collect(Collectors.toList());
     }
 
-    private int getRemainingTime(HttpServletRequest request) {
-        final long start = (long) request.getSession().getAttribute("examStarted");
-        final int remaining = (int) ((examTimeMins * 60) - ((Calendar.getInstance().getTimeInMillis() - start) / 1000));
-        return remaining;
-    }
-
     @GetMapping("/questions/{id}")
     public List<Question> getQuestionsForExam(@PathVariable("id") Integer examId) {
         return examService.getQuestionsForExam(examId);
@@ -86,9 +81,8 @@ public class ExamController {
         return examService.getAnswersForQuestion(questionId);
     }
 
-    @PostMapping("/results")
-    @ResponseBody
-    public ExamResult submitResult( ExamDTO frm, HttpServletRequest request) {
+    @PostMapping("/save")
+    ResponseEntity<ExamResult> submitResult(@RequestBody ExamDTO frm, HttpServletRequest request) {
         logger.info("Submit: {}", frm);
         request.getSession().removeAttribute("examId");
 
@@ -98,16 +92,22 @@ public class ExamController {
         examService.calcGrade(examResult, frm.getExamId(), frm.getAnswers());
         logger.info("Submit: {}", examResult);
         
-        return examService.updateExamResult(examResult);
+        return ResponseEntity.ok(examService.updateExamResult(examResult));
     }
 
-    @GetMapping("/stat/{id}")
-    public Map<String, Object> stat(@PathVariable("id") Integer resultId) {
-        return examService.stats(resultId);
+    @GetMapping("/result/{id}")
+    ResponseEntity <List<Object>> getStat(@PathVariable("id") Integer resultId) {
+        return ResponseEntity.ok(examService.stats(resultId));
     }
 
     public Integer timer(HttpServletRequest request) {
         return getRemainingTime(request);
+    }
+    
+    private int getRemainingTime(HttpServletRequest request) {
+        final long start = (long) request.getSession().getAttribute("examStarted");
+        final int remaining = (int) ((examTimeMins * 60) - ((Calendar.getInstance().getTimeInMillis() - start) / 1000));
+        return remaining;
     }
     
 }

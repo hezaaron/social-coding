@@ -2,25 +2,23 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
 import { OktaAuthService } from '@okta/okta-angular';
 import * as OktaSignIn from '@okta/okta-signin-widget';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-secure',
-    template: `
-        <div class="site-main" style="text-align: center">
-            <h2>Ipusplus Test Exam</h2>
-            <p>Iplusplus exams are multiple choice questions<br>that will help you prepare for your technical interview</p>
-        </div>
-        <div id="okta-signin-container"></div>`
+    template: `<div class="site-main text-sm-center">
+                 <h2>Ipusplus Test Exam</h2>
+                 <p>Iplusplus exams are multiple choice questions<br>that will help you prepare for your technical interview</p>
+               </div>
+               <div id="okta-signin-container"></div>`
 })
 
 export class LoginComponent {
     signIn;
-    widget = new OktaSignIn({
-        baseUrl: 'https://dev-193618.oktapreview.com'
-    })
+    widget = new OktaSignIn({baseUrl: 'https://dev-193618.oktapreview.com'})
     
-    constructor(oktaAuth: OktaAuthService, router: Router) {
-        this.signIn = oktaAuth;
+    constructor(private oktaAuth: OktaAuthService, private router: Router) {
+        this.signIn = this.oktaAuth;
         
         router.events.forEach(event => {
             if(event instanceof NavigationStart) {
@@ -28,6 +26,8 @@ export class LoginComponent {
                   case '/login':
                     break;
                   case '/testexams':
+                    break;
+                  case 'resultstat/:id':
                     break;
                   default:
                     this.widget.remove();

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,8 +8,14 @@ import { Observable } from 'rxjs/Observable';
 export class ExamService {
   public API = '//localhost:8080/testexams';
   public EXAM_API = this.API + '/exam';
+  private examResultId = new BehaviorSubject<number>(0);
+  resultId = this.examResultId.asObservable();
     
   constructor(private http: HttpClient) { }
+  
+  updateResultId(id: number) {
+      this.examResultId.next(id);
+  }
   
   getAll() : Observable<any> {
       return this.http.get(this.API);
@@ -26,4 +32,13 @@ export class ExamService {
   getAnswers(id: number) : Observable<any> {
       return this.http.get(this.API + '/answers/' + id);
   }
+  
+  postAnswers(userAnswer: any) : Observable<any> {
+      return this.http.post(this.API + '/save', userAnswer);
+  }
+
+  getStat(id: number) : Observable<any> {
+      return this.http.get(this.API + '/result/' + id);
+  }
+
 }

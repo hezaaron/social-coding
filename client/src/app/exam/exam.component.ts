@@ -1,8 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Pipe, PipeTransform } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
-import { Subscription } from 'rxjs/Subscription';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Subscription, timer } from 'rxjs';
+import { take, map } from 'rxjs/operators';
 import { ExamService } from '../shared/exam/exam.service';
+import { Option } from '../model/option';
 
 @Component({
   selector: 'app-exam',
@@ -12,93 +14,137 @@ import { ExamService } from '../shared/exam/exam.service';
 export class ExamComponent implements OnInit, OnDestroy {
   sub: Subscription;
   examId: string;
-  examProperties: Array<any>;
   welcomeMsg: string;
-  countDownTimer: number;
-  questions: Array<any>;
-  questionName: string;
-  questionCode: string;
-  questionOptions: Array<any>;
+  counter: number;
+  examQuestions: Array<any>;
+  filteredQuestion: Array<any>;
+  questionOptions: Array<Option>;
   pager = {index: 0, size: 1, count: 1};
-  userAnswers: Array<any>;
-  result: any;
+  userAnswers: any[] = [];
+  resultForm: FormGroup;
+  optionIndex: number;
+  countDown: any;
 
-  constructor(private route: ActivatedRoute, private router: Router, private examService: ExamService) { 
+  constructor(private route: ActivatedRoute, private router: Router, private examService: ExamService, private formBuilder: FormBuilder) {
+      this.resultForm = this.formBuilder.group({
+          id: [''],
+          examId: [''],
+          answers: ['']
+      });
   }
-  
-  getExamProperties() {
+
+  ngOnInit() {
       this.sub = this.route.params.subscribe(params => {
           const id = params['id'];
           if(id) {
               this.examId = id;
-              this.examService.get(id).subscribe(data => {
-                  this.examProperties = data;
-                  this.welcomeMsg = this.examProperties[0];
-                  this.countDownTimer = this.examProperties[1];
-                  this.result = this.examProperties[2];
-              },
-              error => console.error(error));
           }else {
-              console.log(`Exam with id '${id}' not found, returning to list`);
-              this.router.navigate(['/testexams']);
+             console.log(`Exam with id '${id}' not found, returning to list`);
+             this.router.navigate(['/testexams']);
           }
       })
-  }
-
-  ngOnInit() {
-      this.getExamProperties();
+      
+      this.examProperties();
       this.examQuestion();
-      this.startTimer();
+  }
+  
+  examProperties() {
+      this.examService.get(this.examId).subscribe(data => {
+          const properties = data;
+          this.welcomeMsg = properties[0];
+          this.counter = properties[1];
+          this.resultForm.setValue(properties[2]);
+          this.startTimer();
+          console.log(this.counter);
+      },
+      error => console.error(error));
+  }
+  
+  optionClicked() {
+      this.questionOptions[this.optionIndex].selected = true;
+  }
+  
+  getUserAnswer(){
+      let answer = 0;
+      this.questionOptions.forEach((x) => { if(x.selected) answer = x.id;});
+      this.userAnswers.push(answer);
   }
   
   examQuestion() {
       this.examService.getQuestions(this.examId).subscribe(data => {
-          this.questions = data;
-          this.pager.count = this.questions.length;
-          const question = this.questions.slice(this.pager.index, this.pager.size);
-          this.questionName = question[0].name;
-          this.questionCode = question[0].code;
-          this.examService.getAnswers(question[0].id).subscribe(data => {
-              this.questionOptions = data;
-          },
-          error => console.error(error));
+          this.examQuestions = data;
+          this.pager.count = this.examQuestions.length;
+          this.filteredQuestion = this.examQuestions.slice(this.pager.index, this.pager.size);
+          this.loadQuestionOptions();
       },
       error => console.error(error));
+  }
+  
+  loadQuestionOptions() {
+      if(this.filteredQuestion) {
+          this.examService.getAnswers(this.filteredQuestion[0].id).subscribe(data => {
+              let option = data;
+              this.questionOptions = [
+                    new Option(option[0]),
+                    new Option(option[1]),
+                    new Option(option[2]),
+                    new Option(option[3])
+                    ];
+          },
+         error => console.error(error));
+      }
   }
 
   nextQuestion(index: number) {
       if(index >= 0 && index < this.pager.count) {
           this.pager.index = index;
           this.pager.size++;
-          const nextQuestion = this.questions.slice(this.pager.index, this.pager.size);
-          this.questionName = nextQuestion[0].name;
-          this.questionCode = nextQuestion[0].code;
-          this.examService.getAnswers(nextQuestion[0].id).subscribe(data => {
-              this.questionOptions = data;
-          },
-          error => console.error(error));
+          this.filteredQuestion = this.examQuestions.slice(this.pager.index, this.pager.size);
+          this.loadQuestionOptions();
+          this.getUserAnswer();
       }
   }
-
-  interval: number;
-  displayTimer : string;
-  startTimer() {
-      let minute = "0" + ((this.countDownTimer / 60) >> 0);
-      let second = "0" + (this.countDownTimer % 60);
-      
-      setInterval(() => {
-          if(this.countDownTimer > 0) {
-              this.countDownTimer--;
-          }
-          if(this.countDownTimer <= 0) {
-              clearInterval(this.interval);
-          }
-         this.displayTimer = minute + ":" +second;
-          
-      },1000);
+  
+  submit() {
+      this.getUserAnswer();
+      this.resultForm.controls['answers'].setValue(this.userAnswers);
+      console.log(this.resultForm.value);
+      this.examService.postAnswers(this.resultForm.value).subscribe(response => {
+          this.examService.updateResultId(response.id)
+          this.viewResult(response.id);
+      },
+      error => console.error(error));
   }
 
+  startTimer() {
+      this.countDown = timer(0,1000).pipe(
+          take(this.counter),
+          map(() => --this.counter)
+      );
+  }
+  
+  stopTimer() {
+      this.countDown = null;
+  }
+  
+  private viewResult(id: number) {
+      this.router.navigate(['/resultstat', id]);
+  }
+  
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
+  
 }
+
+@Pipe({
+    name: 'formatTime'
+ })
+ export class FormatTimePipe implements PipeTransform {
+
+    transform(value: number): string {
+      const minutes: number = Math.floor(value / 60);
+      return ('00' + minutes).slice(-2) + ':' + ('00' + Math.floor(value - minutes * 60)).slice(-2);
+    }
+    
+ }

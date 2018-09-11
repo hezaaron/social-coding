@@ -1,10 +1,14 @@
 package com.iplusplus.service;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -55,12 +59,15 @@ public class ExamService {
     }
     
     public Exam getExam(int examId) {
-        Exam exam = examRepository.getOne(examId);
-        return exam;
+        return examRepository.getOne(examId);
     }
 
     public List<Question> getQuestionsForExam(int examId) {
-        return questionRepository.findByExamId(examId);
+    	final List<Question> questions = questionRepository.findByExamId(examId);
+    	final int minValue = questions.get(0).getId();
+    	final int maxValue = questions.get(questions.size() - 1).getId();
+    	
+        return getRandomQuestions(minValue, maxValue);
     }
 
     public List<Answer> getAnswersForQuestion(int questionId) {
@@ -84,17 +91,17 @@ public class ExamService {
         return resultRepository.getOne(resultId);
     }
     
-    public Map<String, Object> stats(final Integer resultId) {
+    public List<Object> stats(final Integer resultId) {
     	final ExamResult examResult = getExamResult(resultId);
         final Exam exam = getExam(examResult.getExam().getId());
         Map<String, Object> map = new HashMap<>();
         map.put("title", String.format("Your results for %s", exam.getName()));
-        map.put("start", examResult.getStart());
-        map.put("finish", examResult.getFinish());
+        map.put("start", getTimeInstance(examResult.getStart()));
+        map.put("finish", getTimeInstance(examResult.getFinish()));
         map.put("questionCount", examResult.getQuestionCount());
         map.put("grade", examResult.getGrade());
         map.put("maxGrade", ExamService.MAX_GRADE);
-        return map;
+        return map.entrySet().stream().map(entry -> entry.getValue()).collect(Collectors.toList());
     }
 
     public void calcGrade(ExamResult result, int examId, List<Integer> userAnswers) {
@@ -129,6 +136,20 @@ public class ExamService {
         // grade
         result.setCorrectAnswers(correctCount.size());
         result.setGrade(Math.round(grade));
+    }
+    
+    private List<Question> getRandomQuestions(int minValue, int maxValue) {
+    	final List<Question> questionsForExam = new ArrayList<>();
+    	for(int i = 1; i <= 5; i++) {
+    		int id = new Random().nextInt((maxValue - minValue) + 1) + minValue;
+    		System.out.print(id);
+    		questionsForExam.add(questionRepository.getOne(id));
+    	}
+        return questionsForExam;
+    }
+    
+    private String getTimeInstance(Date date) {
+		return SimpleDateFormat.getTimeInstance().format(date);
     }
 
 }

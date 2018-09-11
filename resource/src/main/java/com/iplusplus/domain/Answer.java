@@ -28,4 +28,5 @@ public final class Answer extends AbstractPersistable<Integer> {
 
     @Column(name = "IS_CORRECT", nullable = false)
     private boolean correct = false;
+
 }
