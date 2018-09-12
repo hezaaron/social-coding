@@ -4,7 +4,7 @@ import { ExamService } from './shared/exam/exam.service';
 @Component({
     selector: 'app-result',
     template: `<div class="container">
-                    <h3 class="text-sm-center">{{examResult}}</h3>
+                    <h5 class="text-sm-center">{{examResult}}</h5>
                     <div class="mt-4">
                         <div *ngIf="!resultStat">Loading...</div>
                         <table *ngIf="resultStat" class="table">

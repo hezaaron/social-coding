@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Pipe, PipeTransform } from '@angular/core';
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                import { Component, OnInit, OnDestroy, Pipe, PipeTransform } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription, timer } from 'rxjs';
@@ -55,7 +55,6 @@ export class ExamComponent implements OnInit, OnDestroy {
           this.counter = properties[1];
           this.resultForm.setValue(properties[2]);
           this.startTimer();
-          console.log(this.counter);
       },
       error => console.error(error));
   }
@@ -68,6 +67,7 @@ export class ExamComponent implements OnInit, OnDestroy {
       let answer = 0;
       this.questionOptions.forEach((x) => { if(x.selected) answer = x.id;});
       this.userAnswers.push(answer);
+      this.optionIndex = null;
   }
   
   examQuestion() {
@@ -108,7 +108,6 @@ export class ExamComponent implements OnInit, OnDestroy {
   submit() {
       this.getUserAnswer();
       this.resultForm.controls['answers'].setValue(this.userAnswers);
-      console.log(this.resultForm.value);
       this.examService.postAnswers(this.resultForm.value).subscribe(response => {
           this.examService.updateResultId(response.id)
           this.viewResult(response.id);
@@ -119,12 +118,12 @@ export class ExamComponent implements OnInit, OnDestroy {
   startTimer() {
       this.countDown = timer(0,1000).pipe(
           take(this.counter),
-          map(() => --this.counter)
+          map(tick => {
+              if(this.counter - (tick % this.counter) === 1 && this.pager.index === (this.pager.count - 1)) this.submit();
+              if(this.counter - (tick % this.counter) === 1) this.nextQuestion(this.pager.index + 1);
+              return this.counter - (tick % this.counter);
+          })
       );
-  }
-  
-  stopTimer() {
-      this.countDown = null;
   }
   
   private viewResult(id: number) {
