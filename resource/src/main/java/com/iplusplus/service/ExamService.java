@@ -104,7 +104,7 @@ public class ExamService {
         return map.entrySet().stream().map(entry -> entry.getValue()).collect(Collectors.toList());
     }
 
-    public void calcGrade(ExamResult result, int examId, List<Integer> userAnswers) {
+    public void calculateGrade(ExamResult result, int examId, List<Integer> userAnswers) {
         if (result == null || userAnswers == null) {
             throw new IllegalArgumentException("Invalid parameters on GRADE call");
         }
@@ -115,34 +115,29 @@ public class ExamService {
         }
 
         final float step = (float) (MAX_GRADE / correctAnswers.size());
-        final Set<Integer> correctCount = new HashSet<>();
-        final Set<Integer> incorrectCount = new HashSet<>();
+        final List<Integer> correctCount = new ArrayList<>();
+        final List<Integer> correctAnswerIds = new ArrayList<>();
 
-        final Set<Integer> answers = userAnswers.stream().filter(a -> a > 0).collect(Collectors.toSet());
-
-        float grade = 0;
         for (final Answer answer : correctAnswers) {
-            final Integer id = answer.getId();
-            if (answers.contains(id)) {
-                grade += step;
+        	correctAnswerIds.add(answer.getId());
+        }
+        
+        float score = 0;
+        for (final Integer id : userAnswers) {
+            if (correctAnswerIds.contains(id)) {
+            	score += step;
                 correctCount.add(id);
-            } else {
-                incorrectCount.add(id);
             }
         }
-        // fix for multi-answers questions
-        correctCount.removeAll(incorrectCount);
-
-        // grade
+        
         result.setCorrectAnswers(correctCount.size());
-        result.setGrade(Math.round(grade));
+        result.setGrade(Math.round(score));
     }
     
     private List<Question> getRandomQuestions(int minValue, int maxValue) {
     	final List<Question> questionsForExam = new ArrayList<>();
     	for(int i = 1; i <= 5; i++) {
     		int id = new Random().nextInt((maxValue - minValue) + 1) + minValue;
-    		System.out.print(id);
     		questionsForExam.add(questionRepository.getOne(id));
     	}
         return questionsForExam;

@@ -11,6 +11,7 @@ import { ResultComponent } from './result.component'
 import { OktaAuthModule, OktaAuthGuard, OktaCallbackComponent } from '@okta/okta-angular';
 import { HighlightModule } from 'ngx-highlightjs';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 
 import { ExamService } from './shared/exam/exam.service';
 import { AuthInterceptor } from './shared/okta/auth.interceptor';
@@ -71,7 +72,8 @@ const appRoutes: Routes = [
     HighlightModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    ConfirmationPopoverModule.forRoot({confirmButtonType: 'danger'})
   ],
   providers: [ExamService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]

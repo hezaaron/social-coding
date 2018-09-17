@@ -1,6 +1,7 @@
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                import { Component, OnInit, OnDestroy, Pipe, PipeTransform } from '@angular/core';
+import { Component, OnInit, OnDestroy, Pipe, PipeTransform } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription, timer } from 'rxjs';
 import { take, map } from 'rxjs/operators';
 import { ExamService } from '../shared/exam/exam.service';
@@ -24,6 +25,8 @@ export class ExamComponent implements OnInit, OnDestroy {
   resultForm: FormGroup;
   optionIndex: number;
   countDown: any;
+  confirmSubmit: boolean = false;
+  cancelSubmit: boolean = false;
 
   constructor(private route: ActivatedRoute, private router: Router, private examService: ExamService, private formBuilder: FormBuilder) {
       this.resultForm = this.formBuilder.group({
@@ -106,20 +109,25 @@ export class ExamComponent implements OnInit, OnDestroy {
   }
   
   submit() {
-      this.getUserAnswer();
-      this.resultForm.controls['answers'].setValue(this.userAnswers);
-      this.examService.postAnswers(this.resultForm.value).subscribe(response => {
-          this.examService.updateResultId(response.id)
-          this.viewResult(response.id);
-      },
-      error => console.error(error));
+      if(this.confirmSubmit) {
+          this.getUserAnswer();
+          this.resultForm.controls['answers'].setValue(this.userAnswers);
+          this.examService.postAnswers(this.resultForm.value).subscribe(response => {
+              this.examService.updateResultId(response.id)
+              this.viewResult(response.id);
+          },
+          error => console.error(error));
+      }
   }
 
   startTimer() {
       this.countDown = timer(0,1000).pipe(
           take(this.counter),
           map(tick => {
-              if(this.counter - (tick % this.counter) === 1 && this.pager.index === (this.pager.count - 1)) this.submit();
+              if(this.counter - (tick % this.counter) === 1 && this.pager.index === (this.pager.count - 1)) {
+                  this.confirmSubmit = true;
+                  this.submit();
+              }
               if(this.counter - (tick % this.counter) === 1) this.nextQuestion(this.pager.index + 1);
               return this.counter - (tick % this.counter);
           })

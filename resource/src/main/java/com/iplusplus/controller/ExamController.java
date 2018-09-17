@@ -83,13 +83,13 @@ public class ExamController {
 
     @PostMapping("/save")
     ResponseEntity<ExamResult> submitResult(@RequestBody ExamDTO frm, HttpServletRequest request) {
-        logger.info("Submit: {}", frm);
+        logger.info("Submit: {}", frm.getAnswers());
         request.getSession().removeAttribute("examId");
 
         final ExamResult examResult = examService.getExamResult(frm.getId());
         examResult.setFinish(Calendar.getInstance().getTime());
 
-        examService.calcGrade(examResult, frm.getExamId(), frm.getAnswers());
+        examService.calculateGrade(examResult, frm.getExamId(), frm.getAnswers());
         logger.info("Submit: {}", examResult);
         
         return ResponseEntity.ok(examService.updateExamResult(examResult));
