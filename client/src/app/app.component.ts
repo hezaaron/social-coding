@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { OktaAuthService } from '@okta/okta-angular';
-import { Router } from '@angular/router';
+import { OktaAuthService, } from './shared/okta/okta.service';
 
 @Component({
   selector: 'app-root',
@@ -8,24 +7,25 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Iplusplus Test Exams'
+  title = 'iplusplus Test Exams'
   isAuthenticated: boolean;
   isNavbarCollapsed = true;
+  user: any;
 
-  constructor(private oktaAuth: OktaAuthService, private router: Router) {
-  }
+  constructor(private oktaService: OktaAuthService) {}
   
   async ngOnInit(){
-      this.isAuthenticated = await this.oktaAuth.isAuthenticated();
-      this.oktaAuth.$authenticationState.subscribe((isAuthenticated: boolean) => this.isAuthenticated = isAuthenticated);
-  }
-  
-  login() {
-      this.oktaAuth.loginRedirect('/profile');
+      this.isAuthenticated = await this.oktaService.isAuthenticated();
+      this.oktaService.user$.subscribe((isAuthenticated: boolean) => this.isAuthenticated = isAuthenticated);
+      if (this.isAuthenticated) {
+          this.user = this.oktaService.idTokenAsUser;
+      }
+      this.oktaService.user$.subscribe(user => {
+          this.user = user;
+      });
   }
   
   async logout() {
-      await this.oktaAuth.logout();
-      this.router.navigateByUrl('/login');
+      await this.oktaService.logout();
   }
 }

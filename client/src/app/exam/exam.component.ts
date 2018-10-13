@@ -15,7 +15,7 @@ import { Option } from '../model/option';
 export class ExamComponent implements OnInit, OnDestroy {
   sub: Subscription;
   examId: string;
-  welcomeMsg: string;
+  examName: string;
   counter: number;
   examQuestions: Array<any>;
   filteredQuestion: Array<any>;
@@ -54,7 +54,7 @@ export class ExamComponent implements OnInit, OnDestroy {
   examProperties() {
       this.examService.get(this.examId).subscribe(data => {
           const properties = data;
-          this.welcomeMsg = properties[0];
+          this.examName = properties[0];
           this.counter = properties[1];
           this.resultForm.setValue(properties[2]);
           this.startTimer();

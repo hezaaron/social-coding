@@ -60,7 +60,7 @@ public class ExamController {
         Map<String, Object> map = new HashMap<>();
 
         map.put("results", new ExamDTO(resultId, examId));
-        map.put("examName", String.format("Welcome to '%s'!", exam.getName()));
+        map.put("examName", exam.getName());
 
         request.getSession().setAttribute("examId", examId);
         request.getSession().setAttribute("examStarted", examResult.getStart().getTime());

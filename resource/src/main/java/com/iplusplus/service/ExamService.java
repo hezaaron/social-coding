@@ -5,18 +5,19 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.iplusplus.controller.ExamController;
 import com.iplusplus.domain.Answer;
 import com.iplusplus.domain.Exam;
 import com.iplusplus.domain.ExamResult;
@@ -29,7 +30,9 @@ import com.iplusplus.repository.QuestionRepository;
 @Service
 public class ExamService {
 
+	private static final Logger logger = LogManager.getLogger(ExamService.class);
 	public static final double MAX_GRADE = 100;
+	public static final int QUESTION_COUNT_PER_EXAM = 5;
 
     @Autowired
     private ExamRepository examRepository;
@@ -43,11 +46,8 @@ public class ExamService {
     @Autowired
     private ExamResultRepository resultRepository;
 
-    public Collection<Exam> getTestExams() {
-        return examRepository.findAll()
-        					 .stream()
-        					 .sorted()
-        					 .collect(Collectors.toList());
+    public List<Exam> getTestExams() {
+        return examRepository.findAll();
     }
 
     @SuppressWarnings("unused")
@@ -63,23 +63,11 @@ public class ExamService {
     }
 
     public List<Question> getQuestionsForExam(int examId) {
-    	final List<Question> questions = questionRepository.findByExamId(examId);
-    	final int minValue = questions.get(0).getId();
-    	final int maxValue = questions.get(questions.size() - 1).getId();
-    	
-        return getRandomQuestions(minValue, maxValue);
+        return getRandomQuestions(examId);
     }
 
     public List<Answer> getAnswersForQuestion(int questionId) {
         return answerRepository.findByQuestionId(questionId);
-    }
-
-    public Question getNextQuestion(Exam exam, Set<Integer> ids) {
-        final Set<Integer> identificators = new HashSet<>(ids);
-        if (identificators.size() == 0) {
-            identificators.add(0);
-        }
-        return questionRepository.findFirstByExamAndIdNotIn(exam, identificators);
     }
     
     @Transactional
@@ -110,15 +98,17 @@ public class ExamService {
         }
 
         final List<Answer> correctAnswers = answerRepository.findByQuestionExamIdAndCorrect(examId, true);
+        logger.info("Submit: {}", correctAnswers.size());
         if (correctAnswers.size() == 0) {
             throw new IllegalArgumentException("You must specify correct answers!");
         }
 
-        final float step = (float) (MAX_GRADE / correctAnswers.size());
+        final float step = (float) (MAX_GRADE / QUESTION_COUNT_PER_EXAM);
         final List<Integer> correctCount = new ArrayList<>();
         final List<Integer> correctAnswerIds = new ArrayList<>();
 
         for (final Answer answer : correctAnswers) {
+        	logger.info("Submit: {}", answer.getId());
         	correctAnswerIds.add(answer.getId());
         }
         
@@ -134,9 +124,13 @@ public class ExamService {
         result.setGrade(Math.round(score));
     }
     
-    private List<Question> getRandomQuestions(int minValue, int maxValue) {
+    private List<Question> getRandomQuestions(int examId) {
+    	final List<Question> questions = questionRepository.findByExamId(examId);
+    	final int minValue = questions.get(0).getId();
+    	final int maxValue = questions.get(questions.size() - 1).getId();
     	final List<Question> questionsForExam = new ArrayList<>();
-    	for(int i = 1; i <= 5; i++) {
+    	
+    	for(int i = 1; i <= QUESTION_COUNT_PER_EXAM; i++) {
     		int id = new Random().nextInt((maxValue - minValue) + 1) + minValue;
     		questionsForExam.add(questionRepository.getOne(id));
     	}

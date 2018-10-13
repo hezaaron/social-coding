@@ -6,10 +6,10 @@
 	padding-top: 30px;
 	max-width: 104em;
 }
-.table {
+.table, .intro {
 	width: 50%;
 	margin: 0 auto !important;
 }
-.nav-link {
-	cursor: pointer;
+#okta-sign-in.auth-container.main-container {
+    border: 0;
 }
