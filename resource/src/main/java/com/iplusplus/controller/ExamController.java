@@ -33,15 +33,13 @@ import com.iplusplus.service.ExamService;
 public class ExamController {
 	
 	private static final Logger logger = LogManager.getLogger(ExamController.class);
-
 	@Value("${exam.time.minutes}")
     private Integer examTimeMins;
-
     @Autowired
     private ExamService examService;
-
+    
     @GetMapping
-    public Collection<Exam> getTestExams() {
+    public List<Exam> getTestExams() {
     	return examService.getTestExams();
     }
     
@@ -56,16 +54,13 @@ public class ExamController {
     	examResult.setQuestionCount(questions.size());
 
         final int resultId = examService.insertExam(examResult);
-        
         Map<String, Object> map = new HashMap<>();
-
         map.put("results", new ExamDTO(resultId, examId));
         map.put("examName", exam.getName());
 
         request.getSession().setAttribute("examId", examId);
         request.getSession().setAttribute("examStarted", examResult.getStart().getTime());
         final int remaining = getRemainingTime(request);
-        
         map.put("examTime", remaining);
 
         return map.entrySet().stream().map(entry -> entry.getValue()).collect(Collectors.toList());

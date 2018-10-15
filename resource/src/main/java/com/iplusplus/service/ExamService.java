@@ -36,13 +36,10 @@ public class ExamService {
 
     @Autowired
     private ExamRepository examRepository;
-
     @Autowired
     private QuestionRepository questionRepository;
-
     @Autowired
     private AnswerRepository answerRepository;
-
     @Autowired
     private ExamResultRepository resultRepository;
 
@@ -50,8 +47,8 @@ public class ExamService {
         return examRepository.findAll();
     }
 
+    @Transactional
     @SuppressWarnings("unused")
-	@Transactional
     public int insertExam(ExamResult result) {
     	final ExamResult er = resultRepository.save(result);
     	resultRepository.flush();
@@ -63,7 +60,8 @@ public class ExamService {
     }
 
     public List<Question> getQuestionsForExam(int examId) {
-        return getRandomQuestions(examId);
+    	final List<Question> questions = questionRepository.findByExamId(examId);
+        return getRandomQuestions(questions);
     }
 
     public List<Answer> getAnswersForQuestion(int questionId) {
@@ -98,7 +96,7 @@ public class ExamService {
         }
 
         final List<Answer> correctAnswers = answerRepository.findByQuestionExamIdAndCorrect(examId, true);
-        logger.info("Submit: {}", correctAnswers.size());
+        logger.info("number of correct answers for exam {} : {}", examId, correctAnswers.size());
         if (correctAnswers.size() == 0) {
             throw new IllegalArgumentException("You must specify correct answers!");
         }
@@ -108,7 +106,6 @@ public class ExamService {
         final List<Integer> correctAnswerIds = new ArrayList<>();
 
         for (final Answer answer : correctAnswers) {
-        	logger.info("Submit: {}", answer.getId());
         	correctAnswerIds.add(answer.getId());
         }
         
@@ -124,8 +121,7 @@ public class ExamService {
         result.setGrade(Math.round(score));
     }
     
-    private List<Question> getRandomQuestions(int examId) {
-    	final List<Question> questions = questionRepository.findByExamId(examId);
+    public List<Question> getRandomQuestions(List<Question> questions) {
     	final int minValue = questions.get(0).getId();
     	final int maxValue = questions.get(questions.size() - 1).getId();
     	final List<Question> questionsForExam = new ArrayList<>();

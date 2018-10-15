@@ -15,4 +15,5 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
 	List<Question> findByExamId(Integer examId);
     Question findFirstByExamAndIdNotIn(Exam exam, Set<Integer> ids);
     List<Integer> countByExamId(Integer examId);
+	List<Question> findByExam(Exam exam);
 }
