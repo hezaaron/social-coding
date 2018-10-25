@@ -18,7 +18,8 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { ExamService } from './shared/exam/exam.service';
 import { AuthInterceptor } from './shared/okta/auth.interceptor';
 import { ExamListComponent } from './exam-list/exam-list.component';
-import { ExamComponent, FormatTimePipe } from './exam/exam.component';
+import { ExamComponent } from './exam/exam.component';
+import { FormatTimePipe } from './shared/pipes/format-time.pipe';
 
 
 const appRoutes: Routes = [

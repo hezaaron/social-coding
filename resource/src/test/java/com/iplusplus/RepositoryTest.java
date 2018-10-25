@@ -107,10 +107,9 @@ public class RepositoryTest {
         assertEquals(MAX_QUESTIONS_FOR_EXAM_1, questions.size());
         final ExamResult result = new ExamResult();
         result.setExam(exams.get(0));
-        result.setStart(Calendar.getInstance().getTime());
+        result.setStartTime(Calendar.getInstance().getTime());
         result.setQuestionCount(questions.size());
-        final ExamResult examResult = examResultRepository.save(result);
-        examResultRepository.flush();
+        examResultRepository.saveAndFlush(result);
     }
 
     @Test
@@ -119,7 +118,7 @@ public class RepositoryTest {
         assertEquals(MAX_EXAMS, exams.size());
         for(final Exam exam : exams) {
             final List<Question> questions = questionRepository.findByExam(exam);
-            assertTrue(questions.size() > 0);
+            assertTrue(!questions.isEmpty());
             for(final Question question : questions) {
                 final List<Answer> answers = answerRepository.findByQuestion(question);
                 assertEquals(MAX_ANSWERS_BY_QUESTION, answers.size());

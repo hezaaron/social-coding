@@ -34,11 +34,11 @@ public final class ExamResult extends AbstractPersistable<Integer> {
 
     @Column
     @Temporal(TemporalType.TIMESTAMP)
-    private Date start;
+    private Date startTime;
 
     @Column
     @Temporal(TemporalType.TIMESTAMP)
-    private Date finish;
+    private Date finishTime;
 
     @Column(name = "QUESTION_COUNT")
     private Integer questionCount;

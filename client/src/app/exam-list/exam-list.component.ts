@@ -11,6 +11,10 @@ export class ExamListComponent implements OnInit {
     exams: Array<any>;
 
   constructor(private examService: ExamService) { }
+  
+  trackById(index, exam) {
+      return exam.id;
+  }
 
   ngOnInit() {
       this.examService.getAll().subscribe(data => {

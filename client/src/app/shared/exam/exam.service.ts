@@ -21,7 +21,7 @@ export class ExamService {
       return this.http.get(this.API);
   }
   
-  get(id: string) : Observable<any> {
+  getExam(id: string) : Observable<any> {
       return this.http.get(this.API + '/' + id);
   }
   
@@ -37,7 +37,7 @@ export class ExamService {
       return this.http.post(this.API + '/save', userAnswer);
   }
 
-  getStat(id: number) : Observable<any> {
+  getExamStat(id: number) : Observable<any> {
       return this.http.get(this.API + '/result/' + id);
   }
 

@@ -1,11 +1,8 @@
 package com.iplusplus.controller;
 
+import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -38,9 +35,10 @@ public class ExamController {
     @Autowired
     private ExamService examService;
     
+    
     @GetMapping
-    public List<Exam> getTestExams() {
-    	return examService.getTestExams();
+    public List<Exam> getAllExams() {
+    	return examService.getAllExams();
     }
     
     @GetMapping("/{id}")
@@ -49,21 +47,14 @@ public class ExamController {
     	final Exam exam = examService.getExam(examId);
     	final List<Question> questions = examService.getQuestionsForExam(examId);
     	final ExamResult examResult = new ExamResult();
+    	
     	examResult.setExam(exam);
-    	examResult.setStart(Calendar.getInstance().getTime());
+    	examResult.setStartTime(Calendar.getInstance().getTime());
     	examResult.setQuestionCount(questions.size());
-
+    	request.getSession().setAttribute("examStarted", examResult.getStartTime().getTime());
         final int resultId = examService.insertExam(examResult);
-        Map<String, Object> map = new HashMap<>();
-        map.put("results", new ExamDTO(resultId, examId));
-        map.put("examName", exam.getName());
-
-        request.getSession().setAttribute("examId", examId);
-        request.getSession().setAttribute("examStarted", examResult.getStart().getTime());
-        final int remaining = getRemainingTime(request);
-        map.put("examTime", remaining);
-
-        return map.entrySet().stream().map(entry -> entry.getValue()).collect(Collectors.toList());
+        
+        return Arrays.asList(exam.getName(), getRemainingTime(request), new ExamDTO(resultId, examId));
     }
 
     @GetMapping("/questions/{id}")
@@ -79,20 +70,16 @@ public class ExamController {
     @PostMapping("/save")
     ResponseEntity<ExamResult> submitResult(@RequestBody ExamDTO frm, HttpServletRequest request) {
         logger.info("Submit: {}", frm.getAnswers());
-        request.getSession().removeAttribute("examId");
-
         final ExamResult examResult = examService.getExamResult(frm.getId());
-        examResult.setFinish(Calendar.getInstance().getTime());
-
+        examResult.setFinishTime(Calendar.getInstance().getTime());
         examService.calculateGrade(examResult, frm.getExamId(), frm.getAnswers());
-        logger.info("Submit: {}", examResult);
         
         return ResponseEntity.ok(examService.updateExamResult(examResult));
     }
 
     @GetMapping("/result/{id}")
-    ResponseEntity <List<Object>> getStat(@PathVariable("id") Integer resultId) {
-        return ResponseEntity.ok(examService.stats(resultId));
+    ResponseEntity <List<Object>> getExamStats(@PathVariable("id") Integer resultId) {
+        return ResponseEntity.ok(examService.getExamStats(resultId));
     }
 
     public Integer timer(HttpServletRequest request) {
@@ -101,8 +88,7 @@ public class ExamController {
     
     private int getRemainingTime(HttpServletRequest request) {
         final long start = (long) request.getSession().getAttribute("examStarted");
-        final int remaining = (int) ((examTimeMins * 60) - ((Calendar.getInstance().getTimeInMillis() - start) / 1000));
-        return remaining;
+        return  (int) ((examTimeMins * 60) - ((Calendar.getInstance().getTimeInMillis() - start) / 1000));
     }
     
 }
