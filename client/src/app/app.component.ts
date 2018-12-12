@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { OktaAuthService, } from './shared/okta/okta.service';
+import { OktaAuthService, } from '@okta/okta-angular';
+import { UserAuthService } from './shared/okta/user.service';
 
 @Component({
   selector: 'app-root',
@@ -12,20 +13,19 @@ export class AppComponent {
   isNavbarCollapsed = true;
   user: any;
 
-  constructor(private oktaService: OktaAuthService) {}
+  constructor(private oktaService: OktaAuthService, private userAuthService: UserAuthService) {
+   // Subscribe to authentication state changes
+      this.oktaService.$authenticationState.subscribe((isAuthenticated: boolean)  => this.isAuthenticated = isAuthenticated);
+  }
   
   async ngOnInit(){
       this.isAuthenticated = await this.oktaService.isAuthenticated();
-      this.oktaService.user$.subscribe((isAuthenticated: boolean) => this.isAuthenticated = isAuthenticated);
-      if (this.isAuthenticated) {
-          this.user = this.oktaService.idTokenAsUser;
+      if(this.isAuthenticated) {
+          this.user = this.userAuthService.tokenAsUser;
       }
-      this.oktaService.user$.subscribe(user => {
-          this.user = user;
-      });
   }
   
   async logout() {
-      await this.oktaService.logout();
+      await this.oktaService.logout('login');
   }
 }

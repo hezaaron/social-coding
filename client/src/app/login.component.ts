@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { OktaAuthService } from './shared/okta/okta.service';
-import { Observable } from 'rxjs';
+import { UserAuthService } from './shared/okta/user.service';
+import { OktaAuthService } from '@okta/okta-angular';
 
 @Component({
     selector: 'app-secure',
-    template: `<div id="okta-signin-container" >
+    template: `<div *ngIf="!isAuthenticated" id="okta-signin-container" >
                    <div class="intro">
                        <h5 class="text-sm-center">iplusplus Exam Maker</h5>
                        <p class="mt-2">iplusplus exams are multiple choice coding questions that will help you 
@@ -14,16 +13,17 @@ import { Observable } from 'rxjs';
                </div>`
 })
 
-export class LoginComponent { 
+export class LoginComponent {
     
-    constructor(private oktaService: OktaAuthService, private router: Router) {}
+    isAuthenticated: boolean;
     
-    ngOnInit() {
-        this.oktaService.showLogin();
-        // user authentication listener
-        this.oktaService.user$.subscribe(user => {
-            this.router.navigate(['/']);
-        });
-        
+    constructor(private oktaService: OktaAuthService, private userAuthService: UserAuthService) {
+     // Subscribe to authentication state changes
+        this.oktaService.$authenticationState.subscribe((isAuthenticated: boolean)  => this.isAuthenticated = isAuthenticated);
+    }
+    
+    async ngOnInit() {
+        this.isAuthenticated = await this.oktaService.isAuthenticated();
+        this.userAuthService.showLogin();
     }
 }

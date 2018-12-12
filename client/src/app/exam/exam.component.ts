@@ -47,19 +47,16 @@ export class ExamComponent implements OnInit, OnDestroy {
           }
       })
       
-      this.examProperties();
-      this.examQuestion();
-  }
-  
-  examProperties() {
       this.examService.getExam(this.examId).subscribe(data => {
-          const properties = data;
-          this.examName = properties[0];
-          this.counter = properties[1];
-          this.resultForm.setValue(properties[2]);
+          const exam = data;
+          this.examName = exam.name;
+          this.counter = exam.timer;
+          this.resultForm.setValue(exam.result);
           this.startTimer();
       },
       error => console.error(error));
+      
+      this.examQuestion();
   }
   
   optionClicked() {
