@@ -6,7 +6,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class ExamService {
-  public API = '//localhost:8080/testexams';
+  public API = 'http://localhost:8080/testexams';
   public EXAM_API = this.API + '/exam';
   private examResultId = new BehaviorSubject<number>(0);
   resultId = this.examResultId.asObservable();

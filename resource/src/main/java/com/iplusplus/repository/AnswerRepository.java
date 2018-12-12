@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.iplusplus.domain.Answer;
-import com.iplusplus.domain.Question;
+import com.iplusplus.entity.Answer;
+import com.iplusplus.entity.Question;
 
 public interface AnswerRepository extends JpaRepository<Answer, Integer> {
 

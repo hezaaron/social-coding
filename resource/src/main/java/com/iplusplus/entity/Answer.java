@@ -1,31 +1,27 @@
-package com.iplusplus.domain;
+package com.iplusplus.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
-
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 @Entity @Table(name="ANSWER")
-@Getter @Setter
-@EqualsAndHashCode @ToString
-public final class Answer extends AbstractPersistable<Integer> {
+@Data @EqualsAndHashCode(callSuper=false)
+public final class Answer {
 
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "QUESTION_ID")
+	@Id @GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer id;
+	@ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "QUESTION_ID")
     private Question question;
-	
-    @Column
     private String name;
-
     @Column(name = "IS_CORRECT", nullable = false)
     private boolean correct = false;
 

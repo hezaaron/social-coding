@@ -8,7 +8,7 @@ import { ExamService } from '../shared/exam/exam.service';
 })
 export class ExamListComponent implements OnInit {
     
-    exams: Array<any>;
+  exams: Array<any>;
 
   constructor(private examService: ExamService) { }
   
@@ -16,11 +16,11 @@ export class ExamListComponent implements OnInit {
       return exam.id;
   }
 
-  ngOnInit() {
+  async ngOnInit() {
       this.examService.getAll().subscribe(data => {
           this.exams = data;
       },
-      error => console.error(error))
+      error => console.error(error));
   }
 
 }

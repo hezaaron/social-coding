@@ -4,25 +4,25 @@ import { ExamService } from './shared/exam/exam.service';
 @Component({
     selector: 'app-result',
     template: `<div class="container">
-                    <h5 class="text-sm-center">{{resultTitle}}</h5>
-                    <div class="mt-4">
-                        <div *ngIf="!stats">Loading...</div>
-                        <table *ngIf="stats" class="table">
-                            <tr><td>Start:</td><td>{{stats[1]}}</td></tr> 
-                            <tr><td>Finish:</td><td>{{stats[2]}}</td></tr>
-                            <tr><td class="text-nowrap">Number of Questions:</td><td>{{stats[3]}}</td></tr>
-                            <tr><td>Score:</td><td [ngClass]="{'text-success': pass, 'text-danger': !pass}">{{stats[4]}}</td></tr>
-                            <tr><td>Max Score:</td><td>{{stats[5]}}</td></tr> 
-                        </table>
+                    <div *ngIf="!stats">Loading...</div>
+                    <div *ngIf="stats">
+                        <h5 class="text-sm-center blue-grey-text">{{stats.title}}</h5>
+                        <div class="mt-4">
+                            <table class="table">
+                                <tr><td>Start:</td><td>{{stats.startTime}}</td></tr> 
+                                <tr><td>Finish:</td><td>{{stats.finishTime}}</td></tr>
+                                <tr><td class="text-nowrap">Number of Questions:</td><td>{{stats.questionCount}}</td></tr>
+                                <tr><td>Score:</td><td [ngClass]="{'text-success': stats.grade >= 50, 'text-danger': stats.grade < 50}">{{stats.grade}}</td></tr>
+                                <tr><td>Max Score:</td><td>{{stats.maxGrade}}</td></tr> 
+                            </table>
+                        </div>
                     </div>
                 </div>`
 })
 
 export class ResultComponent implements OnInit {
-    resultTitle: string;
     stats: Array<any>;
     resultId: number;
-    pass: boolean;
     
     constructor(private examService: ExamService) {}
     
@@ -34,9 +34,7 @@ export class ResultComponent implements OnInit {
 
         this.examService.getExamStat(this.resultId).subscribe(data => {
             this.stats = data;
-            this.resultTitle = this.stats[0];
-            this.pass = this.stats[4] >= 50;
         },
-        error => console.error(error))
+        error => console.error(error));
     }
 }

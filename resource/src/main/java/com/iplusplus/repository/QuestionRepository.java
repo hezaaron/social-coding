@@ -4,12 +4,10 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-import com.iplusplus.domain.Exam;
-import com.iplusplus.domain.Question;
+import com.iplusplus.entity.Exam;
+import com.iplusplus.entity.Question;
 
-@Repository
 public interface QuestionRepository extends JpaRepository<Question, Integer> {
 
 	List<Question> findByExamId(Integer examId);

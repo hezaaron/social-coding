@@ -1,23 +1,25 @@
 package com.iplusplus.service;
 
-import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.iplusplus.domain.Answer;
-import com.iplusplus.domain.Exam;
-import com.iplusplus.domain.ExamResult;
-import com.iplusplus.domain.Question;
+import com.iplusplus.entity.Answer;
+import com.iplusplus.entity.Exam;
+import com.iplusplus.entity.ExamResult;
+import com.iplusplus.entity.Question;
+import com.iplusplus.model.Grade;
+import com.iplusplus.model.Mark;
+import com.iplusplus.model.RandomQuestion;
 import com.iplusplus.repository.AnswerRepository;
 import com.iplusplus.repository.ExamRepository;
 import com.iplusplus.repository.ExamResultRepository;
@@ -25,11 +27,7 @@ import com.iplusplus.repository.QuestionRepository;
 
 @Service
 public class ExamService {
-
-	private static final Logger logger = LogManager.getLogger(ExamService.class);
-	public static final double MAX_GRADE = 100;
-	public static final int NUMBER_OF_QUESTIONS_PER_EXAM = 5;
-
+	
     @Autowired
     private ExamRepository examRepository;
     @Autowired
@@ -43,12 +41,6 @@ public class ExamService {
     public List<Exam> getAllExams() {
         return examRepository.findAll();
     }
-
-    @Transactional
-    public int insertExam(ExamResult result) {
-    	resultRepository.saveAndFlush(result);
-        return result.getId();
-    }
     
     public Exam getExam(int examId) {
         return examRepository.getOne(examId);
@@ -56,7 +48,8 @@ public class ExamService {
 
     public List<Question> getQuestionsForExam(int examId) {
     	final List<Question> questions = questionRepository.findByExamId(examId);
-        return getRandomQuestions(questions);
+    	final int questionSize = Mark.NUMBER_OF_QUESTION;
+    	return new RandomQuestion(questions, questionSize).getList();
     }
 
     public List<Answer> getAnswersForQuestion(int questionId) {
@@ -64,69 +57,41 @@ public class ExamService {
     }
     
     @Transactional
+    public int createExamResult(ExamResult result) {
+    	resultRepository.saveAndFlush(result);
+        return result.getId();
+    }
+    
+    public void computeGrade(ExamResult result, int examId, List<Integer> userAnswers) {
+        final List<Answer> correctAnswers = answerRepository.findByQuestionExamIdAndCorrect(examId, true);
+        final List<Integer> correctIds = new ArrayList<>();
+        correctAnswers.forEach(answer -> correctIds.add(answer.getId()));
+        final Grade grade = new Grade(result, correctIds, userAnswers);
+        grade.computeGrade();
+    }
+    
+    @Transactional
     public ExamResult updateExamResult(ExamResult result) {
         return resultRepository.save(result);
     }
-
+    
     public ExamResult getExamResult(int resultId) {
         return resultRepository.getOne(resultId);
     }
     
-    public List<Object> getExamStats(final Integer resultId) {
-    	final ExamResult examResult = getExamResult(resultId);
-        final Exam exam = getExam(examResult.getExam().getId());
-        return Arrays.asList(String.format("Your results for %s", exam.getName()), getTimeInstance(examResult.getStartTime()),
-        		             getTimeInstance(examResult.getFinishTime()), examResult.getQuestionCount(), examResult.getGrade(), MAX_GRADE);
-    }
-
-    public void calculateGrade(ExamResult result, int examId, List<Integer> userAnswers) {
-        if (result == null || userAnswers == null) {
-            throw new IllegalArgumentException("Invalid parameters on GRADE call");
-        }
-
-        final List<Answer> correctAnswers = answerRepository.findByQuestionExamIdAndCorrect(examId, true);
-        logger.info("number of correct answers for exam {} : {}", examId, correctAnswers.size());
-        if (correctAnswers.isEmpty()) {
-            throw new IllegalArgumentException("You must specify correct answers!");
-        }
-        
-        calculateGrade(result, userAnswers, correctAnswers);
+    public Map<String,Object> getExamStats(final Integer resultId) {
+    	final ExamResult examResult = resultRepository.getOne(resultId);
+        final Map<String, Object> map = new HashMap<>();
+        map.put("title", String.format("Your result for %s", examResult.getExam().getName()));
+        map.put("startTime", getTimeFormat(examResult.getStartTime().toLocalTime()));
+        map.put("finishTime", getTimeFormat(examResult.getFinishTime().toLocalTime()));
+        map.put("questionCount", examResult.getQuestionCount());
+        map.put("grade", examResult.getGrade());
+        map.put("maxGrade", Mark.MAX_MARK);
+        return map;
     }
     
-    public List<Question> getRandomQuestions(List<Question> questions) {
-    	final int minValue = questions.get(0).getId();
-    	final int maxValue = questions.get(questions.size() - 1).getId();
-    	final List<Question> questionsForExam = new ArrayList<>();
-    	
-    	for(int i = 1; i <= NUMBER_OF_QUESTIONS_PER_EXAM; i++) {
-    		int id = new Random().nextInt((maxValue - minValue) + 1) + minValue;
-    		questionsForExam.add(questionRepository.getOne(id));
-    	}
-        return questionsForExam;
-    }
-    
-    private void calculateGrade(ExamResult result, List<Integer> userAnswers, List<Answer> correctAnswers) {
-        final List<Integer> correctCount = new ArrayList<>();
-        final List<Integer> correctAnswerIds = new ArrayList<>();
-        
-        for (final Answer answer : correctAnswers) {
-        	correctAnswerIds.add(answer.getId());
-        }
-        
-        float score = 0;
-        final float step = (float) (MAX_GRADE / NUMBER_OF_QUESTIONS_PER_EXAM);
-        
-        for (final Integer id : userAnswers) {
-            if (correctAnswerIds.contains(id)) {
-            	score += step;
-                correctCount.add(id);
-            }
-        }
-        result.setCorrectAnswers(correctCount.size());
-        result.setGrade(Math.round(score));
-    }
-
-    private String getTimeInstance(Date date) {
-		return SimpleDateFormat.getTimeInstance().format(date);
+    private String getTimeFormat(LocalTime time) {
+    	return DateTimeFormatter.ofPattern("HH:mm:ss", Locale.US).format(time);
     }
 }

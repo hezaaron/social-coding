@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import 'rxjs/add/operator/do';
-import { OktaAuthService } from './okta.service';
+import 'rxjs/add/observable/fromPromise';
+import { OktaAuthService } from '@okta/okta-angular';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -10,23 +10,18 @@ export class AuthInterceptor implements HttpInterceptor {
     constructor(private oktaService: OktaAuthService){}
     
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if (this.oktaService.isAuthenticated()) {
-            const accessToken = this.oktaService.signIn.tokenManager.get('accessToken');
-            request = request.clone({
-              setHeaders: {
-                Authorization: `${accessToken.tokenType} ${accessToken.accessToken}`
-              }
-            });
-          }
+        return Observable.fromPromise(this.handleAccess(request, next));
+      }
 
-          return next.handle(request).do((event: HttpEvent<any>) => {
-            if (event instanceof HttpResponse) {
-              return event;
-            } else if (event instanceof HttpErrorResponse) {
-              if (event.status === 401) {
-                this.oktaService.login();
-              }
+      private async handleAccess(request: HttpRequest<any>, next: HttpHandler): Promise<HttpEvent<any>> {
+        if (request.urlWithParams.indexOf('localhost') > -1) {
+          const accessToken = await this.oktaService.getAccessToken();
+          request = request.clone({
+            setHeaders: {
+              Authorization: 'Bearer ' + accessToken
             }
           });
-    }
+        }
+        return next.handle(request).toPromise();
+      }
 }
