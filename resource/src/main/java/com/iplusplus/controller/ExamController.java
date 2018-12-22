@@ -86,5 +86,4 @@ public class ExamController {
     ResponseEntity <Map<String,Object>> getExamStats(@PathVariable("id") Integer resultId) {
         return ResponseEntity.ok(examService.getExamStats(resultId));
     }
-
 }

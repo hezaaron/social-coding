@@ -4,11 +4,8 @@ import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Calendar;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Value;
-
 import lombok.Getter;
 
 public class ExamTime {
@@ -22,7 +19,7 @@ public class ExamTime {
 	public ExamTime() {
 		this(Clock.systemDefaultZone());
 	}
-	
+
 	public ExamTime(Clock clock) {
 		this.clock = clock;
 		this.time = LocalDateTime.now(this.clock);
