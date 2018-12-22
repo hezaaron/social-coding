@@ -1,9 +1,6 @@
 package com.iplusplus.controller;
 
 import java.time.Clock;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,8 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,12 +17,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.iplusplus.dto.ExamDTO;
+import com.iplusplus.dto.ExamResultDTO;
 import com.iplusplus.entity.Answer;
 import com.iplusplus.entity.Exam;
 import com.iplusplus.entity.ExamResult;
 import com.iplusplus.entity.Question;
 import com.iplusplus.model.ExamTime;
+import com.iplusplus.model.FactoryHelper;
 import com.iplusplus.service.ExamService;
 
 @RestController
@@ -35,10 +31,13 @@ import com.iplusplus.service.ExamService;
 public class ExamController {
 	
 	private static final Logger logger = LogManager.getLogger(ExamController.class);
-	@Value("${exam.time.minutes}")
-    private Integer examTimeMins;
-    @Autowired
-    private ExamService examService;
+    private final ExamService examService;
+    private final FactoryHelper factoryHelper;
+    
+    public ExamController(ExamService examService, FactoryHelper factoryHelper) {
+    	this.examService = examService;
+    	this.factoryHelper = factoryHelper;
+    }
     
     @GetMapping
     public List<Exam> getAllExams() {
@@ -49,16 +48,18 @@ public class ExamController {
     public Map<String, Object> getExam(@PathVariable("id") Integer examId, HttpServletRequest request) {
     	final Exam exam = examService.getExam(examId);
     	final List<Question> questions = examService.getQuestionsForExam(exam.getId());
-    	final ExamResult examResult = new ExamResult();
+    	final ExamTime examTime = factoryHelper.makeExamTime();
+    	final ExamResult examResult = factoryHelper.makeExamResult();
     	examResult.setExam(exam);
-    	examResult.setStartTime(new ExamTime(Clock.systemDefaultZone()).getTime());
+    	examResult.setStartTime(examTime.getTime());
     	examResult.setQuestionCount(questions.size());
     	request.getSession().setAttribute("examStarted", examResult.getStartTime());
         final int resultId = examService.createExamResult(examResult);
+        final ExamResultDTO examResultDto = factoryHelper.makeExamResultDto(resultId, examId);
         final Map<String, Object> model = new HashMap<>();
         model.put("name", exam.getName());
-        model.put("timer", getRemainingTime(request));
-        model.put("result", new ExamDTO(resultId, examId));
+        model.put("timer", examTime.getRemainingTime(request, "examStarted"));
+        model.put("result", examResultDto);
         return model;
     }
 
@@ -73,7 +74,7 @@ public class ExamController {
     }
 
     @PostMapping("/save")
-    ResponseEntity<ExamResult> submitResult(@RequestBody ExamDTO frm, HttpServletRequest request) {
+    ResponseEntity<ExamResult> submitResult(@RequestBody ExamResultDTO frm, HttpServletRequest request) {
         logger.info("Submit: {}", frm.getAnswers());
         final ExamResult examResult = examService.getExamResult(frm.getId());
         examResult.setFinishTime(new ExamTime(Clock.systemDefaultZone()).getTime());
@@ -86,10 +87,4 @@ public class ExamController {
         return ResponseEntity.ok(examService.getExamStats(resultId));
     }
 
-    private int getRemainingTime(HttpServletRequest request) {
-    	LocalDateTime time = (LocalDateTime) (request.getSession().getAttribute("examStarted"));
-    	final long start = time.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
-        return  (int) ((examTimeMins * 60) - ((Calendar.getInstance().getTimeInMillis() - start) / 1000));
-    }
-    
 }
