@@ -12,7 +12,6 @@ export class UserAuthService {
         clientId: '0oafq6phv12Mm9wPO0h7',
         redirectUri: 'http://localhost:4200/implicit/callback',
         idps:[
-              { type: 'facebook', id: '0oaglg0lnqaf72qW30h7'},
               { type: 'google', id: '0oagd0ibny90jyqOw0h7' },
               { type: 'linkedin', id: '0oaglfby91NfRNB1U0h7'}
             ],
@@ -20,7 +19,6 @@ export class UserAuthService {
         i18n: {
             en: {
                 'primaryauth.title': 'Sign In With',
-                'socialauth.facebook.label': 'Facebook',
                 'socialauth.google.label': 'Google',
                 'socialauth.linkedin.label': 'Linkedin'
             }

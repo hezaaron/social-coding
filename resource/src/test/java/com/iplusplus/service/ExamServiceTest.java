@@ -20,7 +20,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.iplusplus.ResourceApplication;
 import com.iplusplus.entity.Answer;
 import com.iplusplus.entity.Exam;
 import com.iplusplus.entity.ExamResult;
@@ -34,7 +33,7 @@ import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = {ResourceApplication.class})
+@SpringBootTest
 class ExamServiceTest {
 
 	@InjectMocks ExamService examService;
