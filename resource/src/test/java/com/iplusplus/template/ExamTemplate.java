@@ -20,11 +20,11 @@ public class ExamTemplate implements TemplateLoader {
 	@Override
 	public void load() {
 		Fixture.of(Exam.class).addTemplate("valid", new Rule() {{
-			add("id", random(Integer.class, range(1, 100)));
+			add("id", sequence(Integer.class));
 			add("name", random("Beginner Java", "Intermediate Java", "Advance Java"));
 			add("description", "${name} exam");
 		}}).addTemplate("examId", new Rule() {{
-			add("id", random(Integer.class, range(1, 100)));
+			add("id", sequence(Integer.class));
 		}});
 		
 		Fixture.of(Question.class).addTemplate("valid", new Rule() {{
@@ -34,12 +34,12 @@ public class ExamTemplate implements TemplateLoader {
 			add("code", random("System.out.print('Hello World');", "System.out.print('Welcome Java');"));
 			add("multiAnswer", random(true, false));
 		}}).addTemplate("questionId", new Rule() {{
-			add("id", random(Integer.class, range(1, 50)));
+			add("id", sequence(Integer.class));
 		}});
 		
 		Fixture.of(Answer.class).addTemplate("valid", new Rule() {{
 			add("id", random(Integer.class, range(1, 100)));
-			add("question", one(Question.class, "questionId"));
+			add("question", one(Question.class, "valid"));
 			add("name", random("Hello World", "Welcome Java"));
 			add("correct", true);
 		}}).addTemplate("answerId", new Rule() {{
@@ -48,7 +48,7 @@ public class ExamTemplate implements TemplateLoader {
 		
 		Fixture.of(ExamResult.class).addTemplate("valid", new Rule() {{
 			add("id", random(Integer.class, range(1, 100)));
-			add("exam", one(Exam.class, "valid"));
+			add("exam", one(Exam.class, "examId"));
 			add("startTime", examTime.getTime());
 			add("finishTime", examTime.getTime().plusMinutes(2));
 			add("questionCount", 5);

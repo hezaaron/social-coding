@@ -51,14 +51,14 @@ public class ExamController {
     	final ExamTime examTime = factoryHelper.makeExamTime();
     	final ExamResult examResult = factoryHelper.makeExamResult();
     	examResult.setExam(exam);
-    	examResult.setStartTime(examTime.getTime());
+    	examResult.setStartTime(new ExamTime(Clock.systemDefaultZone()).getTime());
     	examResult.setQuestionCount(questions.size());
     	request.getSession().setAttribute("examStarted", examResult.getStartTime());
         final int resultId = examService.createExamResult(examResult);
         final ExamResultDTO examResultDto = factoryHelper.makeExamResultDto(resultId, examId);
         final Map<String, Object> model = new HashMap<>();
         model.put("name", exam.getName());
-        model.put("timer", examTime.getRemainingTime(request, "examStarted"));
+        model.put("timer", examTime.getRemainingTime(request));
         model.put("result", examResultDto);
         return model;
     }
@@ -86,4 +86,5 @@ public class ExamController {
     ResponseEntity <Map<String,Object>> getExamStats(@PathVariable("id") Integer resultId) {
         return ResponseEntity.ok(examService.getExamStats(resultId));
     }
+    
 }

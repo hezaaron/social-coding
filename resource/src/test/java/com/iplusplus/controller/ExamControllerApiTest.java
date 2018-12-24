@@ -3,12 +3,11 @@ package com.iplusplus.controller;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -35,7 +34,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.iplusplus.ResourceApplication;
 import com.iplusplus.dto.ExamResultDTO;
 import com.iplusplus.entity.Answer;
 import com.iplusplus.entity.Exam;
@@ -50,7 +48,7 @@ import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = {ResourceApplication.class})
+@SpringBootTest
 public class ExamControllerApiTest {
 
 	private MockMvc mockMvc;
@@ -97,7 +95,7 @@ public class ExamControllerApiTest {
 		given(factoryHelper.makeExamResult()).willReturn(examResult);
 		given(factoryHelper.makeExamResultDto(anyInt(), anyInt())).willReturn(examResultDto);
 		given(request.getSession()).willReturn(session);
-		given(examTime.getRemainingTime(any(), anyString())).willReturn(remainingTime);
+		given(examTime.getRemainingTime(any())).willReturn(remainingTime);
 		given(examService.createExamResult(examResult)).willReturn(examResult.getId());
 		
 		mockMvc.perform(get("/testexams/{examId}", examId, request).accept(MediaType.APPLICATION_JSON))
