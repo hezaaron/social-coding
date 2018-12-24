@@ -13,12 +13,10 @@ import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.iplusplus.entity.Answer;
 import com.iplusplus.entity.Exam;
@@ -32,7 +30,6 @@ import com.iplusplus.repository.QuestionRepository;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest
 class ExamServiceTest {
 
