@@ -10,7 +10,6 @@ import java.util.Map;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.iplusplus.entity.Answer;
@@ -25,17 +24,15 @@ import com.iplusplus.repository.ExamRepository;
 import com.iplusplus.repository.ExamResultRepository;
 import com.iplusplus.repository.QuestionRepository;
 
-@Service
+import lombok.RequiredArgsConstructor;
+
+@Service @RequiredArgsConstructor
 public class ExamService {
 	
-    @Autowired
-    private ExamRepository examRepository;
-    @Autowired
-    private QuestionRepository questionRepository;
-    @Autowired
-    private AnswerRepository answerRepository;
-    @Autowired
-    private ExamResultRepository resultRepository;
+    private final ExamRepository examRepository;
+    private final QuestionRepository questionRepository;
+    private final AnswerRepository answerRepository;
+    private final ExamResultRepository resultRepository;
 
     
     public List<Exam> getAllExams() {
