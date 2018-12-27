@@ -13,7 +13,6 @@ import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,16 +32,17 @@ import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 @SpringBootTest
 class ExamServiceTest {
 
-	@InjectMocks ExamService examService;
+	private ExamService examService;
 	@Mock ExamRepository examRepository;
 	@Mock QuestionRepository questionRepository;
-	@Mock ExamResultRepository resultRepository;
 	@Mock AnswerRepository answerRepository;
+	@Mock ExamResultRepository resultRepository;
 	
 	@BeforeEach
 	void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		FixtureFactoryLoader.loadTemplates("com.iplusplus.template");
+		examService = new ExamService(examRepository, questionRepository, answerRepository, resultRepository);
 	}
 	
 	@Test
