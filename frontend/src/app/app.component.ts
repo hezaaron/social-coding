@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { OktaAuthService, } from '@okta/okta-angular';
-import { UserAuthService } from './shared/okta/user.service';
 
 @Component({
   selector: 'app-root',
@@ -11,17 +10,17 @@ export class AppComponent {
   title = 'iplusplus Test Exams'
   isAuthenticated: boolean;
   isNavbarCollapsed = true;
-  user: any;
+  userName: string;
 
-  constructor(private oktaService: OktaAuthService, private userAuthService: UserAuthService) {
-   // Subscribe to authentication state changes
+  constructor(private oktaService: OktaAuthService) {
       this.oktaService.$authenticationState.subscribe((isAuthenticated: boolean)  => this.isAuthenticated = isAuthenticated);
   }
   
   async ngOnInit(){
       this.isAuthenticated = await this.oktaService.isAuthenticated();
       if(this.isAuthenticated) {
-          this.user = this.userAuthService.tokenAsUser;
+          const userClaims = await this.oktaService.getUser();
+          this.userName = userClaims.name;
       }
   }
   

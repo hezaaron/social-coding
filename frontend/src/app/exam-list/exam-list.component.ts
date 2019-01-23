@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ExamService } from '../shared/exam/exam.service';
+import { Exam } from '../model/exam';
 
 @Component({
   selector: 'app-exam-list',
@@ -7,8 +8,7 @@ import { ExamService } from '../shared/exam/exam.service';
   styleUrls: ['./exam-list.component.css']
 })
 export class ExamListComponent implements OnInit {
-    
-  exams: Array<any>;
+  exams: Array<Exam>;
 
   constructor(private examService: ExamService) { }
   
@@ -17,7 +17,7 @@ export class ExamListComponent implements OnInit {
   }
 
   async ngOnInit() {
-      this.examService.getAll().subscribe(data => {
+      this.examService.getExams().subscribe(data => {
           this.exams = data;
       },
       error => console.error(error));

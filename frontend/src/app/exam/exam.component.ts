@@ -12,16 +12,15 @@ import { Option } from '../model/option';
   templateUrl: './exam.component.html',
   styleUrls: ['./exam.component.css']
 })
-export class ExamComponent implements OnInit, OnDestroy {
-  sub: Subscription;
+export class ExamComponent implements OnInit {
   examId: string;
   examName: string;
   counter: number;
   examQuestions: Array<any>;
   filteredQuestion: Array<any>;
-  questionOptions: Array<Option>;
+  options: Array<Option>;
   pager = {index: 0, size: 1, count: 1};
-  userAnswers: any[] = [];
+  userAnswers: number[] = [];
   resultForm: FormGroup;
   optionIndex: number;
   countDown: any;
@@ -37,15 +36,13 @@ export class ExamComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-      this.sub = this.route.params.subscribe(params => {
-          const id = params['id'];
-          if(id) {
-              this.examId = id;
-          }else {
-             console.log(`Exam with id '${id}' not found, returning to list`);
-             this.router.navigate(['/testexams']);
-          }
-      })
+      const id = this.route.snapshot.paramMap.get('id');
+      if(id) {
+          this.examId = id;
+      }else {
+         console.log(`Exam with id '${id}' not found, returning to list`);
+         this.router.navigate(['/testexams']);
+      }
       
       this.examService.getExam(this.examId).subscribe(data => {
           const exam = data;
@@ -60,12 +57,12 @@ export class ExamComponent implements OnInit, OnDestroy {
   }
   
   optionClicked() {
-      this.questionOptions[this.optionIndex].selected = true;
+      this.options[this.optionIndex].selected = true;
   }
   
   getUserAnswer(){
       let answer = 0;
-      this.questionOptions.forEach((x) => { if(x.selected) answer = x.id;});
+      this.options.forEach((x) => { if(x.selected) answer = x.id;});
       this.userAnswers.push(answer);
       this.optionIndex = null;
   }
@@ -83,13 +80,7 @@ export class ExamComponent implements OnInit, OnDestroy {
   loadQuestionOptions() {
       if(this.filteredQuestion) {
           this.examService.getAnswers(this.filteredQuestion[0].id).subscribe(data => {
-              let option = data;
-              this.questionOptions = [
-                    new Option(option[0]),
-                    new Option(option[1]),
-                    new Option(option[2]),
-                    new Option(option[3])
-                    ];
+              this.options = data;
           },
          error => console.error(error));
       }
@@ -133,10 +124,6 @@ export class ExamComponent implements OnInit, OnDestroy {
   
   private viewResult(id: number) {
       this.router.navigate(['/resultstat', id]);
-  }
-  
-  ngOnDestroy() {
-    this.sub.unsubscribe();
   }
   
 }

@@ -14,9 +14,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
-import { ExamService } from './shared/exam/exam.service';
 import { AuthInterceptor } from './shared/okta/auth.interceptor';
-import { UserAuthService } from './shared/okta/user.service';
 import { ExamListComponent } from './exam-list/exam-list.component';
 import { ExamComponent } from './exam/exam.component';
 import { FormatTimePipe } from './shared/pipes/format-time.pipe';
@@ -27,8 +25,9 @@ export function onAuthRequired({oktaAuth, router}) {
 
 const oktaConfig = {
     issuer: 'https://dev-193618.oktapreview.com/oauth2/default',
-    clientId: '0oafq6phv12Mm9wPO0h7',
-    redirectUri: 'http://localhost:4200/implicit/callback'
+    clientId: '0oaj268wh6uRIKLy50h7',
+    redirectUri: 'http://localhost:4200/implicit/callback',
+    scope: 'openid profile email'
 }
 
 const appRoutes: Routes = [
@@ -62,7 +61,6 @@ const appRoutes: Routes = [
     MDBBootstrapModule.forRoot()
   ],
   providers: [
-    ExamService, UserAuthService,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
