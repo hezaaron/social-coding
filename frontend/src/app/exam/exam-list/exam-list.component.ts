@@ -8,7 +8,7 @@ import { Observable } from "rxjs";
       <div class="container">
         <h4 class="text-sm-center text-info">Exams List</h4>
         <div class="py-sm-5 px-sm-4 mt-4">
-            <div *ngIf="!exams">Loading...</div>
+            <div *ngIf="!(exams | async)">Loading...</div>
             <div style="border-bottom: 1px solid #C6C6C6" *ngFor="let exam of exams | async; trackBy: trackById"> 
                 <h6><a [routerLink]="[exam.id]">{{exam.name}}</a></h6>
                 <p>{{exam.description}}</p>
