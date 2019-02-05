@@ -16,11 +16,13 @@ To run the server, cd into the 'backend' folder and run either of the commands b
 -- cmd --
 
 `mvnw test`	(optional) to run test
+
 `mvnw spring-boot:run`
 
 -- bash --
 
 `./mvnw test`	(optional) to run test
+
 `./mvnw spring-boot:run`
 
 To run the client, cd into the 'frontend' folder and run:
@@ -31,7 +33,7 @@ To run the client, cd into the 'frontend' folder and run:
 
 `npm start`
 
-Fire up a web browser and goto `http://localhost:4200` You will be directed to a login page.
+Fire up a web browser and navigate to `http://localhost:4200` You will be directed to a login page.
 
 username: hezaaron+01@gmail.com
 
