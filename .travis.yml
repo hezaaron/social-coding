@@ -1,0 +1,25 @@
+language: node_js
+node_js:
+  - "10.15.0"
+cache:
+  directories:
+    - "frontend/node_modules"
+addons:
+  chrome: stable
+branches:
+  only:
+    - master
+before_install: cd frontend
+install:
+  - npm install
+before_script: cd frontend
+script:
+  - npm lint
+  #run unit tests
+  - npm test_headless
+  #update Protractor and selenium inluding chromeDriver
+  - npm webdriver-update
+  #launch Selenium standalone in the background
+  - npm webdriver-start
+  #run Protractor E2E tests
+  - npm e2e_headless

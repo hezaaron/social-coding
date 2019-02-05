@@ -14,6 +14,9 @@ import { LoginComponent } from "src/app/login/login.component";
 import { AuthInterceptor } from "src/app/login/auth.interceptor";
 import { ExamPaperComponent } from "src/app/exam/exam-paper/exam-paper.component";
 import { ExamResultsComponent } from "src/app/exam/exam-results/exam-results.component";
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 export function onAuthRequired({oktaAuth, router}) {
     router.navigate(['/login']);
@@ -31,6 +34,8 @@ const appRoutes: Routes = [{
         }, {
         path: 'implicit/callback', component: OktaCallbackComponent
         },{
+        path: '**', component: PageNotFoundComponent
+        },{
         path: '', pathMatch: 'full', redirectTo: '/testexams'
         }, {
         path: 'testexams', component: ExamListComponent, canActivate: [ OktaAuthGuard ], data: {onAuthRequired}
@@ -43,7 +48,8 @@ const appRoutes: Routes = [{
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +58,8 @@ const appRoutes: Routes = [{
     OktaAuthModule.initAuth(oktaConfig),
     ExamModule,
     NgbModule.forRoot(),
-    MDBBootstrapModule.forRoot()
+    MDBBootstrapModule.forRoot(),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}

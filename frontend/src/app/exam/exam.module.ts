@@ -10,8 +10,9 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HighlightModule } from 'ngx-highlightjs';
 import { ConfirmationPopoverModule } from "angular-confirmation-popover";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
-import { AuthInterceptor } from "src/app/login/auth.interceptor";
+import { AuthInterceptor } from "../login/auth.interceptor";
 import { RouterModule } from "@angular/router";
+import { ExamsComponent } from "../exam/exams.component";
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { RouterModule } from "@angular/router";
     ExamListComponent,
     ExamPaperComponent,
     FormatTimePipe,
-    ExamResultsComponent
+    ExamResultsComponent,
+    ExamsComponent
   ],
   providers: [
     ExamService,

@@ -1,0 +1,45 @@
+{
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "resources": {
+        "files": [
+          "/favicon.ico",
+          "/index.html",
+          "/*.css",
+          "/*.js"
+        ],
+        "urls": [
+          "//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/googlecode.min.css",
+          "cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"
+        ]
+      }
+    }, {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/assets/**",
+          "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"
+        ]
+      }
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "testexams",
+      "urls": [
+        "http://localhost:8080/testexams"
+      ],
+      "cacheConfig": {
+        "maxSize": 5,
+        "maxAge": "5h",
+        "timeout": "10s",
+        "strategy": "freshness"
+      }
+    }
+  ]
+}
