@@ -6,7 +6,7 @@ import { ExamService } from "src/app/exam/service/exam.service";
   selector: 'app-exam-results',
   template: `
       <div class="container">
-          <div *ngIf="!stats">Loading...</div>
+          <div *ngIf="!stats">Loading results...</div>
           <div *ngIf="stats">
               <h5 class="text-sm-center blue-grey-text">{{stats.title}}</h5>
               <div class="mt-4">

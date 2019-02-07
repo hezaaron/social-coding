@@ -13,7 +13,7 @@
         ],
         "urls": [
           "//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/googlecode.min.css",
-          "cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"
+          "//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"
         ]
       }
     }, {
@@ -30,9 +30,10 @@
   ],
   "dataGroups": [
     {
-      "name": "testexams",
+      "name": "local-api",
       "urls": [
-        "http://localhost:8080/testexams"
+        "http://localhost:8080/**",
+        "https://iplusplus-server-delightful-kob.cfapps.io/**"
       ],
       "cacheConfig": {
         "maxSize": 5,

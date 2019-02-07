@@ -22,19 +22,17 @@ export function onAuthRequired({oktaAuth, router}) {
     router.navigate(['/login']);
 }
 
+const redirectUri = `${environment.redirectUri}`;
+
 const oktaConfig = {
     issuer: 'https://dev-193618.oktapreview.com/oauth2/default',
     clientId: '0oaj268wh6uRIKLy50h7',
-    redirectUri: 'http://localhost:4200/implicit/callback',
+    redirectUri: `${redirectUri}/implicit/callback`,
     scope: 'openid profile email'
 }
 
 const appRoutes: Routes = [{
         path: 'login', component: LoginComponent
-        }, {
-        path: 'implicit/callback', component: OktaCallbackComponent
-        },{
-        path: '**', component: PageNotFoundComponent
         },{
         path: '', pathMatch: 'full', redirectTo: '/testexams'
         }, {
@@ -43,6 +41,10 @@ const appRoutes: Routes = [{
         path: 'testexams/:id', component: ExamPaperComponent, canActivate: [ OktaAuthGuard ], data: {onAuthRequired}
         }, {
         path: 'resultstat/:id', component: ExamResultsComponent, canActivate: [ OktaAuthGuard ], data: {onAuthRequired}
+        }, {
+          path: 'implicit/callback', component: OktaCallbackComponent
+        }, {
+        path: '**', component: PageNotFoundComponent
 }]
 
 @NgModule({

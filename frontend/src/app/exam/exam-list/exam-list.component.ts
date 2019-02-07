@@ -9,7 +9,7 @@ import { Exam } from "src/app/exam/model/exam";
       <div class="container">
         <h4 class="text-sm-center text-info">Exams List</h4>
         <div class="py-sm-5 px-sm-4 mt-4">
-          <div *ngIf="isLoading">{{loadingExams}}</div>
+          <div *ngIf="!(exams | async)">Loading test exams...</div>
           <div style="border-bottom: 1px solid #C6C6C6" *ngFor="let exam of exams | async; trackBy: trackById"> 
             <h6><a [routerLink]="[exam.id]">{{exam.name}}</a></h6>
             <p>{{exam.description}}</p>
@@ -19,8 +19,6 @@ import { Exam } from "src/app/exam/model/exam";
 } )
 
 export class ExamListComponent implements OnInit {
-	public loadingExams = 'Loading test exams...';
-	public isLoading = true;
 	@Input( 'exams' ) exams: Observable<Exam[]>;
 
 	constructor( private examService: ExamService ) { }
@@ -30,11 +28,6 @@ export class ExamListComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.getExams();
-	}
-
-	public getExams(): void {
-		this.isLoading = false;
 		this.exams = this.examService.getExams();
 	}
 

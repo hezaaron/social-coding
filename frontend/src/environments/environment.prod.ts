@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:8080/testexams'
+  redirectUri: 'https://iplusplus-client-excellent-otter.cfapps.io',
+  apiUrl: 'https://iplusplus-server-delightful-kob.cfapps.io/testexams'
 };

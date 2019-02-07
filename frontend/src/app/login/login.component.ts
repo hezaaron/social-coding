@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { OktaAuthService } from '@okta/okta-angular';
 import * as OktaSignIn from '@okta/okta-signin-widget/dist/js/okta-sign-in-no-jquery';
+import { environment } from "src/environments/environment";
+
+const redirectUri = `${environment.redirectUri}`;
 
 @Component({
     selector: 'app-secure',
@@ -8,7 +11,7 @@ import * as OktaSignIn from '@okta/okta-signin-widget/dist/js/okta-sign-in-no-jq
                    <div class="intro">
                        <h5 class="text-sm-center">iplusplus Exam Maker</h5>
                        <p class="mt-2">iplusplus exams are multiple choice coding questions that will help you 
-                          prepare for your java technical interview and make a good impression.</p>
+                          prepare for your technical interview and make a good impression.</p>
                    </div>
                </div>`
 })
@@ -18,7 +21,7 @@ export class LoginComponent {
     signIn = new OktaSignIn({
                 baseUrl: 'https://dev-193618.oktapreview.com',
                 clientId: '0oaj268wh6uRIKLy50h7',
-                redirectUri: 'http://localhost:4200/implicit/callback',
+                redirectUri: `${redirectUri}/implicit/callback`,
                 authParams: {
                     scope: ['openid', 'profile', 'email']
                 }
