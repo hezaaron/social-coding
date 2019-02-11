@@ -2,26 +2,25 @@ matrix:
   include:
     - language: java
       jdk: oraclejdk8
-      before_script:
-        - cd backend
+      before_install:
+      - cd backend && chmod +x mvnw
       script:
         - ./mvnw test
     - language: node_js
       node_js:
         - "node"
       before_script:
-        - cd frontend
-        - npm install
+        - cd frontend && npm install
       cache:
         directories:
           - "node_modules"
       script:
-        - npm test_headless
+        - npm run test_headless
         #update Protractor and selenium inluding chromeDriver
-        #- npm webdriver-update
+        #- npm run webdriver-update
         #launch Selenium standalone in the background
-        #- npm webdriver-start
+        #- npm run webdriver-start
         #run Protractor E2E tests
-        #- npm e2e_headless
+        #- npm run e2e_headless
 notifications:
   email: false

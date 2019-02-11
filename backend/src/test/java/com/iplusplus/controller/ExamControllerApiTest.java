@@ -182,8 +182,6 @@ public class ExamControllerApiTest {
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$").isMap())
 				.andExpect(jsonPath("$.title").value(Matchers.any(String.class)))
-				.andExpect(jsonPath("$.startTime").value("11:30:30"))
-				.andExpect(jsonPath("$.finishTime").value("11:32:30"))
 				.andExpect(jsonPath("$.questionCount").value(5))
 				.andExpect(jsonPath("$.grade").value(Matchers.any(Integer.class)))
 				.andExpect(jsonPath("$.maxGrade").value(100));

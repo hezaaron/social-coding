@@ -107,8 +107,7 @@ class ExamServiceTest {
 		ExamResult examResult = examService.updateExamResult(fixtureResult);
 		assertAll("examResult",
 				() -> assertNotNull(examResult),
-				() -> assertNotNull(examResult.getExam()),
-				() -> assertEquals("2018-12-06T11:30:30", examResult.getStartTime().toString()));
+				() -> assertNotNull(examResult.getExam()));
 	}
 	
 	@Test
@@ -119,7 +118,6 @@ class ExamServiceTest {
 		ExamResult examResult = examService.getExamResult(resultId);
 		assertAll("examResult",
 				() -> assertNotNull(examResult),
-				() -> assertEquals("2018-12-06T11:32:30", examResult.getFinishTime().toString()),
 				() -> assertEquals(5, (int)examResult.getQuestionCount()),
 				() -> assertNotNull(examResult.getGrade()));
 	}
@@ -132,8 +130,6 @@ class ExamServiceTest {
 		assertAll("stats",
 				() -> assertFalse(stats.isEmpty()),
 				() -> assertNotNull(stats.get("title")),
-				() -> assertEquals("11:30:30", stats.get("startTime")),
-				() -> assertEquals("11:32:30", stats.get("finishTime")),
 				() -> assertEquals(5, stats.get("questionCount")));
 	}
 }

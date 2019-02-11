@@ -1,40 +1,42 @@
-## online-test-exam-maker
+# online-test-exam-maker
+[![Build Status](https://travis-ci.org/hezaaron/online-test-exam-maker.svg?branch=master)](https://travis-ci.org/hezaaron/online-test-exam-maker)
 
-To install the test-exam-maker app, run the following command:
+## To run the test-exam-maker project _locally_, _follow_ the instructions below:
 
-git clone https://github.com/hezaaron/online-test-exam-maker.git
+```sh
+git clone https://github.com/hezaaron/online-test-exam-maker.git && cd online-test-exam-maker
+```
 
-This will install a copy of the project on your system. To install its dependencies and start each app,
-follow the instructions below:
+This will install a copy of the project on your system.
 
-Change directory into the root folder with the command below:
+## Install dependencies and start each app:
 
-`cd online-test-exam-maker`
+### Run the server
 
-To run the server, cd into the 'backend' folder and run either of the commands below:
+```sh
+cd backend
+```
 
--- cmd --
+**_cmd_**
 
-`mvnw test`	(optional) to run test
+```sh
+mvnw spring-boot:run
+```
 
-`mvnw spring-boot:run`
+**_bash_**
 
--- bash --
+```sh
+./mvnw spring-boot:run
+```
 
-`./mvnw test`	(optional) to run test
+### Run the client
 
-`./mvnw spring-boot:run`
+```sh
+cd frontend && npm install
+npm start
+```
 
-To run the client, cd into the 'frontend' folder and run:
+Fire up a web browser and navigate to `http://localhost:4200` You will be directed to the login page.
 
-`npm install`
-
-`ng test`	(optional) to run test
-
-`npm start`
-
-Fire up a web browser and navigate to `http://localhost:4200` You will be directed to a login page.
-
-username: hezaaron+01@gmail.com
-
-password: h326Otaa
+> username: hezaaron+01@gmail.com
+> password: h326Otaa
