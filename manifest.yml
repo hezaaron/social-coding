@@ -1,0 +1,15 @@
+---
+applications:
+- name: iplusplus-server
+  host: iplusplus-server
+  path: ./backend/target/backend-0.0.1-SNAPSHOT.jar
+  instances: 1
+  env:
+    FORCE-HTTPS: true
+
+- name: iplusplus
+  host: iplusplus
+  path: ./frontend/dist/frontend/
+  instance: 1
+  env:
+    FORCE-HTTPS: true

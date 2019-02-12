@@ -14,7 +14,8 @@ export class AuthInterceptor implements HttpInterceptor {
       }
 
       private async handleAccess(request: HttpRequest<any>, next: HttpHandler): Promise<HttpEvent<any>> {
-        if (request.urlWithParams.indexOf('localhost') > -1) {
+      	const isAuthenticated = await this.oktaService.isAuthenticated();
+        if (isAuthenticated) {
           const accessToken = await this.oktaService.getAccessToken();
           request = request.clone({
             setHeaders: {

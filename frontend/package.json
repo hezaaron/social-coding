@@ -8,7 +8,6 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    
     "test_headless": "ng test --watch false --browsers ChromeHeadless",
     "webdriver-start": "webdriver-manager start &",
     "webdriver-update": "webdriver-manager update",

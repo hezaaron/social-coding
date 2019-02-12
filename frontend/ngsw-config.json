@@ -33,7 +33,7 @@
       "name": "local-api",
       "urls": [
         "http://localhost:8080/**",
-        "https://iplusplus-server-delightful-kob.cfapps.io/**"
+        "https://iplusplus-server.cfapps.io/**"
       ],
       "cacheConfig": {
         "maxSize": 5,
