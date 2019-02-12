@@ -1,8 +1,9 @@
 # online-test-exam-maker
 [![Build Status](https://travis-ci.org/hezaaron/online-test-exam-maker.svg?branch=master)](https://travis-ci.org/hezaaron/online-test-exam-maker)
 
-The ***test-exam-maker*** **app** is still *being* *developed*, but has been deployed to cloud foundry. 
-You check it out on the website: https://iplusplus.cfapps.io and login:
+The ***test-exam-maker*** **app** is still *being* *developed*, but has been deployed to Cloud Foundry. 
+You can check it out on the website: https://iplusplus.cfapps.io and login:
+
 > username: hezaaron+01@gmail.com
 > password: h326Otaa
 
