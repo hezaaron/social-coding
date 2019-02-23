@@ -16,7 +16,7 @@ let page: Page;
 describe( 'ExamListComponent tests', () => {
 	beforeEach( async(() => {
 		TestBed.configureTestingModule( {
-			imports: [ExamModule, RouterModule.forRoot([])],
+			imports: [ExamModule, RouterModule.forRoot( [] )],
 			providers: [
 				{ provide: ExamService, useValue: examServiceStub },
 			],
@@ -35,14 +35,14 @@ describe( 'ExamListComponent tests', () => {
 		const actualExamName = page.examNameRows[0].textContent;
 		const actualExamDesc = page.examDescRows[0].textContent;
 		expect( actualExamName ).toContain( expectedExam.name, 'JavaScript Test Exam' );
-		expect(actualExamDesc).toContain(expectedExam.description, 'JavaScript Beginner Test');
+		expect( actualExamDesc ).toContain( expectedExam.description, 'JavaScript Beginner Test' );
 	} );
-	
-	it('should render route as /:id', fakeAsync(() => {
-		const link = fixture.debugElement.query(By.css('a')).nativeElement.getAttribute('href');
-		expect(link).toEqual('/1');
-	}));
-	
+
+	it( 'should render route as /:id', fakeAsync(() => {
+		const link = fixture.debugElement.query( By.css( 'a' ) ).nativeElement.getAttribute( 'href' );
+		expect( link ).toEqual( '/1' );
+	} ) );
+
 } );
 
 

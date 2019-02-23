@@ -6,23 +6,23 @@ import { OktaAuthService } from '@okta/okta-angular';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-    
-    constructor(private oktaService: OktaAuthService){}
-    
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        return Observable.fromPromise(this.handleAccess(request, next));
-      }
 
-      private async handleAccess(request: HttpRequest<any>, next: HttpHandler): Promise<HttpEvent<any>> {
-      	const isAuthenticated = await this.oktaService.isAuthenticated();
-        if (isAuthenticated) {
-          const accessToken = await this.oktaService.getAccessToken();
-          request = request.clone({
-            setHeaders: {
-              Authorization: 'Bearer ' + accessToken
-            }
-          });
-        }
-        return next.handle(request).toPromise();
-      }
+	constructor( private oktaService: OktaAuthService ) { }
+
+	intercept( request: HttpRequest<any>, next: HttpHandler ): Observable<HttpEvent<any>> {
+		return Observable.fromPromise( this.handleAccess( request, next ) );
+	}
+
+	private async handleAccess( request: HttpRequest<any>, next: HttpHandler ): Promise<HttpEvent<any>> {
+		const isAuthenticated = await this.oktaService.isAuthenticated();
+		if ( isAuthenticated ) {
+			const accessToken = await this.oktaService.getAccessToken();
+			request = request.clone( {
+				setHeaders: {
+					Authorization: 'Bearer ' + accessToken
+				}
+			} );
+		}
+		return next.handle( request ).toPromise();
+	}
 }

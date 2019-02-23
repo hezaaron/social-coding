@@ -1,25 +1,27 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ExamService } from "src/app/exam/service/exam.service";
-import { Observable } from "rxjs";
-import { Exam } from "src/app/exam/model/exam";
+import { ExamService } from '../service/exam.service';
+import { Observable } from 'rxjs';
+import { Exam } from '../model/exam';
 
 @Component( {
 	selector: 'app-exam-list',
 	template: `
       <div class="container">
-        <h4 class="text-sm-center text-info">Exams List</h4>
-        <div class="py-sm-5 px-sm-4 mt-4">
-          <div *ngIf="!(exams | async)">Loading test exams...</div>
-          <div style="border-bottom: 1px solid #C6C6C6" *ngFor="let exam of exams | async; trackBy: trackById"> 
+        <h4 class="text-sm-center text-info">Test Exams</h4>
+        <div class="py-sm-5 px-sm-4 mt-3">
+          <ng-container *ngIf="exams$ | async; else loading">
+          <div style="border-bottom: 1px solid #C6C6C6" *ngFor="let exam of exams$ | async; trackBy: trackById"> 
             <h6><a [routerLink]="[exam.id]">{{exam.name}}</a></h6>
             <p>{{exam.description}}</p>
           </div>
+          </ng-container>
+          <ng-template #loading>Loading test exams...</ng-template>
         </div>
-    </div>`
+      </div>`
 } )
 
 export class ExamListComponent implements OnInit {
-	@Input( 'exams' ) exams: Observable<Exam[]>;
+	@Input( 'exams' ) exams$: Observable<Exam[]>;
 
 	constructor( private examService: ExamService ) { }
 
@@ -28,7 +30,7 @@ export class ExamListComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.exams = this.examService.getExams();
+		this.exams$ = this.examService.getExams();
 	}
 
 }

@@ -8,41 +8,41 @@ import { Question } from "src/app/exam/model/question";
 
 const baseUrl = `${environment.apiUrl}`;
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable( {
+	providedIn: 'root'
+} )
 export class ExamService {
 
-  private examResultId = new BehaviorSubject<number>(0);
-  resultId = this.examResultId.asObservable();
-  
-  constructor(private http: HttpClient) { }
-  
-  updateResultId(id: number) {
-      this.examResultId.next(id);
-  }
-  
-  getExams() : Observable<Array<Exam>> {
-      return this.http.get<Exam[]>(baseUrl);
-  }
-  
-  getExam(id: string) : Observable<any> {
-      return this.http.get(`${baseUrl}/${id}`);
-  }
-  
-  getQuestions(id: string) : Observable<Array<Question>> {
-      return this.http.get<Array<Question>>(`${baseUrl}/questions/${id}`);
-  }
-  
-  getAnswers(id: number) : Observable<Array<Option>> {
-      return this.http.get<Array<Option>>(`${baseUrl}/answers/${id}`);
-  }
-  
-  postAnswers(userAnswer: any) : Observable<any> {
-      return this.http.post(`${baseUrl}/save`, userAnswer);
-  }
+	private examResultId = new BehaviorSubject<number>( 0 );
+	resultId = this.examResultId.asObservable();
 
-  getExamStat(id: number) : Observable<any> {
-      return this.http.get(`${baseUrl}/result/${id}`);
-  }
+	constructor( private http: HttpClient ) { }
+
+	getExams(): Observable<Array<Exam>> {
+		return this.http.get<Exam[]>( baseUrl );
+	}
+
+	getExam( id: number ): Observable<any> {
+		return this.http.get( `${baseUrl}/${id}` );
+	}
+
+	getQuestions( id: number ): Observable<Array<Question>> {
+		return this.http.get<Array<Question>>( `${baseUrl}/questions/${id}` );
+	}
+
+	getAnswers( id: number ): Observable<Array<Option>> {
+		return this.http.get<Array<Option>>( `${baseUrl}/answers/${id}` );
+	}
+
+	postAnswers( userAnswer: any ): Observable<any> {
+		return this.http.post( `${baseUrl}/save`, userAnswer );
+	}
+
+	getExamStat( id: number ): Observable<any> {
+		return this.http.get( `${baseUrl}/result/${id}` );
+	}
+
+	updateResultId( id: number ) {
+		this.examResultId.next( id );
+	}
 }

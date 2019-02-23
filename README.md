@@ -1,8 +1,10 @@
 # online-test-exam-maker
 [![Build Status](https://travis-ci.org/hezaaron/online-test-exam-maker.svg?branch=master)](https://travis-ci.org/hezaaron/online-test-exam-maker)
 
-The ***test-exam-maker*** **app** is still *being* *developed*, but has been deployed to Cloud Foundry. 
-You can check it out on the website: https://iplusplus.cfapps.io and login:
+The ***test-exam-maker*** **app** is still *being* *developed*, but has been deployed on Pivotal Web Service.
+You can check it out on the website: https://iplusplus.cfapps.io
+
+***_login_*** with the following credentials:
 
 > username: hezaaron+01@gmail.com
 > password: h326Otaa
@@ -44,7 +46,4 @@ npm start
 
 Fire up a web browser and navigate to `http://localhost:4200`. You will be redirected to the login page.
 
-***_Use_*** the credentials below to login:
-
-> username: hezaaron+01@gmail.com
-> password: h326Otaa
+***_Use_*** the credentials above to login:
