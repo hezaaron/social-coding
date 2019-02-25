@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OktaAuthService } from '@okta/okta-angular';
-import * as OktaSignIn from '@okta/okta-signin-widget/dist/js/okta-sign-in-no-jquery';
+import * as OktaSignIn from '@okta/okta-signin-widget/dist/js/okta-sign-in.min';
 import { environment } from '../../environments/environment';
 
 const redirectUri = `${environment.redirectUri}`;
@@ -24,7 +24,10 @@ export class LoginComponent {
 		clientId: '0oaj268wh6uRIKLy50h7',
 		redirectUri: `${redirectUri}/implicit/callback`,
 		authParams: {
-			scope: ['openid', 'profile', 'email']
+			responseType: ['id_token', 'token'],
+			issuer: 'https://dev-193618.oktapreview.com/oauth2/default',
+			display: 'page',
+			scopes: ['openid', 'profile', 'email']
 		}
 	} );
 

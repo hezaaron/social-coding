@@ -21,7 +21,7 @@ const oktaConfig = {
 	issuer: 'https://dev-193618.oktapreview.com/oauth2/default',
 	clientId: '0oaj268wh6uRIKLy50h7',
 	redirectUri: `${redirectUri}/implicit/callback`,
-	scope: 'openid profile email'
+	scopes: 'openid profile email'
 }
 
 @NgModule( {
