@@ -1,5 +1,5 @@
-import { Observable, of } from "rxjs";
-import { Exam } from "src/app/exam/model/exam";
+import { Observable, of } from 'rxjs';
+import { Exam } from '../../exam/model/exam';
 
 export const examServiceStub = {
 	examsList: [{

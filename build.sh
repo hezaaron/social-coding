@@ -10,7 +10,7 @@ sed -i -e "s|http://localhost:4200|https://iplusplus.cfapps.io|g" $start/backend
 cd $start/frontend
 rm -rf dist
 
-npm install && ng build --prod
+npm install && ng build --prod --aot
 cd dist/frontend
 touch Staticfile
 echo "pushstate: enabled" >> Staticfile

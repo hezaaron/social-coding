@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Exam } from "src/app/exam/model/exam";
+import { Exam } from './model/exam';
 
 @Component( {
 	selector: 'app-exams',

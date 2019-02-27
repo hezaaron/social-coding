@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
-import { FormGroup, FormBuilder } from "@angular/forms";
-import { ExamService } from "src/app/exam/service/exam.service";
-import { timer, Observable } from "rxjs";
-import { take, map } from "rxjs/operators";
-import { Option } from "src/app/exam/model/option";
-import { Question } from "src/app/exam/model/question";
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { ExamService } from '../service/exam.service';
+import { timer, Observable } from 'rxjs';
+import { take, map } from 'rxjs/operators';
+import { Option } from '../model/option';
+import { Question } from '../model/question';
 
 @Component( {
 	selector: 'app-exam',
