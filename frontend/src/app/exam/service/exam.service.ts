@@ -18,7 +18,7 @@ export class ExamService {
 
 	constructor( private http: HttpClient ) { }
 
-	getExams(): Observable<Array<Exam>> {
+	getExams(): Observable<Exam[]> {
 		return this.http.get<Exam[]>( baseUrl );
 	}
 
@@ -26,12 +26,12 @@ export class ExamService {
 		return this.http.get( `${baseUrl}/${id}` );
 	}
 
-	getQuestions( id: number ): Observable<Array<Question>> {
-		return this.http.get<Array<Question>>( `${baseUrl}/questions/${id}` );
+	getQuestions( id: number ): Observable<Question[]> {
+		return this.http.get<Question[]>( `${baseUrl}/questions/${id}` );
 	}
 
-	getAnswers( id: number ): Observable<Array<Option>> {
-		return this.http.get<Array<Option>>( `${baseUrl}/answers/${id}` );
+	getExamAnswers( id: number ): Observable<Option[]> {
+		return this.http.get<Option[]>( `${baseUrl}/exam-answers/${id}` );
 	}
 
 	postAnswers( userAnswer: any ): Observable<any> {

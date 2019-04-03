@@ -8,7 +8,7 @@
     <div>Remaining time: <span>{{countDown | async | formatTime}}</span></div>
 	<h6>{{pager.index + 1}}. <span>{{question.name}}</span></h6>
 	<pre><code class="border border-secondary rounded" style="height: 350px" highlight [code]=question.code></code></pre>
-	<div class="form-check" *ngFor="let option of options; let i = index">
+	<div class="form-check" *ngFor="let option of filteredOptions; let i = index">
 		<label class="form-check-label">
 			<input class="form-check-input d-inline-block p-2" type="radio" name="optradio" [(ngModel)]="optionIndex"
 					[value]="i" (ngModelChange)="optionClicked();">

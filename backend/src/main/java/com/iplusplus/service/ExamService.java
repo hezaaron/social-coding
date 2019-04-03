@@ -29,7 +29,7 @@ import lombok.RequiredArgsConstructor;
 @Service @RequiredArgsConstructor
 public class ExamService {
 	
-    private final ExamRepository examRepository;
+	private final ExamRepository examRepository;
     private final QuestionRepository questionRepository;
     private final AnswerRepository answerRepository;
     private final ExamResultRepository resultRepository;
@@ -47,6 +47,10 @@ public class ExamService {
     	final List<Question> questions = questionRepository.findByExamId(examId);
     	final int questionSize = Mark.NUMBER_OF_QUESTION;
     	return new RandomQuestion(questions, questionSize).getList();
+    }
+    
+    public List<Answer> getAnswersForExam(int examId) {
+    	return answerRepository.findByQuestionExamId(examId);
     }
 
     public List<Answer> getAnswersForQuestion(int questionId) {

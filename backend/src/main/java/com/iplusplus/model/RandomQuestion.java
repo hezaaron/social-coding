@@ -1,6 +1,7 @@
 package com.iplusplus.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -8,11 +9,11 @@ import com.iplusplus.entity.Question;
 
 public final class RandomQuestion {
 
-	private List<Question> questions;
-	private int size;
+	private final List<Question> questions;
+	private final int size;
 	
 	public RandomQuestion(List<Question> questions, int size) {
-		this.questions = questions;
+		this.questions = Collections.unmodifiableList(questions);
 		this.size = size;
 	}
 	

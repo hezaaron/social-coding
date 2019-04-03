@@ -19,11 +19,12 @@ export class ExamPaperComponent implements OnInit {
 	counter: number;
 	examName: string;
 	examId: number;
-	options: Array<Option>;
-	optionIndex: number;
+	questions: Question[] = [];
 	pager = { index: 0, size: 1, count: 1 };
-	questions: Array<Question>
-	filteredQuestion: Array<Question>;
+	filteredQuestion: Question[] = [];
+	options: Option[] = [];
+	filteredOptions: Option[] = [];
+	optionIndex: number;
 	resultForm: FormGroup;
 	userAnswers: number[] = [];
 
@@ -45,6 +46,17 @@ export class ExamPaperComponent implements OnInit {
 		}
 
 		this.startExam();
+		this.loadOptions();
+	}
+	
+	loadOptions(): void {
+		this.examService.getExamAnswers( this.examId ).subscribe( data => {
+			const examOptions = data;
+			for(let i = 0; i < examOptions.length; i++) {
+				this.options[i] = new Option(examOptions[i]);
+			}
+			this.setOptions(this.filteredQuestion[0].id);
+		} );
 	}
 
 	startExam(): void {
@@ -54,24 +66,19 @@ export class ExamPaperComponent implements OnInit {
 			this.resultForm.setValue( exam.result );
 			this.startTimer();
 		} );
-		this.getQuestions();
+		this.setQuestions();
 	}
 
-	getQuestions(): void {
+	setQuestions(): void {
 		this.examService.getQuestions( this.examId ).subscribe( data => {
 			this.questions = data;
 			if ( this.questions ) this.pager.count = this.questions.length;
 			this.filteredQuestion = this.questions.slice( this.pager.index, this.pager.size );
-			this.getOptions();
 		} );
 	}
 
-	getOptions(): void {
-		if ( this.filteredQuestion ) {
-			this.examService.getAnswers( this.filteredQuestion[0].id ).subscribe( data => {
-				this.options = data;
-			} );
-		}
+	setOptions(id: number): void {
+		this.filteredOptions = this.options.filter( option => option.questionId === id );
 	}
 
 	startTimer(): void {
@@ -90,21 +97,21 @@ export class ExamPaperComponent implements OnInit {
 
 	nextQuestion( index: number ): void {
 		if ( index >= 0 && index < this.pager.count ) {
+			this.userAnswer();
 			this.pager.index = index;
 			this.pager.size++;
 			this.filteredQuestion = this.questions.slice( this.pager.index, this.pager.size );
-			this.getOptions();
-			this.userAnswer();
+			this.setOptions(this.filteredQuestion[0].id);
 		}
 	}
 
 	optionClicked(): void {
-		this.options[this.optionIndex].selected = true;
+		this.filteredOptions[this.optionIndex].selected = true;
 	}
 
 	userAnswer(): void {
 		let answer = 0;
-		this.options.forEach(( x ) => { if ( x.selected ) answer = x.id; } );
+		this.filteredOptions.forEach(( x ) => { if ( x.selected ) answer = x.id;} );
 		this.userAnswers.push( answer );
 		this.optionIndex = null;
 	}

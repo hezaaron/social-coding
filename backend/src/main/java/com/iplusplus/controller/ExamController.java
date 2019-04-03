@@ -67,6 +67,11 @@ public class ExamController {
     public List<Question> getQuestionsForExam(@PathVariable("id") Integer examId) {
         return examService.getQuestionsForExam(examId);
     }
+    
+    @GetMapping("/exam-answers/{id}")
+    public List<Answer> getAnswersForExam(@PathVariable("id") Integer examId) {
+        return examService.getAnswersForExam(examId);
+    }
 
     @GetMapping("/answers/{id}")
     public List<Answer> getAnswersForQuestion(@PathVariable("id") Integer questionId) {

@@ -8,15 +8,17 @@ import javax.persistence.Table;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Entity @Table(name="EXAM")
 @Data @EqualsAndHashCode(callSuper=false)
+@NoArgsConstructor(force = true)
 public final class Exam implements Comparable<Exam>{
 
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
-    private String name;
-    private String description;
+    private final String name;
+    private final String description;
 
 	@Override
 	public int compareTo(Exam exam) {
