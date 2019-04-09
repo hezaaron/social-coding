@@ -93,10 +93,10 @@ class ExamServiceTest {
 	}
 	
 	@Test
-	void testCreateExamResult() {
+	void testCreateExamResultId() {
 		ExamResult fixtureResult = Fixture.from(ExamResult.class).gimme("valid");
 		when(resultRepository.saveAndFlush(any())).thenReturn(fixtureResult);
-		Integer savedExamResult = examService.createExamResult(fixtureResult);
+		Integer savedExamResult = examService.createExamResultId(fixtureResult);
 		assertEquals(fixtureResult.getId(), savedExamResult);
 	}
 	

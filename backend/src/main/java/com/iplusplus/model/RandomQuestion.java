@@ -20,12 +20,10 @@ public final class RandomQuestion {
 	public List<Question> getList() {
     	final List<Question> randomQuestions = new ArrayList<>();
     	for(int i = 1; i <= size; i++) {
-    		int id  = getRandomId();
-    		questions.forEach(question -> {
-    			if(question.getId() == id) {
-    				randomQuestions.add(question);
-    			}
-    		});
+    		int id = getRandomId();
+    		questions.stream().filter(question -> question.getId() == id)
+    						  .findAny()
+    						  .ifPresent(question -> randomQuestions.add(question));
     	}
         return randomQuestions;
 	}

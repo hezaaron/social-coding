@@ -1,12 +1,13 @@
 package com.iplusplus.service;
 
+import java.time.Clock;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -16,6 +17,7 @@ import com.iplusplus.entity.Answer;
 import com.iplusplus.entity.Exam;
 import com.iplusplus.entity.ExamResult;
 import com.iplusplus.entity.Question;
+import com.iplusplus.model.ExamTime;
 import com.iplusplus.model.Grade;
 import com.iplusplus.model.Mark;
 import com.iplusplus.model.RandomQuestion;
@@ -36,7 +38,7 @@ public class ExamService {
 
     
     public List<Exam> getAllExams() {
-        return examRepository.findAll();
+    	return examRepository.findAll();
     }
     
     public Exam getExam(int examId) {
@@ -57,18 +59,19 @@ public class ExamService {
         return answerRepository.findByQuestionId(questionId);
     }
     
-    @Transactional
-    public int createExamResult(ExamResult result) {
-    	resultRepository.saveAndFlush(result);
-        return result.getId();
+    public ExamResult createExamResult(Exam exam) {
+    	final List<Question> questions = getQuestionsForExam(exam.getId());
+    	final ExamResult examResult = new ExamResult();
+    	examResult.setExam(exam);
+    	examResult.setStartTime(new ExamTime(Clock.systemDefaultZone()).getTime());
+    	examResult.setQuestionCount(questions.size());
+    	return examResult;
     }
     
-    public void computeGrade(ExamResult result, int examId, List<Integer> userAnswers) {
-        final List<Answer> correctAnswers = answerRepository.findByQuestionExamIdAndCorrect(examId, true);
-        final List<Integer> correctIds = new ArrayList<>();
-        correctAnswers.forEach(answer -> correctIds.add(answer.getId()));
-        final Grade grade = new Grade(result, correctIds, userAnswers);
-        grade.computeGrade();
+    @Transactional
+    public int createExamResultId(ExamResult result) {
+    	resultRepository.saveAndFlush(result);
+        return result.getId();
     }
     
     @Transactional
@@ -76,12 +79,16 @@ public class ExamService {
         return resultRepository.save(result);
     }
     
-    public ExamResult getExamResult(int resultId) {
-        return resultRepository.getOne(resultId);
+    public void computeGrade(ExamResult result, Integer examId, List<Integer> userAnswers) {
+        final List<Answer> correctAnswers = answerRepository.findByQuestionExamIdAndCorrect(examId, true);
+        final List<Integer> correctAnswerIds = correctAnswers.stream()
+	        												 .map(Answer::getId)
+	        												 .collect(Collectors.toList());
+        new Grade(result, correctAnswerIds, userAnswers).computeGrade();
     }
     
-    public Map<String,Object> getExamStats(final Integer resultId) {
-    	final ExamResult examResult = resultRepository.getOne(resultId);
+    public Map<String,Object> getExamStats(final int resultId) {
+    	final ExamResult examResult = getExamResult(resultId);
         final Map<String, Object> map = new HashMap<>();
         map.put("title", String.format("Your result for %s", examResult.getExam().getName()));
         map.put("startTime", getTimeFormat(examResult.getStartTime().toLocalTime()));
@@ -90,6 +97,10 @@ public class ExamService {
         map.put("grade", examResult.getGrade());
         map.put("maxGrade", Mark.MAX_MARK);
         return map;
+    }
+    
+    public ExamResult getExamResult(int resultId) {
+        return resultRepository.getOne(resultId);
     }
     
     private String getTimeFormat(LocalTime time) {

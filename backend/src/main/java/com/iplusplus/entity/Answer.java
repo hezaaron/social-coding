@@ -12,16 +12,18 @@ import javax.persistence.Table;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Entity @Table(name="ANSWER")
 @Data @EqualsAndHashCode(callSuper=false)
+@NoArgsConstructor(force=true)
 public final class Answer {
 
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	@ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "QUESTION_ID")
-    private Question question;
-    private String name;
+    private final Question question;
+    private final String name;
     @Column(name = "IS_CORRECT", nullable = false)
     private boolean correct = false;
 

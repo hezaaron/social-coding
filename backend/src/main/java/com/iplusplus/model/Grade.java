@@ -1,6 +1,6 @@
 package com.iplusplus.model;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.iplusplus.entity.ExamResult;
@@ -8,26 +8,21 @@ import com.iplusplus.entity.ExamResult;
 public final class Grade {
 
 	private ExamResult examResult;
-	private List<Integer> correctAnswers;
-	private List<Integer> userAnswers;
+	private final List<Integer> correctAnswers;
+	private final List<Integer> userAnswers;
 	
 	public Grade(ExamResult examResult, List<Integer> correctAnswers, List<Integer> userAnswers) {
 		this.examResult = examResult;
-		this.correctAnswers = correctAnswers;
-		this.userAnswers = userAnswers;
+		this.correctAnswers = Collections.unmodifiableList(correctAnswers);
+		this.userAnswers = Collections.unmodifiableList(userAnswers);
 	}
 	
 	public void computeGrade() {
-        final List<Integer> correctUserAnswers = new ArrayList<>();
-        final float mark = Mark.getMarkPerQuestion();
-        float score = 0;
-        for(final Integer id: userAnswers) {
-        	if(correctAnswers.contains(id)) {
-        		score += mark;
-        		correctUserAnswers.add(id);
-        	}
-        }
-        examResult.setCorrectAnswers(correctUserAnswers.size());
+        long count = userAnswers.stream().filter(id -> correctAnswers.contains(id))
+			        					.map(id -> id)
+			        					.count();
+        float score = count * Mark.getMarkPerQuestion();
+        examResult.setCorrectAnswers((int)count);
         examResult.setGrade(Math.round(score));
 	}
 }
