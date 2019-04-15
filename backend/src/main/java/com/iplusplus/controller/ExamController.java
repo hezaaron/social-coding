@@ -45,12 +45,12 @@ public class ExamController {
     }
     
     @GetMapping("/{id}")
-    public Map<String, Object> makeExam(@PathVariable("id") Integer examId, HttpServletRequest request) {
+    public Map<String, Object> setExam(@PathVariable("id") Integer examId, HttpServletRequest request) {
     	final Exam exam = examService.getExam(examId);
     	final ExamTime examTime = factoryHelper.makeExamTime();
     	ExamResult examResult = examService.createExamResult(exam);
     	request.getSession().setAttribute("examStarted", examResult.getStartTime());
-        final int resultId = examService.createExamResultId(examResult);
+        final int resultId = examService.getExamResultId(examResult);
         final ExamResultDTO examResultDto = factoryHelper.makeExamResultDto(resultId, examId);
         final Map<String, Object> model = new HashMap<>();
         model.put("name", exam.getName());

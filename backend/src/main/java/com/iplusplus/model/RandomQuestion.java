@@ -23,7 +23,7 @@ public final class RandomQuestion {
     		int id = getRandomId();
     		questions.stream().filter(question -> question.getId() == id)
     						  .findAny()
-    						  .ifPresent(question -> randomQuestions.add(question));
+    						  .ifPresent(randomQuestions::add);
     	}
         return randomQuestions;
 	}

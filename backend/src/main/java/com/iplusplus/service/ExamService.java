@@ -69,7 +69,7 @@ public class ExamService {
     }
     
     @Transactional
-    public int createExamResultId(ExamResult result) {
+    public int getExamResultId(ExamResult result) {
     	resultRepository.saveAndFlush(result);
         return result.getId();
     }
