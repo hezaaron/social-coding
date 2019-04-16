@@ -14,9 +14,9 @@
     "e2e_headless": "ng e2e --protractor-config='e2e/ci.protractor.conf.js'",
     "postinstall": "ng build --prod --aot"
   },
-  "engines":{
-  	"node": "~10.15.0",
-  	"npm": "~6.7.0"
+  "engines": {
+    "node": "~10.15.0",
+    "npm": "~6.7.0"
   },
   "private": true,
   "dependencies": {
