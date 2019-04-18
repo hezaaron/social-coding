@@ -44,7 +44,16 @@ public class ExamService {
     public Exam getExam(int examId) {
         return examRepository.getOne(examId);
     }
-
+    
+    public ExamResult createExamResult(Exam exam) {
+    	final List<Question> questions = getQuestionsForExam(exam.getId());
+    	final ExamResult examResult = new ExamResult();
+    	examResult.setExam(exam);
+    	examResult.setStartTime(new ExamTime(Clock.systemDefaultZone()).getTime());
+    	examResult.setQuestionCount(questions.size());
+    	return examResult;
+    }
+    
     public List<Question> getQuestionsForExam(int examId) {
     	final List<Question> questions = questionRepository.findByExamId(examId);
     	final int questionSize = Mark.NUMBER_OF_QUESTION;
@@ -57,15 +66,6 @@ public class ExamService {
 
     public List<Answer> getAnswersForQuestion(int questionId) {
         return answerRepository.findByQuestionId(questionId);
-    }
-    
-    public ExamResult createExamResult(Exam exam) {
-    	final List<Question> questions = getQuestionsForExam(exam.getId());
-    	final ExamResult examResult = new ExamResult();
-    	examResult.setExam(exam);
-    	examResult.setStartTime(new ExamTime(Clock.systemDefaultZone()).getTime());
-    	examResult.setQuestionCount(questions.size());
-    	return examResult;
     }
     
     @Transactional

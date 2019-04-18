@@ -9,7 +9,7 @@ fi
 clientUri="https://$client_app.herokuapp.com"
 
 server_app=iplusplus-server
-#heroku create $server_app --no-remote
+heroku create $server_app --no-remote
 serverUri="https://$server_app.herokuapp.com"
 
 # Deploy server
@@ -19,21 +19,9 @@ cd $app_root/backend
 sed -i -e "s|http://localhost:4200|$clientUri|g" src/main/java/com/iplusplus/BackendApplication.java
 
 ./mvnw clean package -DskipTests
-heroku buildpacks:add -a $server_app https://github.com/heroku/heroku-buildpack-multi-procfile
-heroku deploy:jar target/backend-0.0.1-SNAPSHOT.jar --app iplusplus-server
-heroku config:set $server_app FORCE_HTTPS="true"
-
-# Deploy client
-cd $app_root/frontend
-npm install
-heroku buildpacks:add -a $client_app https://github.com/heroku/heroku-buildpack-multi-procfile
-git add .
-git commit -m 'initial iplusplus-client deploy'
-git push heroku-iplusplus-client master
+heroku deploy:jar target/backend-0.0.1-SNAPSHOT.jar  -a $server_app
+heroku config:set FORCE_HTTPS="true" -a $server_app
 
 # reset and remove changed files
-sed -i -e "s|$clientUri|http://localhost:4200|g" $app_root/backend/src/main/java/com/iplusplus/BackendApplication.java
-rm -rf $app_root/backend/src/main/src/main/java/com/iplusplus/BackendApplication.java-e
-
-# show apps and URLs
-heroku open
+sed -i -e "s|$clientUri|http://localhost:4200|g" src/main/java/com/iplusplus/BackendApplication.java
+rm -rf src/main/src/main/java/com/iplusplus/BackendApplication.java-e

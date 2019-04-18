@@ -12,11 +12,8 @@
     "webdriver-start": "webdriver-manager start &",
     "webdriver-update": "webdriver-manager update",
     "e2e_headless": "ng e2e --protractor-config='e2e/ci.protractor.conf.js'",
-    "postinstall": "ng build --prod --aot"
-  },
-  "engines": {
-    "node": "~10.15.0",
-    "npm": "~6.7.0"
+    "heroku-postbuild": "ng build --configuration=production",
+    "stats": "webpack-bundle-analyzer dist/iplusplus/stats.json"
   },
   "private": true,
   "dependencies": {
@@ -79,6 +76,11 @@
     "ts-loader": "^5.2.0",
     "ts-node": "~5.0.1",
     "tslint": "~5.9.1",
+    "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.1.0"
+  },
+  "engines": {
+    "node": "~10.15.0",
+    "npm": "~6.7.0"
   }
 }
