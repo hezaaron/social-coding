@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   redirectUri: 'http://localhost:4200',
-  apiUrl: 'http://localhost:8080/testexams'
+  apiUrl: 'http://localhost:5000/testexams'
 };
 
 /*

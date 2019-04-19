@@ -6,11 +6,9 @@ client_app=iplusplus-client
 if ! echo "$(git remote -v)" | grep -q heroku-$client_app; then
   heroku create $client_app --remote heroku-iplusplus-client
 fi
-clientUri="https://$client_app.herokuapp.com"
 
+clientUri="https://$client_app.herokuapp.com"
 server_app=iplusplus-server
-heroku create $server_app --no-remote
-serverUri="https://$server_app.herokuapp.com"
 
 # Deploy server
 cd $app_root/backend
@@ -25,3 +23,8 @@ heroku config:set FORCE_HTTPS="true" -a $server_app
 # reset and remove changed files
 sed -i -e "s|$clientUri|http://localhost:4200|g" src/main/java/com/iplusplus/BackendApplication.java
 rm -rf src/main/src/main/java/com/iplusplus/BackendApplication.java-e
+
+#deploy cleint
+cd $app_root/frontend
+
+git push heroku-$client_app master

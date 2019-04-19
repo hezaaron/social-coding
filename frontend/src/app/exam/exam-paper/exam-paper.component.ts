@@ -46,17 +46,6 @@ export class ExamPaperComponent implements OnInit {
 		}
 
 		this.startExam();
-		this.loadOptions();
-	}
-	
-	loadOptions(): void {
-		this.examService.getExamAnswers( this.examId ).subscribe( data => {
-			const examOptions = data;
-			for(let i = 0; i < examOptions.length; i++) {
-				this.options[i] = new Option(examOptions[i]);
-			}
-			this.setOptions(this.filteredQuestion[0].id);
-		} );
 	}
 
 	startExam(): void {
@@ -67,18 +56,45 @@ export class ExamPaperComponent implements OnInit {
 			this.startTimer();
 		} );
 		this.setQuestions();
+		this.loadOptions();
 	}
 
 	setQuestions(): void {
-		this.examService.getQuestions( this.examId ).subscribe( data => {
-			this.questions = data;
+		this.examService.getQuestions( this.examId ).subscribe( questions => {
+			this.questions = questions;
 			if ( this.questions ) this.pager.count = this.questions.length;
 			this.filteredQuestion = this.questions.slice( this.pager.index, this.pager.size );
 		} );
 	}
 
-	setOptions(id: number): void {
+	loadOptions(): void {
+		this.examService.getExamAnswers( this.examId ).subscribe( examAnswers => {
+			for ( let examAnswer of examAnswers ) {
+				this.options.push( new Option( examAnswer ) );
+			}
+			this.setOptions( this.filteredQuestion[0].id );
+		} );
+	}
+
+	setOptions( id: number ): void {
 		this.filteredOptions = this.options.filter( option => option.questionId === id );
+	}
+
+	nextQuestion( index: number ): void {
+		if ( index >= 0 && index < this.pager.count ) {
+			this.userAnswer();
+			this.pager.index = index;
+			this.pager.size++;
+			this.filteredQuestion = this.questions.slice( this.pager.index, this.pager.size );
+			this.setOptions( this.filteredQuestion[0].id );
+		}
+	}
+
+	userAnswer(): void {
+		let answer = 0;
+		this.filteredOptions.forEach(( x ) => { if ( x.selected ) answer = x.id; } );
+		this.userAnswers.push( answer );
+		this.optionIndex = null;
 	}
 
 	startTimer(): void {
@@ -95,27 +111,6 @@ export class ExamPaperComponent implements OnInit {
 		);
 	}
 
-	nextQuestion( index: number ): void {
-		if ( index >= 0 && index < this.pager.count ) {
-			this.userAnswer();
-			this.pager.index = index;
-			this.pager.size++;
-			this.filteredQuestion = this.questions.slice( this.pager.index, this.pager.size );
-			this.setOptions(this.filteredQuestion[0].id);
-		}
-	}
-
-	optionClicked(): void {
-		this.filteredOptions[this.optionIndex].selected = true;
-	}
-
-	userAnswer(): void {
-		let answer = 0;
-		this.filteredOptions.forEach(( x ) => { if ( x.selected ) answer = x.id;} );
-		this.userAnswers.push( answer );
-		this.optionIndex = null;
-	}
-
 	submit(): void {
 		if ( this.confirmSubmit ) {
 			this.userAnswer();
@@ -125,6 +120,10 @@ export class ExamPaperComponent implements OnInit {
 				this.viewResult( response.id );
 			} );
 		}
+	}
+
+	optionClicked(): void {
+		this.filteredOptions[this.optionIndex].selected = true;
 	}
 
 	private viewResult( id: number ): void {

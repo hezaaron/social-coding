@@ -6,12 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter @Setter
-@NoArgsConstructor
+@Getter
+@NoArgsConstructor(force = true)
 public final class ExamResultDTO {
 
-	private Integer id;
-    private Integer examId;
+	private final Integer id;
+    private final Integer examId;
+    @Setter
     private List<Integer> answers;
     
     public ExamResultDTO(Integer id, Integer examId) {

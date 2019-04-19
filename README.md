@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/hezaaron/online-test-exam-maker.svg?branch=master)](https://travis-ci.org/hezaaron/online-test-exam-maker)
 
 The ***online-test-exam-maker*** **App** can be used to test for basic programming skills. I am continuously improving it,
-and I've deployed it on Pivotal Web Services: https://iplusplus.cfapps.io **To** **_login_**, use the credentials below:
+and I've deployed it on Heroku: https://iplusplus-client.herokuapp.com. **To** **_login_**, use the credentials below:
 
 > username: hezaaron+01@gmail.com
 > password: h326Otaa
@@ -39,9 +39,11 @@ mvnw spring-boot:run
 
 ```sh
 cd frontend && npm install
-npm start
+ng serve
 ```
 
 Fire up a web browser and navigate to `http://localhost:4200`. You will be redirected to the login page.
 
 ***_Use_*** the credentials above to login.
+
+The app is integrated with Okta's cloud service API for user authentication, so you need to be on the internet to **_login_** successfully.
