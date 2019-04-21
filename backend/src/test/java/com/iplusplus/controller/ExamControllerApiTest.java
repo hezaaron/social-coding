@@ -80,6 +80,36 @@ public class ExamControllerApiTest {
 	}
 	
 	@Test
+	void testGetExam() throws Exception {
+		Exam exam = Fixture.from(Exam.class).gimme("valid");
+		ExamResult examResult = Fixture.from(ExamResult.class).gimme("valid");
+		ExamResultDTO examResultDto = Fixture.from(ExamResultDTO.class).gimme("valid");
+		int remainingTime = 60, examId = exam.getId();
+		
+		given(examService.getExam(anyInt())).willReturn(exam);
+		given(factoryHelper.makeExamTime()).willReturn(examTime);
+		given(examService.createExamResult(exam)).willReturn(examResult);
+		given(factoryHelper.makeExamResultDto(anyInt(), anyInt())).willReturn(examResultDto);
+		given(request.getSession()).willReturn(session);
+		given(examTime.getRemainingTime(any())).willReturn(remainingTime);
+		given(examService.getExamResultId(examResult)).willReturn(examResult.getId());
+
+		mockMvc.perform(get("/testexams/{examId}", examId, request).accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$").isMap())
+				.andExpect(jsonPath("$.name").value(Matchers.any(String.class)))
+				.andExpect(jsonPath("$.timer").value(60))
+				.andExpect(jsonPath("$").value(Matchers.hasKey("result")))
+				.andExpect(jsonPath("$.result.id").value(Matchers.any(Integer.class)))
+				.andExpect(jsonPath("$.result.examId").value(Matchers.any(Integer.class)))
+				.andExpect(jsonPath("$.result.answers").value(Matchers.nullValue()));
+		verify(examService, times(1)).getExam(anyInt());
+		verify(examService, times(1)).createExamResult(exam);
+		verify(examService, times(1)).getExamResultId(examResult);
+		verifyNoMoreInteractions(examService);
+	}
+	
+	@Test
 	void testGetQuestionForExam() throws Exception {
 		List<Question> questions = Fixture.from(Question.class).gimme(5, "valid");
 		given(examService.getQuestionsForExam(anyInt())).willReturn(questions);

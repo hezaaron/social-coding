@@ -18,9 +18,9 @@ public final class RandomQuestion {
 	}
 	
 	public List<Question> getList() {
-    	final List<Question> randomQuestions = new ArrayList<>();
+    	final List<Question> randomQuestions = new ArrayList<>(size);
     	for(int i = 1; i <= size; i++) {
-    		int id = getRandomId();
+    		int id = getRandomQuestionId();
     		questions.stream().filter(question -> question.getId() == id)
     						  .findAny()
     						  .ifPresent(randomQuestions::add);
@@ -28,7 +28,7 @@ public final class RandomQuestion {
         return randomQuestions;
 	}
 	
-	private Integer getRandomId() {
+	private Integer getRandomQuestionId() {
 		final int minValue = questions.get(0).getId();
     	final int maxValue = questions.get(questions.size() - 1).getId();
     	return new Random().nextInt((maxValue - minValue) + 1) + minValue; 

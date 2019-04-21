@@ -19,8 +19,8 @@ public final class Grade {
 	
 	public void computeGrade() {
         long count = userAnswers.stream().filter(id -> correctAnswers.contains(id))
-			        					.map(id -> id)
-			        					.count();
+			        					 .map(id -> id)
+			        					 .count();
         float score = count * Mark.getMarkPerQuestion();
         examResult.setCorrectAnswers((int)count);
         examResult.setGrade(Math.round(score));
