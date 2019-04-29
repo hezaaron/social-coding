@@ -24,7 +24,7 @@ heroku config:set FORCE_HTTPS="true" -a $server_app
 sed -i -e "s|$clientUri|http://localhost:4200|g" src/main/java/com/iplusplus/BackendApplication.java
 rm -rf src/main/src/main/java/com/iplusplus/BackendApplication.java-e
 
-#deploy cleint
+#deploy client
 cd $app_root/frontend
 
 git push heroku-$client_app master

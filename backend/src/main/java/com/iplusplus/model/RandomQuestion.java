@@ -20,7 +20,7 @@ public final class RandomQuestion {
 	public List<Question> getList() {
     	final List<Question> randomQuestions = new ArrayList<>(size);
     	for(int i = 1; i <= size; i++) {
-    		int id = getRandomQuestionId();
+    		final int id = getRandomQuestionId();
     		questions.stream().filter(question -> question.getId() == id)
     						  .findAny()
     						  .ifPresent(randomQuestions::add);

@@ -7,7 +7,7 @@ import com.iplusplus.entity.ExamResult;
 
 public final class Grade {
 
-	private ExamResult examResult;
+	private final ExamResult examResult;
 	private final List<Integer> correctAnswers;
 	private final List<Integer> userAnswers;
 	
@@ -18,11 +18,11 @@ public final class Grade {
 	}
 	
 	public void computeGrade() {
-        long count = userAnswers.stream().filter(id -> correctAnswers.contains(id))
-			        					 .map(id -> id)
-			        					 .count();
-        float score = count * Mark.getMarkPerQuestion();
-        examResult.setCorrectAnswers((int)count);
+        Integer correctUserAnswer = (int) userAnswers.stream().filter(answer -> correctAnswers.contains(answer))
+								        					  .mapToInt(answer -> answer)
+								        					  .count();
+        float score = correctUserAnswer * Mark.getMarkPerQuestion();
+        examResult.setCorrectAnswers(correctUserAnswer);
         examResult.setGrade(Math.round(score));
 	}
 }

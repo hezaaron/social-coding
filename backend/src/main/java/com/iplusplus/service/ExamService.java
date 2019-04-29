@@ -81,9 +81,8 @@ public class ExamService {
     
     public void computeGrade(ExamResult result, Integer examId, List<Integer> userAnswers) {
         final List<Answer> correctAnswers = answerRepository.findByQuestionExamIdAndCorrect(examId, true);
-        final List<Integer> correctAnswerIds = correctAnswers.stream()
-	        												 .map(Answer::getId)
-	        												 .collect(Collectors.toList());
+        final List<Integer> correctAnswerIds = correctAnswers.stream().map(Answer::getId)
+	        														  .collect(Collectors.toList());
         new Grade(result, correctAnswerIds, userAnswers).computeGrade();
     }
     
