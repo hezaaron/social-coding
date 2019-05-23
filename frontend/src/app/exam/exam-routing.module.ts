@@ -4,6 +4,7 @@ import { OktaAuthGuard } from '@okta/okta-angular/dist';
 import { ExamsComponent } from './exams.component';
 import { ExamPaperComponent } from './exam-paper/exam-paper.component';
 import { ExamResultsComponent } from './exam-results/exam-results.component';
+import { ExamInfoComponent } from '../exam/exam-info/exam-info.component';
 
 export function onAuthRequired( { oktaAuth, router } ) {
 	router.navigate( ['/login'] );
@@ -13,7 +14,10 @@ const examRoutes: Routes = [{
 	path: 'testexams', component: ExamsComponent,
 	canActivate: [OktaAuthGuard], data: { onAuthRequired }
 }, {
-	path: 'testexams/:id', component: ExamPaperComponent,
+	path: 'testexams/:id', component: ExamInfoComponent,
+	canActivate: [OktaAuthGuard], data: { onAuthRequired }
+},{
+	path: 'exam/:id', component: ExamPaperComponent,
 	canActivate: [OktaAuthGuard], data: { onAuthRequired }
 }, {
 	path: 'resultstat/:id', component: ExamResultsComponent,

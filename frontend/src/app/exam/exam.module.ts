@@ -11,6 +11,7 @@ import { HighlightModule } from 'ngx-highlightjs';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { ExamsComponent } from '../exam/exams.component';
 import { ExamRoutingModule } from './exam-routing.module';
+import { ExamInfoComponent } from './exam-info/exam-info.component';
 
 
 @NgModule( {
@@ -27,7 +28,8 @@ import { ExamRoutingModule } from './exam-routing.module';
 		ExamPaperComponent,
 		FormatTimePipe,
 		ExamResultsComponent,
-		ExamsComponent
+		ExamsComponent,
+		ExamInfoComponent
 	],
 	providers: [
 		ExamService

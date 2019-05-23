@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ExamService } from '../service/exam.service';
-import { timer, Observable } from 'rxjs';
+import { timer, Observable, Subscription } from 'rxjs';
 import { take, map } from 'rxjs/operators';
 import { Option } from '../model/option';
 import { Question } from '../model/question';
@@ -27,6 +27,7 @@ export class ExamPaperComponent implements OnInit {
 	optionIndex: number;
 	resultForm: FormGroup;
 	userAnswers: number[] = [];
+	private subscription: Subscription;
 
 	constructor( private route: ActivatedRoute, private router: Router, private examService: ExamService, private formBuilder: FormBuilder ) {
 		this.resultForm = this.formBuilder.group( {
@@ -37,14 +38,10 @@ export class ExamPaperComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		const id = +this.route.snapshot.paramMap.get( 'id' );
-		if ( id ) {
-			this.examId = id;
-		} else {
-			console.log( `Exam with id '${id}' not found, returning to list` );
-			this.router.navigate( ['/'] );
-		}
-
+		this.subscription = this.examService.examId.subscribe( value => {
+			this.examId = value;
+		},
+			error => console.error( error ) );
 		this.startExam();
 	}
 
@@ -116,7 +113,7 @@ export class ExamPaperComponent implements OnInit {
 			this.userAnswer();
 			this.resultForm.controls['answers'].setValue( this.userAnswers );
 			this.examService.postAnswers( this.resultForm.value ).subscribe( response => {
-				this.examService.updateResultId( response.id )
+				this.examService.updateResultId( response.id );
 				this.viewResult( response.id );
 			} );
 		}
@@ -130,4 +127,7 @@ export class ExamPaperComponent implements OnInit {
 		this.router.navigate( ['/resultstat', id] );
 	}
 
+	ngOnDestroy() {
+		this.subscription.unsubscribe();
+	}
 }

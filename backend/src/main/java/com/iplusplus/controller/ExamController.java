@@ -44,7 +44,7 @@ public class ExamController {
     	return examService.getAllExams();
     }
     
-    @GetMapping("/{id}")
+    @GetMapping("/exam/{id}")
     public Map<String, Object> getExam(@PathVariable("id") Integer examId, HttpServletRequest request) {
     	final Exam exam = examService.getExam(examId);
     	final ExamTime examTime = factoryHelper.makeExamTime();

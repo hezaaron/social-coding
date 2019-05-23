@@ -1,7 +1,7 @@
 -- Exams
-INSERT INTO EXAM (name, description) VALUES ('Java Exam: Beginner', 'This exam offers test on the basics of the Java language');
-INSERT INTO EXAM (name, description) VALUES ('Java Exam: Intermediate', 'This exam offers test on the more sophisticated capabilities than the basics of the Java language');
-INSERT INTO EXAM (name, description) VALUES ('Java Exam: Advanced', 'This exam offers test on the more advanced concepts and nuances of the Java language');
+INSERT INTO EXAM (name, description) VALUES ('Java Exam: Beginner', 'This exam offers test on the basics of the Java language.');
+INSERT INTO EXAM (name, description) VALUES ('Java Exam: Intermediate', 'This exam offers test on the more sophisticated capabilities than the basics of the Java language.');
+INSERT INTO EXAM (name, description) VALUES ('Java Exam: Advanced', 'This exam offers test on the more advanced concepts and nuances of the Java language.');
 
 -- Java Beginner Questions with Answers
 INSERT INTO QUESTION (exam_id, name, code, multi_answer) VALUES (1, 'What is the output of the following program?',

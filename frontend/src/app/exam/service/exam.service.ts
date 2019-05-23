@@ -12,7 +12,8 @@ const baseUrl = `${environment.apiUrl}`;
 	providedIn: 'root'
 } )
 export class ExamService {
-
+	private examIdSub = new BehaviorSubject<number>(0);
+	examId = this.examIdSub.asObservable();
 	private examResultId = new BehaviorSubject<number>( 0 );
 	resultId = this.examResultId.asObservable();
 
@@ -23,7 +24,7 @@ export class ExamService {
 	}
 
 	getExam( id: number ): Observable<any> {
-		return this.http.get( `${baseUrl}/${id}` );
+		return this.http.get( `${baseUrl}/exam/${id}` );
 	}
 
 	getQuestions( id: number ): Observable<Question[]> {
@@ -44,5 +45,9 @@ export class ExamService {
 
 	updateResultId( id: number ) {
 		this.examResultId.next( id );
+	}
+	
+	updateExamId( id: number ) {
+		this.examIdSub.next( id );
 	}
 }
