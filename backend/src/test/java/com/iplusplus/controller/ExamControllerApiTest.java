@@ -94,7 +94,7 @@ public class ExamControllerApiTest {
 		given(examTime.getRemainingTime(any())).willReturn(remainingTime);
 		given(examService.getExamResultId(examResult)).willReturn(examResult.getId());
 
-		mockMvc.perform(get("/testexams/{examId}", examId, request).accept(MediaType.APPLICATION_JSON))
+		mockMvc.perform(get("/testexams/exam/{examId}", examId, request).accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$").isMap())
 				.andExpect(jsonPath("$.name").value(Matchers.any(String.class)))
