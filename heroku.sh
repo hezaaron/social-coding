@@ -28,7 +28,8 @@ mv .git c:/
 
 cd $app_root/frontend
 
-git init
+#move previously saved heroku .git file back to the current dir
+mv c:/heroku-git/.git .
 git add .
 git commit -m 'heroku commit'
 heroku git:remote -a $client_app
@@ -36,4 +37,4 @@ git push -f heroku master
 
 # reset and remove changed files
 mv c:/.git $app_root
-rm -rf .git
+mv .git c:/heroku-git

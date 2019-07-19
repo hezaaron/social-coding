@@ -527,6 +527,56 @@ INSERT INTO ANSWER (question_id, name, is_correct) VALUES (23, '0,32,43,5', 0);
 INSERT INTO ANSWER (question_id, name, is_correct) VALUES (23, '1,3,2,5', 0);
 INSERT INTO ANSWER (question_id, name, is_correct) VALUES (23, 'runtime error', 0);
 
+INSERT INTO QUESTION (exam_id, name, code, multi_answer) VALUES (2, 'What is the output of the following program?',
+'public class Solution {
+  public static void main(String[] args) {
+    int n = 75;
+    double d = 2.25;
+    double result = n - d;
+    if(result > 0) {
+      boolean b = result < 0;
+      if(b) System.out.println("It cannot be true!");
+      else {
+	    String s = "wow";
+	    if(result >= 0) {
+	      s = "bravo";
+	      System.out.println(s);
+	    }else System.out.println(s.toUpperCase());
+    }
+    for(int i = 0; i < 0; i++) {
+      System.out.println("WOW");
+    }
+  }
+}', 0);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (24, 'It cannot be true!', 0);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (24, 'wow', 0);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (24, 'bravo', 1);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (24, 'WOW', 0);
+
+INSERT INTO QUESTION (exam_id, name, code, multi_answer) VALUES (2, 'What is the output of the following program?',
+'public class FindOut {
+  public final int num = 30;
+  public void doIt() {
+    int num = 5;
+    Runnable r = new Runnable() {
+      public final int num = 5;
+	  public void run(){
+      int num = 12;
+        System.out.println(this.num);
+	  }
+    };
+    r.run();
+  }
+  public static void main(String[] args) {
+    FindOut f = new FindOut();
+    f.doIt();
+  }
+}', 0);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (25, '42', 0);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (25, '4', 0);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (25, '6', 0);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (25, '5', 1);
+
 -- Java Advanced Questions with Answers
 INSERT INTO QUESTION (exam_id, name, code, multi_answer) VALUES (3, 'What is the output of the following program?',
 'public class Employee {
@@ -557,10 +607,10 @@ class Programmer extends Engineer {
     Programmer programmer = new Programmer();
   }
 }', 0);
-INSERT INTO ANSWER (question_id, name, is_correct) VALUES (24, 'compile error', 0);
-INSERT INTO ANSWER (question_id, name, is_correct) VALUES (24, '3,5,6', 0);
-INSERT INTO ANSWER (question_id, name, is_correct) VALUES (24, '2,6,6', 1);
-INSERT INTO ANSWER (question_id, name, is_correct) VALUES (24,'3,6,6', 0);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (26, 'compile error', 0);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (26, '3,5,6', 0);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (26, '2,6,6', 1);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (26,'3,6,6', 0);
 
 INSERT INTO QUESTION (exam_id, name, code, multi_answer) VALUES (3, 'What is the output of the following program?',
 'public class BreakWithLabel {
@@ -582,10 +632,10 @@ INSERT INTO QUESTION (exam_id, name, code, multi_answer) VALUES (3, 'What is the
       }
   }
 }', 0);
-INSERT INTO ANSWER (question_id, name, is_correct) VALUES (25, 'compile error', 0);
-INSERT INTO ANSWER (question_id, name, is_correct) VALUES (25, 'runtime error', 0);
-INSERT INTO ANSWER (question_id, name, is_correct) VALUES (25, '0,0,5', 1);
-INSERT INTO ANSWER (question_id, name, is_correct) VALUES (25, '0,1,6', 0);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (27, 'compile error', 0);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (27, 'runtime error', 0);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (27, '0,0,5', 1);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (27, '0,1,6', 0);
 
 INSERT INTO QUESTION (exam_id, name, code, multi_answer) VALUES (3, 'What is the output of the following program?',
 'public class Employee {
@@ -617,10 +667,10 @@ class Programmer extends Employee {
     programmer.progMethod();
   }
 }', 0);
-INSERT INTO ANSWER (question_id, name, is_correct) VALUES (26, '86,11,10', 1);
-INSERT INTO ANSWER (question_id, name, is_correct) VALUES (26, '84,11,10', 0);
-INSERT INTO ANSWER (question_id, name, is_correct) VALUES (26, '86,9,0', 0);
-INSERT INTO ANSWER (question_id, name, is_correct) VALUES (26, '84,9,0', 0);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (28, '86,11,10', 1);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (28, '84,11,10', 0);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (28, '86,9,0', 0);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (28, '84,9,0', 0);
 
 INSERT INTO QUESTION (exam_id, name, code, multi_answer) VALUES (3, 'What is the output of the following program?',
 'public class Team {
@@ -654,10 +704,10 @@ INSERT INTO QUESTION (exam_id, name, code, multi_answer) VALUES (3, 'What is the
     System.out.print("," + name + id);
   }
 }', 0);
-INSERT INTO ANSWER (question_id, name, is_correct) VALUES (27, '2,2,devop1', 0);
-INSERT INTO ANSWER (question_id, name, is_correct) VALUES (27, ',2,2,prod1', 1);
-INSERT INTO ANSWER (question_id, name, is_correct) VALUES (27, ',2,2,prod0', 0);
-INSERT INTO ANSWER (question_id, name, is_correct) VALUES (27, 'compile error', 0);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (29, '2,2,devop1', 0);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (29, ',2,2,prod1', 1);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (29, ',2,2,prod0', 0);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (29, 'compile error', 0);
 
 INSERT INTO QUESTION (exam_id, name, code, multi_answer) VALUES (3, 'What is the output of the following program?',
 'public class LoopI {
@@ -693,10 +743,10 @@ INSERT INTO QUESTION (exam_id, name, code, multi_answer) VALUES (3, 'What is the
     loop.methodLoop(4);
   }
 }', 0);
-INSERT INTO ANSWER (question_id, name, is_correct) VALUES (28, '1-2-2-1-1', 0);
-INSERT INTO ANSWER (question_id, name, is_correct) VALUES (28, '1-22-1-0-8', 0);
-INSERT INTO ANSWER (question_id, name, is_correct) VALUES (28, '1-22-1-2-8', 0);
-INSERT INTO ANSWER (question_id, name, is_correct) VALUES (28, '1-22-1-1-8', 1);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (30, '1-2-2-1-1', 0);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (30, '1-22-1-0-8', 0);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (30, '1-22-1-2-8', 0);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (30, '1-22-1-1-8', 1);
 
 INSERT INTO QUESTION (exam_id, name, code, multi_answer) VALUES (3, 'What is the output of the following program?',
 'public class LoopII{
@@ -713,10 +763,10 @@ INSERT INTO QUESTION (exam_id, name, code, multi_answer) VALUES (3, 'What is the
     }
   }
 }', 0);
-INSERT INTO ANSWER (question_id, name, is_correct) VALUES (29, '-6-14-6-14-6-14', 1);
-INSERT INTO ANSWER (question_id, name, is_correct) VALUES (29, '4-12-4-12-4-12', 0);
-INSERT INTO ANSWER (question_id, name, is_correct) VALUES (29, '0-8-0-8-0-8', 0);
-INSERT INTO ANSWER (question_id, name, is_correct) VALUES (29, 'compile error', 0);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (31, '-6-14-6-14-6-14', 1);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (31, '4-12-4-12-4-12', 0);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (31, '0-8-0-8-0-8', 0);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (31, 'compile error', 0);
 
 INSERT INTO QUESTION (exam_id, name, code, multi_answer) VALUES (3, 'What is the output of the following program?',
 'class SuperClass {
@@ -743,7 +793,29 @@ class SubClass extends SuperClass {
     System.out.print(subClass.b);
   }
 }', 0);
-INSERT INTO ANSWER (question_id, name, is_correct) VALUES (30, 'compile error', 0);
-INSERT INTO ANSWER (question_id, name, is_correct) VALUES (30, 'x6x3y43', 0);
-INSERT INTO ANSWER (question_id, name, is_correct) VALUES (30, 'x2x6y34', 1);
-INSERT INTO ANSWER (question_id, name, is_correct) VALUES (30, 'runtime error', 0);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (32, 'compile error', 0);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (32, 'x6x3y43', 0);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (32, 'x2x6y34', 1);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (32, 'runtime error', 0);
+
+INSERT INTO QUESTION (exam_id, name, code, multi_answer) VALUES (3, 'What is the output of the following program?',
+'import java.util.Arrays;
+public class Flip {
+  static void flip(int[] arr, int n) {
+    for(int i = 0; i < n/2; i++) {
+      int temp = arr[i];
+      arr[i] = arr[n - i - 1];
+      arr[n - i - 1] = temp;
+	}
+    System.out.println(Arrays.toString(arr));
+  }
+  public static void main(String[] args) {
+    int[] arr = new int[]{11, 4, 10, 8, 9};
+    int n = 4;
+    flip(arr, n);
+  }
+}', 0);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (33, '[11, 4, 10, 8, 9]', 0);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (33, '[8, 10, 4, 11, 9]', 1);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (33, '[8, 4, 10, 11, 9]', 0);
+INSERT INTO ANSWER (question_id, name, is_correct) VALUES (33, '[11, 9, 10, 8, 4]', 0);
