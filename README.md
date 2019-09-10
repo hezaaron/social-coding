@@ -20,7 +20,7 @@ This will install a copy of the project on your system.
 ### Run the server
 
 ```sh
-cd backend
+cd exam
 ```
 
 **_cmd_**
@@ -38,7 +38,7 @@ mvnw spring-boot:run
 ### Run the client
 
 ```sh
-cd frontend && npm install
+cd web && npm install
 ng serve
 ```
 
