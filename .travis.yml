@@ -3,14 +3,14 @@ matrix:
     - language: java
       jdk: openjdk8
       before_install:
-      - cd backend && chmod +x mvnw
+      - cd exam && chmod +x mvnw
       script:
         - ./mvnw test
     - language: node_js
       node_js:
         - "node"
       before_script:
-        - cd frontend && npm install
+        - cd web && npm install
       cache:
         directories:
           - "node_modules"
