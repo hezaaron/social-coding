@@ -1,4 +1,4 @@
-package com.iplusplus.config;
+package com.iplusplus.configuration;
 
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
