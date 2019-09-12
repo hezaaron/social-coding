@@ -6,6 +6,12 @@ matrix:
       - cd exam && chmod +x mvnw
       script:
         - ./mvnw test
+    - language: java
+      jdk: openjdk8
+      before_install:
+      - cd gamification && chmod +x mvnw
+      script:
+        - ./mvnw test
     - language: node_js
       node_js:
         - "node"
@@ -16,11 +22,5 @@ matrix:
           - "node_modules"
       script:
         - npm run test_headless
-        #update Protractor and selenium inluding chromeDriver
-        #- npm run webdriver-update
-        #launch Selenium standalone in the background
-        #- npm run webdriver-start
-        #run Protractor E2E tests
-        #- npm run e2e_headless
 notifications:
   email: false
