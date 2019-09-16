@@ -1,34 +1,34 @@
-CREATE TABLE EXAM (
-  ID          INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  NAME        VARCHAR(50)  NOT NULL,
-  DESCRIPTION VARCHAR(250) NOT NULL
+CREATE TABLE exam (
+  id          int          not null auto_increment primary key,
+  name        varchar(50)  not null,
+  description varchar(250) not null
 );
 
-CREATE TABLE QUESTION (
-  ID           INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  EXAM_ID      INT          NOT NULL,
-  NAME         VARCHAR(250) NOT NULL,
-  CODE		   MEDIUMTEXT	NOT NULL,
-  MULTI_ANSWER BIT          NOT NULL DEFAULT 0
+CREATE TABLE question (
+  id           int          not null auto_increment primary key,
+  exam_id      int          not null,
+  name         varchar(250) not null,
+  code		   mediumtext	not null,
+  multi_answer bit          not null default 0
 );
 
-ALTER TABLE QUESTION ADD FOREIGN KEY (EXAM_ID) REFERENCES EXAM (ID);
+ALTER TABLE question add foreign key (exam_id) references exam (id);
 
-CREATE TABLE ANSWER (
-  ID          INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  QUESTION_ID INT          NOT NULL,
-  NAME        VARCHAR(250) NOT NULL,
-  IS_CORRECT  BIT          NOT NULL DEFAULT 0
+CREATE TABLE answer (
+  id          int          not null auto_increment primary key,
+  question_id int          not null,
+  name        varchar(250) not null,
+  is_correct  bit          not null default 0
 );
-ALTER TABLE ANSWER ADD FOREIGN KEY (QUESTION_ID) REFERENCES QUESTION (ID);
+ALTER TABLE answer add foreign key (question_id) references question (id);
 
-CREATE TABLE EXAM_RESULT (
-  ID              INT      NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  EXAM_ID         INT      NOT NULL,
-  START           DATETIME NOT NULL,
-  FINISH          DATETIME,
-  QUESTION_COUNT  INT,
-  CORRECT_ANSWERS INT,
-  GRADE           INT
+CREATE TABLE exam_result (
+  id              int      not null auto_increment primary key,
+  exam_id         int      not null,
+  start           datetime not null,
+  finish          datetime,
+  question_count  int,
+  correct_answers int,
+  grade           int
 );
-ALTER TABLE EXAM_RESULT ADD FOREIGN KEY (EXAM_ID) REFERENCES EXAM (ID);
+ALTER TABLE exam_result add foreign key (exam_id) references exam (id);

@@ -4,28 +4,23 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 
-@Getter @ToString
-@EqualsAndHashCode
+@Data
 @RequiredArgsConstructor
 public final class GameStats {
 
-	private final String userName;
+	private final String username;
 	private final int score;
 	private final List<Badge> badges;
 	
 	public GameStats() {
-		this.userName = null;
-		this.score = 0;
-		this.badges = new ArrayList<>();
+		this(null, 0, new ArrayList<>());
 	}
 	
-	public static GameStats emptyStats(final String userName) {
-		return new GameStats(userName, 0, Collections.emptyList());
+	public static GameStats emptyStats(final String username) {
+		return new GameStats(username, 0, Collections.emptyList());
 	}
 	
 	public List<Badge> getBadges() {

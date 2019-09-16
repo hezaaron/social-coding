@@ -3,7 +3,6 @@ package com.iplusplus.gamification.entity;
 import java.time.Clock;
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -23,9 +22,8 @@ import lombok.ToString;
 public final class BadgeCard {
 
 	@Id @GeneratedValue
-	@Column(name = "BADGE_ID")
-	private final Long badgeId;
-	private final String userName;
+	private final Long id;
+	private final String username;
 	private final Badge badge;
 	private final LocalDateTime badgeTime;
 	
@@ -33,7 +31,7 @@ public final class BadgeCard {
 		this(null, null, null, null);
 	}
 	
-	public BadgeCard(final String userName, final Badge badge) {
-		this(null, userName, badge, new BagTime(Clock.systemDefaultZone()).getTime());
+	public BadgeCard(final String username, final Badge badge) {
+		this(null, username, badge, new BagTime(Clock.systemDefaultZone()).getTime());
 	}
 }

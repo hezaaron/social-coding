@@ -1,15 +1,15 @@
 package com.iplusplus.exam.event;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import java.io.Serializable;
+
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 
+@Data
 @RequiredArgsConstructor
-@Getter @ToString
-@EqualsAndHashCode
-public class ExamTakenEvent {
+public class ExamTakenEvent implements Serializable {
 
+	private static final long serialVersionUID = 4419489739197516400L;
 	private final Integer examResultId;
     private final String userName;
     private final boolean passed;

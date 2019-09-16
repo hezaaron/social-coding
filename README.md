@@ -1,7 +1,7 @@
-# online-test-exam-maker
+# exam-maker
 [![Build Status](https://travis-ci.org/hezaaron/online-test-exam-maker.svg?branch=master)](https://travis-ci.org/hezaaron/online-test-exam-maker)
 
-The ***online-test-exam-maker*** **App** can be used to test for basic programming skills. I am continuously improving it,
+The ***exam-maker*** **App** can be used to test for basic programming skills. I am continuously improving it,
 and I've deployed it on Heroku: https://iplusplus-client.herokuapp.com. **To** **_login_**, use the credentials below:
 
 > username: hezaaron+01@gmail.com

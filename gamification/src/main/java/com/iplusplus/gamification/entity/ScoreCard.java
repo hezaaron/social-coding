@@ -3,7 +3,6 @@ package com.iplusplus.gamification.entity;
 import java.time.Clock;
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -23,22 +22,17 @@ public final class ScoreCard {
 
 	public static final int DEFAULT_SCORE = 5;
 	@Id @GeneratedValue
-	@Column(name = "CARD_ID")
-	private final Long cardId;
-	@Column(name = "USER_NAME")
-	private final String userName;
-	@Column(name = "ATTEMPT_ID")
+	private final Long id;
+	private final String username;
 	private final Long attemptId;
-	@Column(name = "SCORE_TIME")
 	private final LocalDateTime scoreTime;
-	@Column(name = "SCORE")
 	private final int score;
 	
 	public ScoreCard() {
 		this(null, null, null, null, 0);
 	}
 	
-	public ScoreCard(final String userName, final Long attemptId) {
-		this(null, userName, attemptId, new BagTime(Clock.systemDefaultZone()).getTime(), DEFAULT_SCORE);
+	public ScoreCard(final String username, final Long attemptId) {
+		this(null, username, attemptId, new BagTime(Clock.systemDefaultZone()).getTime(), DEFAULT_SCORE);
 	}
 }

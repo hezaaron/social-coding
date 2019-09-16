@@ -3,11 +3,11 @@ package com.iplusplus.exam.dto;
 import java.util.List;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@NoArgsConstructor(force = true)
+@RequiredArgsConstructor
 public final class ExamResultDTO {
 
 	private final Integer id;
@@ -17,8 +17,7 @@ public final class ExamResultDTO {
     @Setter
     private String userName;
     
-    public ExamResultDTO(Integer id, Integer examId) {
-        this.id = id;
-        this.examId = examId;
+    public ExamResultDTO() {
+        this(null, null);
     }
 }
