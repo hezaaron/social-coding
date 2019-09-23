@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 public class ExamTakenEvent implements Serializable {
 
 	private static final long serialVersionUID = 4419489739197516400L;
-	private final Integer examResultId;
+	private final Long examResultId;
     private final String userName;
     private final boolean passed;
 }

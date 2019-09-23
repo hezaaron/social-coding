@@ -35,7 +35,7 @@ public class GameServiceImplTest {
 	}
 	
 	@Test
-	public void processFirstPassedAttemptTest() {
+	public void testFirstPassedAttempt() {
 		String username = "hezaaron";
 		Long examId = 1L;
 		int totalScore = 60;
@@ -56,7 +56,7 @@ public class GameServiceImplTest {
 	}
 	
 	@Test
-	public void processPassedAttemptForScoreBadgeTest() {
+	public void testPassedAttemptForScoreBadge() {
 		String username = "hezaaron";
 		Long examId = 1L;
 		int totalScore = 100;
@@ -83,7 +83,7 @@ public class GameServiceImplTest {
 	}
 	
 	@Test
-	public void processFailedAttemptTest() {
+	public void testFailedAttempt() {
 		String username = "hezaaron";
 		Long examId = 2L;
 		int totalScore = 20;
@@ -104,7 +104,7 @@ public class GameServiceImplTest {
 	}
 	
 	@Test
-	public void retrieveStatsForUserTest() {
+	public void testRetrieveStatsForUser() {
 		String username = "hezaaron";
 		int totalScore = 1000;
 		BadgeCard badgeCard = new BadgeCard(username, Badge.SILVER);

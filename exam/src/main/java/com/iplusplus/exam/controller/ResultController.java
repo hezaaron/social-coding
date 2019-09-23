@@ -5,9 +5,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,33 +15,37 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.iplusplus.exam.dto.ExamResultDTO;
-import com.iplusplus.exam.entity.ExamResult;
+import com.iplusplus.exam.dto.ExamDTO;
+import com.iplusplus.exam.entity.ExamProtocol;
 import com.iplusplus.exam.model.ExamTime;
-import com.iplusplus.exam.service.ExamService;
+import com.iplusplus.exam.service.ResultService;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/results")
+@Slf4j @RequiredArgsConstructor
 public class ResultController {
 
-	private static final Logger logger = LogManager.getLogger(ExamController.class);
-	private final ExamService examService;
-	
-	public ResultController(ExamService examService) {
-		this.examService = examService;
-	}
+	private final ResultService resultService;
 	
 	@PostMapping
-    ResponseEntity<ExamResult> submitResult(@RequestBody ExamResultDTO frm, HttpServletRequest request) {
-        logger.info("Submit: {}", frm.getAnswers());
-        final ExamResult examResult = examService.getExamResult(frm.getId());
-        examResult.setFinishTime(new ExamTime(Clock.systemDefaultZone()).getTime());
-        examService.computeGrade(examResult, frm.getExamId(), frm.getAnswers(), frm.getUserName());
-        return ResponseEntity.ok(examService.updateExamResult(examResult));
+    public ResponseEntity<ExamProtocol> submitResult(@RequestBody ExamDTO frm, HttpServletRequest request) {
+        log.info("Submit: {}", frm.getAnswers());
+        final ExamProtocol examProtocol = resultService.getExamProtocol(frm.getId());
+        examProtocol.setFinishTime(new ExamTime(Clock.systemDefaultZone()).getTime());
+        resultService.computeGrade(examProtocol, frm.getExamId(), frm.getAnswers(), frm.getUsername());
+        return ResponseEntity.ok(resultService.updateExamProtocol(examProtocol));
     }
 
     @GetMapping("/{id}")
-    ResponseEntity <Map<String,Object>> getExamStats(@PathVariable("id") Integer resultId) {
-        return ResponseEntity.ok(examService.getExamStats(resultId));
+    public ResponseEntity <Map<String,Object>> getExamStats(@PathVariable("id") Long resultId) {
+        return ResponseEntity.ok(resultService.getExamStats(resultId));
+    }
+    
+    @ExceptionHandler(RuntimeException.class)
+    public final ResponseEntity<Exception> handleAllExceptions(RuntimeException exception) {
+        return new ResponseEntity<>(exception, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

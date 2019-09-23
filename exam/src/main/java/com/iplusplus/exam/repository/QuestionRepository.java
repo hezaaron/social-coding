@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.iplusplus.exam.entity.Exam;
 import com.iplusplus.exam.entity.Question;
 
-public interface QuestionRepository extends JpaRepository<Question, Integer> {
+public interface QuestionRepository extends JpaRepository<Question, Long> {
 
 	List<Question> findByExamId(Integer examId);
     Question findFirstByExamAndIdNotIn(Exam exam, Set<Integer> ids);

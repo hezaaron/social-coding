@@ -15,24 +15,29 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 @Entity @Data
 @ToString(exclude={"exam"})
 @EqualsAndHashCode(exclude= {"exam"})
-public final class ExamResult implements Serializable {
+@RequiredArgsConstructor
+public final class ExamProtocol implements Serializable {
 
 	private static final long serialVersionUID = 4452128691658159963L;
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
+	private Long id;
 	@JsonIgnore
     private String user;
 	@ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "exam_id")
-    private Exam exam;
-    private LocalDateTime startTime;
+    private final Exam exam;
+    private final LocalDateTime startTime;
     private LocalDateTime finishTime;
-    private Integer questionCount;
+    private final Integer questionCount;
     private Integer correctAnswers;
     private Integer grade;
-
+    
+    public ExamProtocol() {
+    	this(null, null, null);
+    }
 }

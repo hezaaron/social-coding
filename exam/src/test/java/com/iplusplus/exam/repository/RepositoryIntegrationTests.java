@@ -16,11 +16,11 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import com.iplusplus.exam.entity.Answer;
 import com.iplusplus.exam.entity.Exam;
-import com.iplusplus.exam.entity.ExamResult;
+import com.iplusplus.exam.entity.ExamProtocol;
 import com.iplusplus.exam.entity.Question;
 import com.iplusplus.exam.repository.AnswerRepository;
 import com.iplusplus.exam.repository.ExamRepository;
-import com.iplusplus.exam.repository.ExamResultRepository;
+import com.iplusplus.exam.repository.ExamProtocolRepository;
 import com.iplusplus.exam.repository.QuestionRepository;
 
 import br.com.six2six.fixturefactory.Fixture;
@@ -37,7 +37,7 @@ class RepositoryIntegrationTests {
 	@Autowired
 	private AnswerRepository answerRepository;
 	@Autowired
-	private ExamResultRepository examResultRepository;
+	private ExamProtocolRepository examResultRepository;
 	private Exam fixtureExam;
 
 	@BeforeEach
@@ -78,7 +78,7 @@ class RepositoryIntegrationTests {
 		questionRepository.save(fixtureQuestion);
 		Answer fixtureAnswer = Fixture.from(Answer.class).gimme("valid");
 		answerRepository.save(fixtureAnswer);
-		int questionId = fixtureAnswer.getQuestion().getId();
+		Long questionId = fixtureAnswer.getQuestion().getId();
 		List<Answer> answers = answerRepository.findByQuestionId(questionId);
 		assertAll("answers", () -> assertFalse(answers.isEmpty()), () -> assertEquals(1, answers.size()));
 	}
@@ -99,9 +99,9 @@ class RepositoryIntegrationTests {
 	@Test
 	void shouldSaveAndFetchExamResult() {
 		examRepository.save(fixtureExam);
-		ExamResult fixtureExamResult = Fixture.from(ExamResult.class).gimme("valid");
+		ExamProtocol fixtureExamResult = Fixture.from(ExamProtocol.class).gimme("valid");
 		examResultRepository.save(fixtureExamResult);
-		List<ExamResult> examResults = examResultRepository.findAll();
+		List<ExamProtocol> examResults = examResultRepository.findAll();
 		assertAll("examResults", () -> assertFalse(examResults.isEmpty()), () -> assertEquals(1, examResults.size()));
 	}
 }

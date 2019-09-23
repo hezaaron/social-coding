@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.iplusplus.exam.entity.Answer;
 
-public interface AnswerRepository extends JpaRepository<Answer, Integer> {
+public interface AnswerRepository extends JpaRepository<Answer, Long> {
 
-    List<Answer> findByQuestionId(Integer questionId);
+    List<Answer> findByQuestionId(Long questionId);
     List<Answer> findByQuestionExamId(Integer examId);
     List<Answer> findByQuestionExamIdAndCorrect(Integer examId, Boolean isCorrect);
 

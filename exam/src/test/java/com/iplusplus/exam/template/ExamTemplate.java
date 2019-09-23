@@ -4,10 +4,10 @@ import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
 
-import com.iplusplus.exam.dto.ExamResultDTO;
+import com.iplusplus.exam.dto.ExamDTO;
 import com.iplusplus.exam.entity.Answer;
 import com.iplusplus.exam.entity.Exam;
-import com.iplusplus.exam.entity.ExamResult;
+import com.iplusplus.exam.entity.ExamProtocol;
 import com.iplusplus.exam.entity.Question;
 import com.iplusplus.exam.model.ExamTime;
 
@@ -28,26 +28,26 @@ public class ExamTemplate implements TemplateLoader {
 		}});
 		
 		Fixture.of(Question.class).addTemplate("valid", new Rule() {{
-			add("id", sequence(Integer.class));
+			add("id", sequence(Long.class));
 			add("exam", one(Exam.class, "examId"));
 			add("name", "What is the output of the following program");
 			add("code", random("System.out.print('Hello World');", "System.out.print('Welcome Java');"));
 			add("multiAnswer", random(true, false));
 		}}).addTemplate("questionId", new Rule() {{
-			add("id", sequence(Integer.class));
+			add("id", sequence(Long.class));
 		}});
 		
 		Fixture.of(Answer.class).addTemplate("valid", new Rule() {{
-			add("id", random(Integer.class, range(1, 100)));
+			add("id", random(Long.class, range(1L, 100L)));
 			add("question", one(Question.class, "valid"));
 			add("name", random("Hello World", "Welcome Java"));
 			add("correct", true);
 		}}).addTemplate("answerId", new Rule() {{
-			add("id", random(Integer.class, range(1, 100)));
+			add("id", random(Long.class, range(1L, 100L)));
 		}});
 		
-		Fixture.of(ExamResult.class).addTemplate("valid", new Rule() {{
-			add("id", random(Integer.class, range(1, 100)));
+		Fixture.of(ExamProtocol.class).addTemplate("valid", new Rule() {{
+			add("id", random(Long.class, range(1L, 100L)));
 			add("user", random("hez", "aaron"));
 			add("exam", one(Exam.class, "examId"));
 			add("startTime", examTime.getTime());
@@ -57,10 +57,10 @@ public class ExamTemplate implements TemplateLoader {
 			add("grade", random(20, 40, 60, 80, 100));
 		}});
 		
-		Fixture.of(ExamResultDTO.class).addTemplate("valid", new Rule() {{
-			add("id", random(Integer.class, range(1, 100)));
+		Fixture.of(ExamDTO.class).addTemplate("valid", new Rule() {{
+			add("id", random(Long.class, range(1L, 100L)));
 			add("examId", random(Integer.class, range(1, 100)));
-			add("userName", random("hez", "aaron"));
+			add("username", random("hez", "aaron"));
 		}});
 		
 	}

@@ -8,21 +8,21 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import com.iplusplus.exam.entity.ExamResult;
+import com.iplusplus.exam.entity.ExamProtocol;
 import com.iplusplus.exam.model.Grade;
 
 class GradeTest {
 	
 	@Test
 	void testComputeGrade() {
-		ExamResult result = new ExamResult();
-		List<Integer>correctAnswers = Arrays.asList(1, 4, 5, 7, 10);
-		List<Integer>userAnswers = Arrays.asList(1, 9, 3, 7, 1 );
+		ExamProtocol result = new ExamProtocol();
+		List<Long>correctAnswers = Arrays.asList(1L, 4L, 5L, 7L, 10L);
+		List<Long>userAnswers = Arrays.asList(1L, 9L, 3L, 7L, 1L);
 		String user = "hez";
 		Grade grade = new Grade(result, correctAnswers, userAnswers, user);
 		grade.computeGrade();
 		assertAll("result",
-				() -> assertEquals(3, (int)result.getCorrectAnswers()),
-				() -> assertEquals(60, (int)result.getGrade()));
+				() -> assertEquals(3, (int) result.getCorrectAnswers()),
+				() -> assertEquals(60, (int) result.getGrade()));
 	}
 }

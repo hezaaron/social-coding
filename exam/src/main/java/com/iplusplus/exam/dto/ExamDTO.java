@@ -8,16 +8,16 @@ import lombok.Setter;
 
 @Getter
 @RequiredArgsConstructor
-public final class ExamResultDTO {
+public final class ExamDTO {
 
-	private final Integer id;
+	private final Long id;
     private final Integer examId;
     @Setter
-    private List<Integer> answers;
+    private List<Long> answers;
     @Setter
-    private String userName;
+    private String username;
     
-    public ExamResultDTO() {
+    public ExamDTO() {
         this(null, null);
     }
 }

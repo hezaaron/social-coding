@@ -24,7 +24,7 @@ public final class Answer implements Serializable{
 
 	private static final long serialVersionUID = -3457593334233409268L;
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
+	private Long id;
 	@ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "question_id")
     private final Question question;
     private final String name;

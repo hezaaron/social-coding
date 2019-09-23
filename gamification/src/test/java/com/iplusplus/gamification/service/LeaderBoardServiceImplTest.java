@@ -26,7 +26,7 @@ public class LeaderBoardServiceImplTest {
 	}
 	
 	@Test
-	public void retrieveLeaderBoardTest() {
+	public void testRetrieveLeaderBoard() {
 		String username = "hezaaron";
 		LeaderBoardRow leaderBoardRow = new LeaderBoardRow(username, 300L);
 		List<LeaderBoardRow> expectedLeaderBoardRows = Collections.singletonList(leaderBoardRow);
