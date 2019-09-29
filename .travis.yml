@@ -6,12 +6,14 @@ matrix:
       - cd coding && chmod +x mvnw
       script:
         - ./mvnw test
+    
     - language: java
       jdk: openjdk8
       before_install:
       - cd gamification && chmod +x mvnw
       script:
         - ./mvnw test
+    
     - language: node_js
       node_js:
         - "node"
@@ -22,16 +24,24 @@ matrix:
           - "node_modules"
       script:
         - npm run test_headless
-    #- language: android
-    #  dist: trusty
-    #  android:
-    #    components:
-    #      - build-tools-29.0.2
-    #      - android-28
-    #  before_script:
-    #    - cd mobile
-    #  script:
-    #    - ./gradlew build connectedCheck
     
+    - language: android
+      dist: trusty
+      android:
+        components:
+          - platform-tools
+          - tools
+          - extra-android-m2repository
+        licenses:
+          - 'android-sdk-preview-license-52d11cd2'
+          - 'android-sdk-license-.+'
+          - 'google-gdk-license-.+'
+      before_install:
+        - cd mobile && chmod +x gradlew
+        - touch $HOME/.android/repositories.cfg
+        - yes | sdkmanager "platforms;android-28"
+        - yes | sdkmanager "build-tools;29.0.2"
+      script:
+        - ./gradlew build connectedCheck
 notifications:
   email: false
