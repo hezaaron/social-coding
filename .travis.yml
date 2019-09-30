@@ -32,6 +32,7 @@ matrix:
           - platform-tools
           - tools
           - extra-android-m2repository
+          - sys-img-x86-android-28
         licenses:
           - 'android-sdk-preview-license-52d11cd2'
           - 'android-sdk-license-.+'
