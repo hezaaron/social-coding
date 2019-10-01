@@ -27,7 +27,7 @@ export class ExamService {
 	}
 
 	getExam( id: number ): Observable<any> {
-		return this.http.get( `${examBaseUrl}/exam/${id}` );
+		return this.http.get( `${examBaseUrl}/details/${id}` );
 	}
 
 	getQuestions( id: number ): Observable<Question[]> {
@@ -35,7 +35,7 @@ export class ExamService {
 	}
 
 	getExamAnswers( id: number ): Observable<Option[]> {
-		return this.http.get<Option[]>( `${examBaseUrl}/exam-answers/${id}` );
+		return this.http.get<Option[]>( `${examBaseUrl}/answers/${id}` );
 	}
 
 	postAnswers( userAnswer: any ): Observable<any> {
