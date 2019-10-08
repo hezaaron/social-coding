@@ -26,7 +26,7 @@ public final class Protocol implements Serializable {
 
 	private static final long serialVersionUID = 4452128691658159963L;
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id;
+	private final Long id;
 	@JsonIgnore
     private String user;
 	@ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "quiz_id")
@@ -38,6 +38,6 @@ public final class Protocol implements Serializable {
     private Integer grade;
     
     public Protocol() {
-    	this(null, null, null);
+    	this(null, null, null, null);
     }
 }

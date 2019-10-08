@@ -10,17 +10,17 @@ public class EventDispatcher {
 
     private RabbitTemplate rabbitTemplate;
     private String codingExchange;
-    private String codingTakenRoutingKey;
+    private String codingSolvedRoutingKey;
     
     @Autowired
     EventDispatcher(final RabbitTemplate rabbitTemplate, @Value("${coding.exchange}") final String codingExchange,
-                    @Value("${coding.taken.key}") final String codingTakenRoutingKey) {
+                    @Value("${coding.solved.key}") final String codingSolvedRoutingKey) {
         this.rabbitTemplate = rabbitTemplate;
         this.codingExchange = codingExchange;
-        this.codingTakenRoutingKey = codingTakenRoutingKey;
+        this.codingSolvedRoutingKey = codingSolvedRoutingKey;
     }
 
-    public void send(final CodingTakenEvent codingTakenEvent) {
-        rabbitTemplate.convertAndSend(codingExchange, codingTakenRoutingKey, codingTakenEvent);
+    public void send(final CodingSolvedEvent codingSolvedEvent) {
+        rabbitTemplate.convertAndSend(codingExchange, codingSolvedRoutingKey, codingSolvedEvent);
     }
 }

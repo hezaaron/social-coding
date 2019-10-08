@@ -19,7 +19,7 @@ import org.mockito.MockitoAnnotations;
 
 import com.iplusplus.coding.entity.Protocol;
 import com.iplusplus.coding.event.EventDispatcher;
-import com.iplusplus.coding.event.CodingTakenEvent;
+import com.iplusplus.coding.event.CodingSolvedEvent;
 import com.iplusplus.coding.model.Mark;
 import com.iplusplus.coding.repository.AnswerRepository;
 import com.iplusplus.coding.repository.ProtocolRepository;
@@ -45,10 +45,10 @@ public class ResultServiceImplTest {
 	void testUpdateExamProtocol() {
 		Protocol fixtureProtocol = Fixture.from(Protocol.class).gimme("valid");
 		boolean isPass = fixtureProtocol.getGrade() >= Mark.PASS_MARK;
-		CodingTakenEvent event = new CodingTakenEvent(fixtureProtocol.getId(), fixtureProtocol.getUser(), isPass);
+		CodingSolvedEvent event = new CodingSolvedEvent(fixtureProtocol.getId(), fixtureProtocol.getUser(), isPass);
 		
 		given(protocolRepository.save(any())).willReturn(fixtureProtocol);
-		Protocol protocol = resultService.updateExamProtocol(fixtureProtocol);
+		Protocol protocol = resultService.updateProtocol(fixtureProtocol);
 		
 		assertAll("protocol",
 				() -> assertNotNull(protocol),
@@ -61,7 +61,7 @@ public class ResultServiceImplTest {
 		Protocol fixtureProtocol = Fixture.from(Protocol.class).gimme("valid");
 		given(protocolRepository.getOne(anyLong())).willReturn(fixtureProtocol);
 		Long protocolId = fixtureProtocol.getId();
-		Protocol protocol = resultService.getExamProtocol(protocolId);
+		Protocol protocol = resultService.getProtocol(protocolId);
 		
 		assertAll("protocol",
 				() -> assertNotNull(protocol),

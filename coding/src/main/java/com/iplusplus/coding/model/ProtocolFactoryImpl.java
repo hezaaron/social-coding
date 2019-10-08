@@ -12,7 +12,7 @@ public class ProtocolFactoryImpl implements ProtocolFactory {
 
 	@Override
 	public Protocol createInstance(Quiz quiz, LocalDateTime startTime, Integer questionCount) {
-		return new Protocol(quiz, startTime, questionCount);
+		return new Protocol(null, quiz, startTime, questionCount);
 	}
 
 }

@@ -25,11 +25,11 @@ public class GameServiceImpl implements GameService {
 	private final BadgeCardRepository badgeCardRepository;
 	
 	@Override
-	public GameStats newAttemptForUser(final String username, final Long examId, boolean pass) {
+	public GameStats newAttemptForUser(final String username, final Long quizId, boolean pass) {
 		if(pass) {
-			ScoreCard scoreCard = new ScoreCard(username, examId);
+			ScoreCard scoreCard = new ScoreCard(username, quizId);
 			scoreCardRepository.save(scoreCard);
-			log.info("User {} scored {} points for exam id {}", username, scoreCard.getScore(), examId);
+			log.info("User {} scored {} points for exam id {}", username, scoreCard.getScore(), quizId);
 			List<BadgeCard> badgeCards = processForBadges(username);
 			
 			return new GameStats(username, scoreCard.getScore(),

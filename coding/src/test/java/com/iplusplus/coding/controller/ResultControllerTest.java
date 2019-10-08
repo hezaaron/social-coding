@@ -63,9 +63,9 @@ public class ResultControllerTest {
 		Protocol protocol = Fixture.from(Protocol.class).gimme("valid");
 		QuizDTO examDto = Fixture.from(QuizDTO.class).gimme("valid");
 		
-		given(resultService.getExamProtocol(anyLong())).willReturn(protocol);
+		given(resultService.getProtocol(anyLong())).willReturn(protocol);
 		doNothing().when(resultService).computeGrade(any(), anyInt(), any(), anyString());
-		given(resultService.updateExamProtocol(any())).willReturn(protocol);
+		given(resultService.updateProtocol(any())).willReturn(protocol);
 		
 		MockHttpServletResponse response = mockMvc.perform(post("/results")
 												  .contentType(MediaType.APPLICATION_JSON)

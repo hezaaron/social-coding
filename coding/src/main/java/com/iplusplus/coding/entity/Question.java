@@ -24,7 +24,7 @@ public final class Question implements Serializable {
 
 	private static final long serialVersionUID = 6292560590697622204L;
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id;
+	private final Long id;
 	@ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "quiz_id")
     private final Quiz quiz;
     private final String name;
@@ -33,6 +33,6 @@ public final class Question implements Serializable {
     private boolean multiAnswer = false;
 	
     public Question() {
-    	this(null, null, null);
+    	this(null, null, null, null);
     }
 }

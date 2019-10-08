@@ -7,10 +7,10 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @RequiredArgsConstructor
-public class CodingTakenEvent implements Serializable {
+public class CodingSolvedEvent implements Serializable {
 
 	private static final long serialVersionUID = 4419489739197516400L;
 	private final Long resultId;
     private final String userName;
-    private final boolean passed;
+    private final boolean solved;
 }

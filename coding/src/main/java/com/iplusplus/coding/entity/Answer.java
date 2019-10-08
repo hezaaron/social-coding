@@ -24,7 +24,7 @@ public final class Answer implements Serializable{
 
 	private static final long serialVersionUID = -3457593334233409268L;
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id;
+	private final Long id;
 	@ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "question_id")
     private final Question question;
     private final String name;
@@ -32,6 +32,6 @@ public final class Answer implements Serializable{
     private boolean correct = false;
 
     public Answer() {
-    	this(null, null);
+    	this(null, null, null);
     }
 }

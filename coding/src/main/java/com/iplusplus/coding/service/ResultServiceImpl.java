@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import com.iplusplus.coding.entity.Answer;
 import com.iplusplus.coding.entity.Protocol;
 import com.iplusplus.coding.event.EventDispatcher;
-import com.iplusplus.coding.event.CodingTakenEvent;
+import com.iplusplus.coding.event.CodingSolvedEvent;
 import com.iplusplus.coding.model.Grade;
 import com.iplusplus.coding.model.Mark;
 import com.iplusplus.coding.repository.AnswerRepository;
@@ -33,9 +33,9 @@ public class ResultServiceImpl implements ResultService {
 	
 	@Override
 	@Transactional
-    public Protocol updateExamProtocol(Protocol protocol) {
+    public Protocol updateProtocol(Protocol protocol) {
     	boolean isPass = protocol.getGrade() >= Mark.PASS_MARK;
-    	eventDispatcher.send(new CodingTakenEvent(protocol.getId(), protocol.getUser(), isPass));
+    	eventDispatcher.send(new CodingSolvedEvent(protocol.getId(), protocol.getUser(), isPass));
         return protocolRepository.save(protocol);
     }
 
@@ -49,7 +49,7 @@ public class ResultServiceImpl implements ResultService {
 
 	@Override
 	public Map<String, Object> getQuizStats(Long protocolId) {
-		final Protocol protocol = getExamProtocol(protocolId);
+		final Protocol protocol = getProtocol(protocolId);
         final Map<String, Object> map = new HashMap<>();
         map.put("title", String.format("Your result for %s", protocol.getQuiz().getName()));
         map.put("startTime", getTimeFormat(protocol.getStartTime().toLocalTime()));
@@ -61,7 +61,7 @@ public class ResultServiceImpl implements ResultService {
 	}
 
 	@Override
-	public Protocol getExamProtocol(Long protocolId) {
+	public Protocol getProtocol(Long protocolId) {
 		return protocolRepository.getOne(protocolId);
 	}
 

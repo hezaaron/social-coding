@@ -7,9 +7,9 @@ import androidx.room.*
 ])
 data class CodeAttempt (
     @PrimaryKey(autoGenerate = true) val id:Int = 0,
-    @ColumnInfo(name = "user_id") val userId:Int,
+    @ColumnInfo(name = "user_id", index = true) val userId:Int,
     @Embedded(prefix = "code_") val code:Code,
-    @ColumnInfo(name = "answer_id") val answerId:Int,
+    @ColumnInfo(name = "answer_id", index = true) val answerId:Int,
     @ColumnInfo(name = "user_answer") val userAnswer:String,
     @ColumnInfo(name = "is_correct") val correct:Boolean
 )

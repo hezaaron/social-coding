@@ -37,7 +37,7 @@ import com.iplusplus.coding.service.QuizServiceImpl;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
-class QuizServiceImplTest {
+public class QuizServiceImplTest {
 
 	private QuizServiceImpl quizService;
 	@Mock private QuizRepository quizRepository;

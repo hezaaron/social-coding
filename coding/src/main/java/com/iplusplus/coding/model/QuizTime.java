@@ -8,15 +8,18 @@ import java.util.Calendar;
 import javax.servlet.http.HttpServletRequest;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class QuizTime {
 
-	private Clock clock;
+	private final Clock clock;
 	@Getter
-	private LocalDateTime time;
+	private final LocalDateTime time;
 
+	public QuizTime() {
+		this(null, null);
+	}
 	public QuizTime(Clock clock) {
 		this.clock = clock;
 		this.time = LocalDateTime.now(this.clock);

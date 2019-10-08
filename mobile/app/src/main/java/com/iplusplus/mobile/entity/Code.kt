@@ -11,7 +11,7 @@ import androidx.room.PrimaryKey
 ])
 data class Code (
     @PrimaryKey(autoGenerate = true) val id:Int = 0,
-    @ColumnInfo(name = "language_id")val languageId:Int,
+    @ColumnInfo(name = "language_id", index = true)val languageId:Int,
     val question:String,
     val snippet:String
 )

@@ -12,7 +12,7 @@ import androidx.room.PrimaryKey
 ])
 data class Answer (
     @PrimaryKey(autoGenerate = true) val id:Int = 0,
-    @ColumnInfo(name = "code_id") val codeId:Int,
+    @ColumnInfo(name = "code_id", index = true) val codeId:Int,
     val name:String,
     @ColumnInfo(name = "is_correct") val correct:Boolean
 )

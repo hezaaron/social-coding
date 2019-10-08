@@ -33,13 +33,11 @@ matrix:
           - platform-tools
           - tools
           - extra-android-m2repository
-          #- sys-img-armeabi-v7a-android-28
         licenses:
           - 'android-sdk-preview-license-52d11cd2'
           - 'android-sdk-license-.+'
           - 'google-gdk-license-.+'
       before_install:
-        #- cd mobile && chmod +x gradlew
         - touch $HOME/.android/repositories.cfg
         - yes | sdkmanager "platforms;android-28"
         - yes | sdkmanager "build-tools;29.0.2"
@@ -53,12 +51,8 @@ matrix:
           - $HOME/.android/build-cache
       before_script:
         - cd mobile && chmod +x gradlew
-      #  - echo no | android create avd --force -n test -t android-28 --abi armeabi-v7a -c 100M
-       # - emulator -avd test -no-audio -no-window &
-       # - android-wait-for-emulator
-       # - adb shell input keyevent 82 &
       script:
-        - ./gradlew clean build
+        - ./gradlew clean build --warning-mode=all
         - ./gradlew test
 notifications:
   email: false

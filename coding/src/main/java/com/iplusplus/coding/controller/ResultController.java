@@ -33,10 +33,10 @@ public class ResultController {
 	@PostMapping
     public ResponseEntity<Protocol> submitResult(@RequestBody QuizDTO frm, HttpServletRequest request) {
         log.info("Submit: {}", frm.getAnswers());
-        final Protocol protocol = resultService.getExamProtocol(frm.getId());
+        final Protocol protocol = resultService.getProtocol(frm.getId());
         protocol.setFinishTime(new QuizTime(Clock.systemDefaultZone()).getTime());
         resultService.computeGrade(protocol, frm.getQuizId(), frm.getAnswers(), frm.getUsername());
-        return ResponseEntity.ok(resultService.updateExamProtocol(protocol));
+        return ResponseEntity.ok(resultService.updateProtocol(protocol));
     }
 
     @GetMapping("/{id}")
