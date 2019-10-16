@@ -29,12 +29,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.iplusplus.coding.controller.QuizController;
 import com.iplusplus.coding.dto.QuizDTO;
 import com.iplusplus.coding.entity.Answer;
-import com.iplusplus.coding.entity.Quiz;
 import com.iplusplus.coding.entity.Question;
-import com.iplusplus.coding.service.QuizServiceImpl;
+import com.iplusplus.coding.entity.Quiz;
+import com.iplusplus.coding.service.QuizService;
 
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
@@ -43,7 +42,7 @@ import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 @WebMvcTest @WithMockUser
 public class QuizControllerTest {
 
-	@MockBean private QuizServiceImpl quizService;
+	@MockBean private QuizService quizService;
 	@Autowired private MockMvc mockMvc;
 	@Mock private HttpServletRequest request;
 	@Mock private HttpSession session;

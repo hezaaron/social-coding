@@ -30,7 +30,7 @@ import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
 public class ResultServiceImplTest {
 
-	private ResultServiceImpl resultService;
+	private ResultService resultService;
 	@Mock private ProtocolRepository protocolRepository;
 	@Mock private AnswerRepository answerRepository;
     @Mock private EventDispatcher eventDispatcher;

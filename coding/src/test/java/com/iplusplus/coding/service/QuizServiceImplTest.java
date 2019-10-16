@@ -39,7 +39,7 @@ import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
 public class QuizServiceImplTest {
 
-	private QuizServiceImpl quizService;
+	private QuizService quizService;
 	@Mock private QuizRepository quizRepository;
 	@Mock private QuestionRepository questionRepository;
 	@Mock private AnswerRepository answerRepository;

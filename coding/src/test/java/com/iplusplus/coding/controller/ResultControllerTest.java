@@ -32,11 +32,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.iplusplus.coding.controller.ResultController;
 import com.iplusplus.coding.dto.QuizDTO;
 import com.iplusplus.coding.entity.Protocol;
 import com.iplusplus.coding.model.Mark;
-import com.iplusplus.coding.service.ResultServiceImpl;
+import com.iplusplus.coding.service.ResultService;
 
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
@@ -46,7 +45,7 @@ import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 @WebMvcTest @WithMockUser
 public class ResultControllerTest {
 	
-	@MockBean private ResultServiceImpl resultService;
+	@MockBean private ResultService resultService;
 	@Autowired private MockMvc mockMvc;
 	@Mock private HttpServletRequest request;
 	private JacksonTester<QuizDTO> jsonExamDto;
