@@ -29,7 +29,7 @@ class RandomQuestionTest {
 		RandomQuestion randomQuestion = new RandomQuestion(fixtureQuestions, size);
 		List<Question> randomQuestions = randomQuestion.getList();
 		assertAll("randomQuestions",
-				() -> assertFalse(randomQuestions.isEmpty()),
-				() -> assertEquals(3, randomQuestions.size()));
+					() -> assertFalse(randomQuestions.isEmpty()),
+					() -> assertEquals(3, randomQuestions.size()));
 	}
 }

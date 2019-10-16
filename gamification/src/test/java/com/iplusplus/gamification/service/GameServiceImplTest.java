@@ -24,7 +24,7 @@ import com.iplusplus.gamification.repository.ScoreCardRepository;
 
 public class GameServiceImplTest {
 
-	private GameServiceImpl gameService;
+	private GameService gameService;
 	@Mock private ScoreCardRepository scoreCardRepository;
 	@Mock private BadgeCardRepository badgeCardRepository;
 	

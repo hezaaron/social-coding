@@ -30,7 +30,7 @@ import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
 public class ResultServiceImplTest {
 
-	private ResultServiceImpl resultService;
+	private ResultService resultService;
 	@Mock private ProtocolRepository protocolRepository;
 	@Mock private AnswerRepository answerRepository;
     @Mock private EventDispatcher eventDispatcher;
@@ -41,8 +41,22 @@ public class ResultServiceImplTest {
 		FixtureFactoryLoader.loadTemplates("com.iplusplus.coding.template");
 		resultService = new ResultServiceImpl(protocolRepository, answerRepository, eventDispatcher);
 	}
+	
 	@Test
-	void testUpdateExamProtocol() {
+	void testGetProtocol() {
+		Protocol fixtureProtocol = Fixture.from(Protocol.class).gimme("valid");
+		given(protocolRepository.getOne(anyLong())).willReturn(fixtureProtocol);
+		Long protocolId = fixtureProtocol.getId();
+		Protocol protocol = resultService.getProtocol(protocolId);
+		
+		assertAll("protocol",
+					() -> assertNotNull(protocol),
+					() -> assertEquals(5, (int)protocol.getQuestionCount()),
+					() -> assertNotNull(protocol.getGrade()));
+	}
+	
+	@Test
+	void testUpdateProtocol() {
 		Protocol fixtureProtocol = Fixture.from(Protocol.class).gimme("valid");
 		boolean isPass = fixtureProtocol.getGrade() >= Mark.PASS_MARK;
 		CodingSolvedEvent event = new CodingSolvedEvent(fixtureProtocol.getId(), fixtureProtocol.getUser(), isPass);
@@ -51,22 +65,9 @@ public class ResultServiceImplTest {
 		Protocol protocol = resultService.updateProtocol(fixtureProtocol);
 		
 		assertAll("protocol",
-				() -> assertNotNull(protocol),
-				() -> assertNotNull(protocol.getQuiz()));
+					() -> assertNotNull(protocol),
+					() -> assertNotNull(protocol.getQuiz()));
 		verify(eventDispatcher).send(eq(event));
-	}
-	
-	@Test
-	void testGetQuizProtocol() {
-		Protocol fixtureProtocol = Fixture.from(Protocol.class).gimme("valid");
-		given(protocolRepository.getOne(anyLong())).willReturn(fixtureProtocol);
-		Long protocolId = fixtureProtocol.getId();
-		Protocol protocol = resultService.getProtocol(protocolId);
-		
-		assertAll("protocol",
-				() -> assertNotNull(protocol),
-				() -> assertEquals(5, (int)protocol.getQuestionCount()),
-				() -> assertNotNull(protocol.getGrade()));
 	}
 	
 	@Test

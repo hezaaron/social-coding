@@ -7,8 +7,8 @@ import com.iplusplus.coding.entity.Protocol;
 
 public interface ResultService {
 
+	Protocol getProtocol(Long protocolId);
 	Protocol updateProtocol(Protocol protocol);
 	void computeGrade(Protocol protocol, Integer examId, List<Long> userAnswers, String user);
 	Map<String,Object> getQuizStats(final Long protocolId);
-	Protocol getProtocol(Long protocolId);
 }
