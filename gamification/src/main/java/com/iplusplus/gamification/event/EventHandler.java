@@ -27,6 +27,4 @@ class EventHandler {
 			throw new AmqpRejectAndDontRequeueException(e);
 		}
 	}
-	
-	
 }

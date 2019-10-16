@@ -39,7 +39,7 @@ import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
 public class QuizServiceImplTest {
 
-	private QuizServiceImpl quizService;
+	private QuizService quizService;
 	@Mock private QuizRepository quizRepository;
 	@Mock private QuestionRepository questionRepository;
 	@Mock private AnswerRepository answerRepository;
@@ -59,18 +59,19 @@ public class QuizServiceImplTest {
 	}
 	
 	@Test
-    void testFindsAllExams() {
-		List<Quiz> fixtureExams = Fixture.from(Quiz.class).gimme(3, "valid");
-		given(quizRepository.findAll()).willReturn(fixtureExams);
-        final List<Quiz> quizzes = quizService.getAllQuizzes();
+    void testFindsAllQuizzes() {
+		List<Quiz> fixtureQuizzes = Fixture.from(Quiz.class).gimme(3, "valid");
+		given(quizRepository.findAll()).willReturn(fixtureQuizzes);
+        
+		final List<Quiz> quizzes = quizService.getAllQuizzes();
         assertAll("quizzes",
-        		() -> assertFalse(quizzes.isEmpty()),
-        		() -> assertEquals(3, quizzes.size()),
-        		() -> assertNotNull(quizzes.get(1).getName()));
+	        		() -> assertFalse(quizzes.isEmpty()),
+	        		() -> assertEquals(3, quizzes.size()),
+	        		() -> assertNotNull(quizzes.get(1).getName()));
     }
 
 	@Test
-	void testGetExamDetails() {
+	void testGetQuizDetails() {
 		Quiz fixtureQuiz = Fixture.from(Quiz.class).gimme("valid");
 		List<Question> fixtureQuestions = Fixture.from(Question.class).gimme(5, "valid");
 		Protocol fixtureProtocol = Fixture.from(Protocol.class).gimme("valid");
@@ -85,34 +86,36 @@ public class QuizServiceImplTest {
 		
 		final Map<String, Object> model = quizService.getQuizDetails(fixtureQuiz.getId(), request);
 		
-		assertAll("model",
-				() -> assertNotNull(model),
-				() -> assertEquals(model.get("name"), fixtureQuiz.getName()),
-				() -> assertEquals(model.get("timer"), remainingTime),
-				() -> assertTrue(model.get("result") instanceof QuizDTO));
+		assertAll("quizDetails",
+					() -> assertNotNull(model),
+					() -> assertEquals(model.get("name"), fixtureQuiz.getName()),
+					() -> assertEquals(model.get("timer"), remainingTime),
+					() -> assertTrue(model.get("result") instanceof QuizDTO));
 	}
 	
 	@Test
-	void testGetQuestionsForExam() {
+	void testGetQuestionsForQuiz() {
 		List<Question> fixtureQuestions = Fixture.from(Question.class).gimme(5, "valid");
 		given(questionRepository.findByQuizId(anyInt())).willReturn(fixtureQuestions);
-		int examId = fixtureQuestions.get(0).getQuiz().getId();
-		final List<Question> randomQuestions = quizService.getQuestionsForQuiz(examId);
+		int quizId = fixtureQuestions.get(0).getQuiz().getId();
+		
+		final List<Question> randomQuestions = quizService.getQuestionsForQuiz(quizId);
 		assertAll("randomQuestions",
-				() -> assertNotNull(randomQuestions),
-				() -> assertFalse(randomQuestions.isEmpty()),
-				() -> assertEquals(5, randomQuestions.size()));
+					() -> assertNotNull(randomQuestions),
+					() -> assertFalse(randomQuestions.isEmpty()),
+					() -> assertEquals(5, randomQuestions.size()));
 	}
 	
 	@Test
-	void testGetAnswersForExam() {
+	void testGetAnswersForQuiz() {
 		List<Answer> fixtureAnswers = Fixture.from(Answer.class).gimme(4, "valid");
 		given(answerRepository.findByQuestionQuizId(any(Integer.class))).willReturn(fixtureAnswers);
 		Integer quizId = fixtureAnswers.get(0).getQuestion().getQuiz().getId();
+		
 		final List<Answer> answers = quizService.getAnswersForQuiz(quizId);
 		assertAll("answers",
-				() -> assertNotNull(answers),
-				() -> assertFalse(answers.isEmpty()),
-				() -> assertEquals(4, answers.size()));
+					() -> assertNotNull(answers),
+					() -> assertFalse(answers.isEmpty()),
+					() -> assertEquals(4, answers.size()));
 	}
 }

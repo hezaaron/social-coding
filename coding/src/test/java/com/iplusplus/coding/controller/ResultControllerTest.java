@@ -32,11 +32,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.iplusplus.coding.controller.ResultController;
 import com.iplusplus.coding.dto.QuizDTO;
 import com.iplusplus.coding.entity.Protocol;
 import com.iplusplus.coding.model.Mark;
-import com.iplusplus.coding.service.ResultServiceImpl;
+import com.iplusplus.coding.service.ResultService;
 
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
@@ -46,10 +45,10 @@ import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 @WebMvcTest @WithMockUser
 public class ResultControllerTest {
 	
-	@MockBean private ResultServiceImpl resultService;
+	@MockBean private ResultService resultService;
 	@Autowired private MockMvc mockMvc;
 	@Mock private HttpServletRequest request;
-	private JacksonTester<QuizDTO> jsonExamDto;
+	private JacksonTester<QuizDTO> jsonQuizDto;
 	private JacksonTester<Map<String, Object>> jsonStats;
 	
 	@BeforeEach
@@ -61,7 +60,7 @@ public class ResultControllerTest {
 	@Test
 	void testSubmitResult() throws Exception {
 		Protocol protocol = Fixture.from(Protocol.class).gimme("valid");
-		QuizDTO examDto = Fixture.from(QuizDTO.class).gimme("valid");
+		QuizDTO quizDto = Fixture.from(QuizDTO.class).gimme("valid");
 		
 		given(resultService.getProtocol(anyLong())).willReturn(protocol);
 		doNothing().when(resultService).computeGrade(any(), anyInt(), any(), anyString());
@@ -69,13 +68,13 @@ public class ResultControllerTest {
 		
 		MockHttpServletResponse response = mockMvc.perform(post("/results")
 												  .contentType(MediaType.APPLICATION_JSON)
-												  .content(jsonExamDto.write(examDto).getJson()))
+												  .content(jsonQuizDto.write(quizDto).getJson()))
 												  .andReturn().getResponse();
 		assertEquals(HttpStatus.OK.value(), response.getStatus());
 	}
 	
 	@Test
-	void testGetExamStats() throws Exception {
+	void testGetQuizStats() throws Exception {
 		Protocol protocol = Fixture.from(Protocol.class).gimme("valid");
 		Map<String, Object> stats = new HashMap<>();
 		stats.put("title", String.format("Your result for %s", protocol.getQuiz().getName()));
@@ -89,7 +88,7 @@ public class ResultControllerTest {
 		
 		MockHttpServletResponse response = mockMvc.perform(get("/results/1"))
 												  .andReturn().getResponse();
-		assertAll("results",
+		assertAll("quizStats",
 					() -> assertEquals(HttpStatus.OK.value(), response.getStatus()),
 					() -> assertEquals(jsonStats.write(stats).getJson(), response.getContentAsString()));
 	}

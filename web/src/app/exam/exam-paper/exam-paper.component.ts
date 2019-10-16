@@ -40,7 +40,7 @@ export class ExamPaperComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.subscription = this.examService.examId.subscribe( id => {
+		this.subscription = this.examService.quizId.subscribe( id => {
 			this.examId = id;
 		},
 			error => console.error( error ) );
@@ -54,7 +54,7 @@ export class ExamPaperComponent implements OnInit {
 	}
 
 	startExam(): void {
-		this.examService.getExam( this.examId ).subscribe( exam => {
+		this.examService.getQuiz( this.examId ).subscribe( exam => {
 			this.examName = exam.name
 			this.counter = exam.timer;
 			this.resultForm.setValue( exam.result );
@@ -73,7 +73,7 @@ export class ExamPaperComponent implements OnInit {
 	}
 
 	loadOptions(): void {
-		this.examService.getExamAnswers( this.examId ).subscribe( examAnswers => {
+		this.examService.getAnswers( this.examId ).subscribe( examAnswers => {
 			for ( let examAnswer of examAnswers ) {
 				this.options.push( new Option( examAnswer ) );
 			}

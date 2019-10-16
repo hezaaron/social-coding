@@ -16,7 +16,7 @@ import com.iplusplus.gamification.repository.ScoreCardRepository;
 
 public class LeaderBoardServiceImplTest {
 
-	private LeaderBoardServiceImpl leaderBoardService;
+	private LeaderBoardService leaderBoardService;
 	@Mock private ScoreCardRepository scoreCardRepository;
 	
 	@BeforeEach

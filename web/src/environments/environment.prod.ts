@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
   redirectUri: 'https://iplusplus-client.herokuapp.com',
-  examApiUrl: 'https://iplusplus-server.herokuapp.com/exams',
+  quizApiUrl: 'https://iplusplus-server.herokuapp.com/quizzes',
   resultApiUrl: 'https://iplusplus-server.herokuapp.com/results'    
 };

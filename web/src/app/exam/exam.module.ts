@@ -7,21 +7,27 @@ import { ExamService } from './service/exam.service';
 import { ExamResultsComponent } from './exam-results/exam-results.component';
 import { FormatTimePipe } from './pipes/format-time.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HighlightModule } from 'ngx-highlightjs';
-import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { ExamsComponent } from '../exam/exams.component';
 import { ExamRoutingModule } from './exam-routing.module';
 import { ExamInfoComponent } from './exam-info/exam-info.component';
+import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 
+export function getHighlightLanguages() {
+  return {
+    typescript: () => import('highlight.js/lib/languages/typescript'),
+    java: () => import('highlight.js/lib/languages/java')
+  };
+}
 
 @NgModule( {
 	imports: [
 		CommonModule,
 		FormsModule,
 		ReactiveFormsModule,
-		HighlightModule.forRoot(),
-		ConfirmationPopoverModule.forRoot( { confirmButtonType: 'danger' } ),
-		ExamRoutingModule
+		ExamRoutingModule,
+		HighlightModule,
+    ConfirmationPopoverModule.forRoot( { confirmButtonType: 'danger' } )
 	],
 	declarations: [
 		ExamListComponent,
@@ -32,7 +38,8 @@ import { ExamInfoComponent } from './exam-info/exam-info.component';
 		ExamInfoComponent
 	],
 	providers: [
-		ExamService
+		ExamService,
+		{ provide: HIGHLIGHT_OPTIONS, useValue: { languages: getHighlightLanguages()}},
 	]
 } )
 export class ExamModule { }

@@ -55,11 +55,13 @@ class RepositoryIntegrationTests {
 	}
 
 	@Test
-	void shouldSaveAndFetchExam() {
+	void shouldSaveAndFetchQuiz() {
 		quizRepository.save(fixtureQuiz);
-		List<Quiz> quizs = quizRepository.findAll();
-		assertAll("quizzes", () -> assertFalse(quizs.isEmpty()), () -> assertEquals(1, quizs.size()),
-				() -> assertTrue(quizs.contains(fixtureQuiz)));
+		
+		List<Quiz> quizzes = quizRepository.findAll();
+		assertAll("quizzes",
+					() -> assertFalse(quizzes.isEmpty()), () -> assertEquals(1, quizzes.size()),
+					() -> assertTrue(quizzes.contains(fixtureQuiz)));
 	}
 
 	@Test
@@ -67,8 +69,11 @@ class RepositoryIntegrationTests {
 		quizRepository.save(fixtureQuiz);
 		Question fixtureQuestion = Fixture.from(Question.class).gimme("valid");
 		questionRepository.save(fixtureQuestion);
+		
 		List<Question> questions = questionRepository.findAll();
-		assertAll("questions", () -> assertFalse(questions.isEmpty()), () -> assertEquals(1, questions.size()));
+		assertAll("questions",
+					() -> assertFalse(questions.isEmpty()),
+					() -> assertEquals(1, questions.size()));
 	}
 
 	@Test
@@ -79,8 +84,11 @@ class RepositoryIntegrationTests {
 		Answer fixtureAnswer = Fixture.from(Answer.class).gimme("valid");
 		answerRepository.save(fixtureAnswer);
 		Long questionId = fixtureAnswer.getQuestion().getId();
+		
 		List<Answer> answers = answerRepository.findByQuestionId(questionId);
-		assertAll("answers", () -> assertFalse(answers.isEmpty()), () -> assertEquals(1, answers.size()));
+		assertAll("answers",
+					() -> assertFalse(answers.isEmpty()),
+					() -> assertEquals(1, answers.size()));
 	}
 
 	@Test
@@ -90,18 +98,23 @@ class RepositoryIntegrationTests {
 		questionRepository.save(fixtureQuestion);
 		Answer fixtureAnswer = Fixture.from(Answer.class).gimme("valid");
 		answerRepository.save(fixtureAnswer);
+		
 		List<Answer> correctAnswers = answerRepository.findByQuestionQuizIdAndCorrect(fixtureQuiz.getId(),
 				fixtureAnswer.isCorrect());
-		assertAll("correctAnswers", () -> assertFalse(correctAnswers.isEmpty()),
-				() -> assertEquals(1, correctAnswers.size()));
+		assertAll("correctAnswers",
+					() -> assertFalse(correctAnswers.isEmpty()),
+					() -> assertEquals(1, correctAnswers.size()));
 	}
 
 	@Test
-	void shouldSaveAndFetchExamResult() {
+	void shouldSaveAndFetchProtocol() {
 		quizRepository.save(fixtureQuiz);
 		Protocol fixtureProtocol = Fixture.from(Protocol.class).gimme("valid");
 		protocolRepository.save(fixtureProtocol);
+		
 		List<Protocol> protocols = protocolRepository.findAll();
-		assertAll("protocols", () -> assertFalse(protocols.isEmpty()), () -> assertEquals(1, protocols.size()));
+		assertAll("protocols",
+					() -> assertFalse(protocols.isEmpty()),
+					() -> assertEquals(1, protocols.size()));
 	}
 }

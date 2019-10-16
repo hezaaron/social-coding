@@ -1,5 +1,5 @@
 import { ExamsComponent } from './exams.component';
-import { Exam } from "src/app/exam/model/exam";
+import { Quiz } from "src/app/exam/model/quiz";
 
 describe( 'ExamsComponent Tests', () => {
 	let examsComponent: ExamsComponent = null;
@@ -13,19 +13,19 @@ describe( 'ExamsComponent Tests', () => {
 	} );
 
 	it( 'should be no exams if there is no data', () => {
-		expect( examsComponent.exams.length ).toBe( 0 );
+		expect( examsComponent.quizzes.length ).toBe( 0 );
 	} );
 
 	it( 'should be exams if there is data', () => {
-		const newExam: Exam = {
+		const newExam: Quiz = {
 			id: 1,
 			name: 'Angular Test Exam',
 			description: 'Angular Beginner test',
 		};
 
-		const examsList: Array<Exam> = [newExam];
-		examsComponent.exams = examsList;
-		expect( examsComponent.exams.length ).toBe( 1 );
+		const examsList: Array<Quiz> = [newExam];
+		examsComponent.quizzes = examsList;
+		expect( examsComponent.quizzes.length ).toBe( 1 );
 	} );
 
 	afterEach(() => {

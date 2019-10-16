@@ -20,7 +20,9 @@ class GradeTest {
 		List<Long>userAnswers = Arrays.asList(1L, 9L, 3L, 7L, 1L);
 		String user = "hez";
 		Grade grade = new Grade(result, correctAnswers, userAnswers, user);
+		
 		grade.computeGrade();
+		
 		assertAll("result",
 				() -> assertEquals(3, (int) result.getCorrectAnswers()),
 				() -> assertEquals(60, (int) result.getGrade()));

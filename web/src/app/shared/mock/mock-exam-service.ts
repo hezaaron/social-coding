@@ -1,5 +1,5 @@
 import { Observable, of } from 'rxjs';
-import { Exam } from '../../exam/model/exam';
+import { Quiz } from '../../exam/model/Quiz';
 
 export const examServiceStub = {
 	examsList: [{
@@ -12,7 +12,7 @@ export const examServiceStub = {
 		description: 'Angular Beginner test',
 	}],
 
-	getExams(): Observable<Exam[]> {
+	getExams(): Observable<Quiz[]> {
 		return of( this.examsList );
 	}
 }

@@ -1,7 +1,7 @@
 import { fakeAsync, ComponentFixture, TestBed, async, inject } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { Exam } from "src/app/exam/model/exam";
+import { Quiz } from "src/app/exam/model/quiz";
 import { RouterTestingModule } from "@angular/router/testing";
 import { ExamService } from "src/app/exam/service/exam.service";
 import { ExamModule } from "src/app/exam/exam.module";

@@ -41,13 +41,13 @@ export class ExamInfoComponent implements OnInit {
 	}
 
 	setExamName(): void {
-		this.examService.getExam( this.examId ).subscribe( exam => {
+		this.examService.getQuiz( this.examId ).subscribe( exam => {
 			this.examName = exam.name
 		} );
 	}
 
 	startExam(): void {
-		this.examService.updateExamId( this.examId );
+		this.examService.updateQuizId( this.examId );
 		this.router.navigate( ['/exam', this.examId] );
 	}
 

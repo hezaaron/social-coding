@@ -31,7 +31,12 @@ public class ResultServiceImpl implements ResultService {
 	private final AnswerRepository answerRepository;
     private final EventDispatcher eventDispatcher;
 	
-	@Override
+    @Override
+	public Protocol getProtocol(Long protocolId) {
+		return protocolRepository.getOne(protocolId);
+	}
+    
+    @Override
 	@Transactional
     public Protocol updateProtocol(Protocol protocol) {
     	boolean isPass = protocol.getGrade() >= Mark.PASS_MARK;
@@ -40,8 +45,8 @@ public class ResultServiceImpl implements ResultService {
     }
 
 	@Override
-	public void computeGrade(Protocol protocol, Integer examId, List<Long> userAnswers, String user) {
-		final List<Answer> correctAnswers = answerRepository.findByQuestionQuizIdAndCorrect(examId, true);
+	public void computeGrade(Protocol protocol, Integer quizId, List<Long> userAnswers, String user) {
+		final List<Answer> correctAnswers = answerRepository.findByQuestionQuizIdAndCorrect(quizId, true);
         final List<Long> correctAnswerIds = correctAnswers.stream().map(Answer::getId)
 	        														  .collect(Collectors.toList());
         new Grade(protocol, correctAnswerIds, userAnswers, user).computeGrade();
@@ -58,11 +63,6 @@ public class ResultServiceImpl implements ResultService {
         map.put("grade", protocol.getGrade());
         map.put("maxGrade", Mark.MAX_MARK);
         return map;
-	}
-
-	@Override
-	public Protocol getProtocol(Long protocolId) {
-		return protocolRepository.getOne(protocolId);
 	}
 
 	private String getTimeFormat(LocalTime time) {
