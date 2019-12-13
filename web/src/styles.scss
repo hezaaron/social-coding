@@ -1,15 +1,11 @@
+/* You can add global styles to this file, and also import other style files */
 @import '~@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
-@import '~@okta/okta-signin-widget/dist/css/okta-theme.css';
-@import '~bootstrap/dist/css/bootstrap.css';
 
-.site-main {
-	padding-top: 30px;
-	max-width: 104em;
-}
-.table, .intro {
-	width: 50%;
-	margin: 0 auto !important;
-}
-/*#okta-sign-in.auth-container.main-container {
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif}
+.toolbar-spacer { flex: 1 1 auto; }
+#okta-sign-in.auth-container.main-container {
     border: 0;
-}*/
+}
+
+

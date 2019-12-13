@@ -12,6 +12,8 @@ public class OktaOAuth2WebSecurityConfiguration extends WebSecurityConfigurerAda
 		httpSec.authorizeRequests()
 			   .anyRequest().authenticated()
 			   .and()
+			   .oauth2Login()
+			   .and()
 			   .oauth2ResourceServer().jwt();
 	}
 }
