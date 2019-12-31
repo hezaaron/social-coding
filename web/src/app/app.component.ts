@@ -19,7 +19,7 @@ export class AppComponent {
 	}
 
 	async ngOnInit() {
-		this.isAuthenticated = await this.oktaService.isAuthenticated();
+	  this.isAuthenticated = await this.oktaService.isAuthenticated();
 		if ( this.isAuthenticated ) {
 			const userClaims = await this.oktaService.getUser();
 			this.userName = userClaims.name;

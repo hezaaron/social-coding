@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { Exam } from './model/exam';
+import { Quiz } from './model/quiz';
 
 @Component( {
 	selector: 'app-exams',
-	template: `<app-exam-list [exams]=exams></app-exam-list>`
+	template: `<app-exam-list [quizzes]=quizzes></app-exam-list>`
 } )
 export class ExamsComponent {
-	exams: Exam[] = [];
+	quizzes: Quiz[] = [];
 
 	constructor() { }
 

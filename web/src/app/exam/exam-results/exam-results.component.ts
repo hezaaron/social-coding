@@ -34,7 +34,7 @@ export class ExamResultsComponent implements OnInit {
 		},
 			error => console.error( error ) );
 
-		this.examService.getExamStat( this.resultId ).subscribe( stats => {
+		this.examService.getResult( this.resultId ).subscribe( stats => {
 			this.stats = stats;
 		} );
 	}

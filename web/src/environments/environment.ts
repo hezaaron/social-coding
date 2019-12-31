@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   redirectUri: 'http://localhost:4200',
-  examApiUrl: 'http://localhost:5000/quizzes',
+  quizApiUrl: 'http://localhost:5000/quizzes',
   resultApiUrl: 'http://localhost:5000/results'
 };
 
