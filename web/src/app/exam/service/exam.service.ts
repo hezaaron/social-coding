@@ -9,9 +9,7 @@ import { Question } from '../model/question';
 const quizBaseUrl = `${environment.quizApiUrl}`;
 const resultBaseUrl = `${environment.resultApiUrl}`;
 
-@Injectable( {
-	providedIn: 'root'
-} )
+@Injectable()
 export class ExamService {
 	private quizIdSubject = new BehaviorSubject<number>(0);
 	quizId = this.quizIdSubject.asObservable();
