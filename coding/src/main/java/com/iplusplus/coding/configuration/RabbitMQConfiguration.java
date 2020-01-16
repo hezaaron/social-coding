@@ -20,7 +20,7 @@ public class RabbitMQConfiguration {
 	}
 	
 	@Bean
-	public TopicExchange examExchange(@Value("${coding.exchange}") final String exchangeName) {
+	public TopicExchange quizExchange(@Value("${quiz.exchange}") final String exchangeName) {
 		return new TopicExchange(exchangeName);
 	}
 	

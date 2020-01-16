@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import com.iplusplus.coding.entity.Answer;
 import com.iplusplus.coding.entity.Protocol;
 import com.iplusplus.coding.event.EventDispatcher;
-import com.iplusplus.coding.event.CodingSolvedEvent;
+import com.iplusplus.coding.event.QuizSolvedEvent;
 import com.iplusplus.coding.model.Grade;
 import com.iplusplus.coding.model.Mark;
 import com.iplusplus.coding.repository.AnswerRepository;
@@ -40,7 +40,7 @@ public class ResultServiceImpl implements ResultService {
 	@Transactional
     public Protocol updateProtocol(Protocol protocol) {
     	boolean isPass = protocol.getGrade() >= Mark.PASS_MARK;
-    	eventDispatcher.send(new CodingSolvedEvent(protocol.getId(), protocol.getUser(), isPass));
+    	eventDispatcher.send(new QuizSolvedEvent(protocol.getId(), protocol.getUser(), isPass));
         return protocolRepository.save(protocol);
     }
 

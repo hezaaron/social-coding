@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { OktaAuthGuard } from '@okta/okta-angular/dist';
+import { OktaAuthGuard } from '@okta/okta-angular';
 import { ExamsComponent } from './exams.component';
 import { ExamPaperComponent } from './exam-paper/exam-paper.component';
 import { ExamResultsComponent } from './exam-results/exam-results.component';

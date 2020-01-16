@@ -73,7 +73,7 @@ export class ExamPaperComponent implements OnInit {
 	}
 
 	loadOptions(): void {
-		this.examService.getExamAnswers( this.examId ).subscribe( examAnswers => {
+		this.examService.getAnswers( this.examId ).subscribe( examAnswers => {
 			for ( let examAnswer of examAnswers ) {
 				this.options.push( new Option( examAnswer ) );
 			}

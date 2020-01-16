@@ -6,7 +6,7 @@ import { Exam } from '../model/exam';
 import { Option } from '../model/option';
 import { Question } from '../model/question';
 
-const examBaseUrl = `${environment.examApiUrl}`;
+const quizBaseUrl = `${environment.quizApiUrl}`;
 const resultBaseUrl = `${environment.resultApiUrl}`;
 
 @Injectable( {
@@ -23,19 +23,19 @@ export class ExamService {
 	constructor( private http: HttpClient ) { }
 
 	getExams(): Observable<Exam[]> {
-		return this.http.get<Exam[]>( examBaseUrl );
+		return this.http.get<Exam[]>( quizBaseUrl );
 	}
 
 	getExam( id: number ): Observable<any> {
-		return this.http.get( `${examBaseUrl}/details/${id}` );
+		return this.http.get( `${quizBaseUrl}/details/${id}` );
 	}
 
 	getQuestions( id: number ): Observable<Question[]> {
-		return this.http.get<Question[]>( `${examBaseUrl}/questions/${id}` );
+		return this.http.get<Question[]>( `${quizBaseUrl}/questions/${id}` );
 	}
 
-	getExamAnswers( id: number ): Observable<Option[]> {
-		return this.http.get<Option[]>( `${examBaseUrl}/answers/${id}` );
+	getAnswers( id: number ): Observable<Option[]> {
+		return this.http.get<Option[]>( `${quizBaseUrl}/answers/${id}` );
 	}
 
 	postAnswers( userAnswer: any ): Observable<any> {
