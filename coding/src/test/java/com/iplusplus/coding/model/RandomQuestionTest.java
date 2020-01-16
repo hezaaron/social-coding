@@ -27,7 +27,9 @@ class RandomQuestionTest {
 		List<Question> fixtureQuestions = Fixture.from(Question.class).gimme(5, "valid");
 		int size = 3;
 		RandomQuestion randomQuestion = new RandomQuestion(fixtureQuestions, size);
+		
 		List<Question> randomQuestions = randomQuestion.getList();
+		
 		assertAll("randomQuestions",
 					() -> assertFalse(randomQuestions.isEmpty()),
 					() -> assertEquals(3, randomQuestions.size()));

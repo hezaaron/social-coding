@@ -9,18 +9,18 @@ import org.springframework.stereotype.Component;
 public class EventDispatcher {
 
     private RabbitTemplate rabbitTemplate;
-    private String codingExchange;
-    private String codingSolvedRoutingKey;
+    private String quizExchange;
+    private String quizSolvedRoutingKey;
     
     @Autowired
-    EventDispatcher(final RabbitTemplate rabbitTemplate, @Value("${coding.exchange}") final String codingExchange,
-                    @Value("${coding.solved.key}") final String codingSolvedRoutingKey) {
+    EventDispatcher(final RabbitTemplate rabbitTemplate, @Value("${quiz.exchange}") final String quizExchange,
+                    @Value("${quiz.solved.key}") final String quizSolvedRoutingKey) {
         this.rabbitTemplate = rabbitTemplate;
-        this.codingExchange = codingExchange;
-        this.codingSolvedRoutingKey = codingSolvedRoutingKey;
+        this.quizExchange = quizExchange;
+        this.quizSolvedRoutingKey = quizSolvedRoutingKey;
     }
 
-    public void send(final CodingSolvedEvent codingSolvedEvent) {
-        rabbitTemplate.convertAndSend(codingExchange, codingSolvedRoutingKey, codingSolvedEvent);
+    public void send(final QuizSolvedEvent quizSolvedEvent) {
+        rabbitTemplate.convertAndSend(quizExchange, quizSolvedRoutingKey, quizSolvedEvent);
     }
 }

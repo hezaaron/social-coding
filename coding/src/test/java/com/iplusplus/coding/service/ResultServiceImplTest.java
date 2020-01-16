@@ -19,7 +19,7 @@ import org.mockito.MockitoAnnotations;
 
 import com.iplusplus.coding.entity.Protocol;
 import com.iplusplus.coding.event.EventDispatcher;
-import com.iplusplus.coding.event.CodingSolvedEvent;
+import com.iplusplus.coding.event.QuizSolvedEvent;
 import com.iplusplus.coding.model.Mark;
 import com.iplusplus.coding.repository.AnswerRepository;
 import com.iplusplus.coding.repository.ProtocolRepository;
@@ -59,7 +59,7 @@ public class ResultServiceImplTest {
 	void testUpdateProtocol() {
 		Protocol fixtureProtocol = Fixture.from(Protocol.class).gimme("valid");
 		boolean isPass = fixtureProtocol.getGrade() >= Mark.PASS_MARK;
-		CodingSolvedEvent event = new CodingSolvedEvent(fixtureProtocol.getId(), fixtureProtocol.getUser(), isPass);
+		QuizSolvedEvent event = new QuizSolvedEvent(fixtureProtocol.getId(), fixtureProtocol.getUser(), isPass);
 		
 		given(protocolRepository.save(any())).willReturn(fixtureProtocol);
 		Protocol protocol = resultService.updateProtocol(fixtureProtocol);
