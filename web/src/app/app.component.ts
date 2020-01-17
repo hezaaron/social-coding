@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { OktaAuthService, } from '@okta/okta-angular';
-import { ExamService } from "./exam/service/exam.service";
+import { QuizService } from "./quiz/service/quiz.service";
 
 @Component( {
 	selector: 'app-root',
@@ -14,7 +14,7 @@ export class AppComponent {
 	isNavbarCollapsed = true;
 	userName: string;
 
-	constructor( private oktaService: OktaAuthService, private examService: ExamService ) {
+	constructor( private oktaService: OktaAuthService, private quizService: QuizService ) {
 		this.oktaService.$authenticationState.subscribe(( isAuthenticated: boolean ) => this.isAuthenticated = isAuthenticated );
 	}
 
@@ -23,7 +23,7 @@ export class AppComponent {
 		if ( this.isAuthenticated ) {
 			const userClaims = await this.oktaService.getUser();
 			this.userName = userClaims.name;
-			this.examService.updateUserName(this.userName);
+			this.quizService.updateUserName(this.userName);
 		}
 	}
 

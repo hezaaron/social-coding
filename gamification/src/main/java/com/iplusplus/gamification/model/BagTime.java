@@ -7,9 +7,9 @@ import lombok.Getter;
 
 public final class BagTime {
 
-	private Clock clock;
+	private final Clock clock;
 	@Getter
-	private LocalDateTime time;
+	private final LocalDateTime time;
 	
 	public BagTime(final Clock clock) {
 		this.clock = clock;

@@ -1,5 +1,5 @@
 <div class="text-sm-center">
-	<h5 class="text-info">{{examName}}</h5>
+	<h5 class="text-info">{{quizName}}</h5>
 	<div class="badge badge-info">Question {{pager.index + 1}} of {{pager.count}}</div>
 </div>
 
@@ -17,7 +17,7 @@
 	</div>
 </div>
 </ng-container>
-<ng-template #loading>Loading exam ...</ng-template>
+<ng-template #loading>Loading quiz ...</ng-template>
 
 <hr>
 <div class="text-sm-center">
@@ -27,7 +27,7 @@
 	<div class="d-inline-block">
 		<form [formGroup]="resultForm" (ngSubmit)="confirmSubmit = false; cancelSubmit = false">	
 			<input type="hidden" name="id" formControlName="id">
-			<input type="hidden" name="examId" formControlName="examId">
+			<input type="hidden" name="quizId" formControlName="quizId">
 			<input type="hidden" name="answers" formControlName="answers">
 			<button class="btn btn-default" type="submit"
 				mwlConfirmationPopover
