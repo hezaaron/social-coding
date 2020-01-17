@@ -9,9 +9,9 @@ const appRoutes: Routes = [{
 }, {
 	path: 'implicit/callback', component: OktaCallbackComponent
 }, {
-	path: '', pathMatch: 'full', redirectTo: '/testexams'
+	path: '', pathMatch: 'full', redirectTo: '/quizzes'
 }, {
-	path: 'testexams', loadChildren: './exam/exam.module#ExamModule'
+	path: 'quizzes', loadChildren: './quiz/quiz.module#QuizModule'
 }, {
 	path: '**', component: PageNotFoundComponent
 }]

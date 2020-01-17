@@ -21,17 +21,17 @@ public class RabbitMQConfiguration implements RabbitListenerConfigurer {
 	}
 	
 	@Bean
-	public TopicExchange codingExchange(@Value("${coding.exchange}") final String exchangeName) {
+	public TopicExchange quizExchange(@Value("${quiz.exchange}") final String exchangeName) {
 		return new TopicExchange(exchangeName);
 	}
 
 	@Bean
-	public Queue gamificationCodingQueue(@Value("${coding.queue}") final String queueName) {
+	public Queue gamificationQuizQueue(@Value("${quiz.queue}") final String queueName) {
 		return new Queue(queueName, true);
 	}
 	
 	@Bean
-	Binding binding(final Queue queue, final TopicExchange exchange, @Value("${coding.anything.routing-key}")
+	Binding binding(final Queue queue, final TopicExchange exchange, @Value("${quiz.anything.routing-key}")
 					final String routingKey) {
 		return BindingBuilder.bind(queue).to(exchange).with(routingKey);
 	}

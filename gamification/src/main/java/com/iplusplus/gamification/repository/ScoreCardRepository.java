@@ -19,5 +19,6 @@ public interface ScoreCardRepository extends JpaRepository<ScoreCard, Long> {
 			+ "FROM com.iplusplus.gamification.entity.ScoreCard s "
 			+ "GROUP BY s.username ORDER BY SUM(s.score) DESC")
 	List<LeaderBoardRow> findFirst10();
+	
 	List<ScoreCard> findByUsernameOrderByScoreTimeDesc(String username);
 }

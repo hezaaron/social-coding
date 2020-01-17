@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 @Data @RequiredArgsConstructor
-public class CodingSolvedEvent implements Serializable {
+public class QuizSolvedEvent implements Serializable {
 
 	private static final long serialVersionUID = -5633123394142170126L;
 	private final Long resultId;

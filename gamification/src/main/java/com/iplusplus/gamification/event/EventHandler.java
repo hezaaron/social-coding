@@ -17,13 +17,13 @@ class EventHandler {
 		this.gameService = gameService;
 	}
 	
-	@RabbitListener(queues = "${coding.queue}")
-	void handleCodingSolved(final CodingSolvedEvent event) {
-		log.info("Coding solved Event received: {}", event.getResultId());
+	@RabbitListener(queues = "${quiz.queue}")
+	void handleQuizSolved(final QuizSolvedEvent event) {
+		log.info("Quiz solved Event received: {}", event.getResultId());
 		try {
 			gameService.newAttemptForUser(event.getUsername(), event.getResultId(), event.isSolved());
 		}catch (final Exception e) {
-			log.error("Error when trying to process CodingSolved Event", e);
+			log.error("Error when trying to process QuizSolved Event", e);
 			throw new AmqpRejectAndDontRequeueException(e);
 		}
 	}

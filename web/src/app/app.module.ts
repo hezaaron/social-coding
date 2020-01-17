@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { OKTA_CONFIG, OktaAuthModule } from '@okta/okta-angular';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { ExamModule } from './exam/exam.module';
+import { QuizModule } from './quiz/quiz.module';
 import { LoginComponent } from './login/login.component';
 import { AuthInterceptor } from './login/auth.interceptor';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -34,7 +34,7 @@ const oktaConfig = {
 		BrowserModule,
 		HttpClientModule,
 		OktaAuthModule,
-		ExamModule,
+		QuizModule,
 		NgbModule.forRoot(),
 		MDBBootstrapModule.forRoot(),
 		ServiceWorkerModule.register( 'ngsw-worker.js', { enabled: environment.production } ),
