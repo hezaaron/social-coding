@@ -1,6 +1,7 @@
 import { fakeAsync, ComponentFixture, TestBed, async, inject } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { OktaAuthService, OKTA_CONFIG } from '@okta/okta-angular';
 import { Router, RouterModule } from "@angular/router";
 import { RouterTestingModule } from '@angular/router/testing';
 import { Quiz } from '../model/quiz';
@@ -13,11 +14,20 @@ let component: QuizListComponent;
 let fixture: ComponentFixture<QuizListComponent>;
 let page: Page;
 
+const oktaConfig = {
+    issuer: 'https://dev-193618.oktapreview.com/oauth2/default',
+    clientId: '0oaj268wh6uRIKLy50h7',
+    redirectUri: `http://localhost:4200/implicit/callback`,
+    copes: ['openid', 'profile', 'email']
+}
+
 describe( 'QuizListComponent tests', () => {
 	beforeEach( async(() => {
 		TestBed.configureTestingModule( {
 			imports: [QuizModule, RouterModule.forRoot( [] )],
 			providers: [
+			  OktaAuthService,
+			  { provide: OKTA_CONFIG, useValue: oktaConfig},
 				{ provide: QuizService, useValue: quizServiceStub },
 			],
 		} )

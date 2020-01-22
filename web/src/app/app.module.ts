@@ -19,9 +19,9 @@ const redirectUri = `${environment.redirectUri}`;
 
 const oktaConfig = {
     issuer: 'https://dev-193618.oktapreview.com/oauth2/default',
-    clientId: '0oanjpbibbdsu3Go60h7',
+    clientId: '0oaj268wh6uRIKLy50h7',
     redirectUri: `${redirectUri}/implicit/callback`,
-    pkce: true
+    copes: ['openid', 'profile', 'email']
 }
 
 @NgModule( {
