@@ -13,7 +13,7 @@ import { Question } from '../model/question';
 	styleUrls: ['./quiz.component.scss']
 } )
 export class QuizComponent implements OnInit {
-  userName: string;
+  username: string;
 	cancelSubmit: boolean = false;
 	confirmSubmit: boolean = false;
 	countDown: Observable<number>;
@@ -35,7 +35,7 @@ export class QuizComponent implements OnInit {
 			id: [''],
 			quizId: [''],
 			answers: [''],
-			userName: ['']
+			username: ['']
 		} );
 	}
 
@@ -46,7 +46,7 @@ export class QuizComponent implements OnInit {
 			error => console.error( error ) );
 		
 		this.subscription = this.quizService.userName.subscribe( name => {
-      this.userName = name;
+      this.username = name;
     },
       error => console.error( error ) );
 		
@@ -120,7 +120,7 @@ export class QuizComponent implements OnInit {
 		if ( this.confirmSubmit ) {
 			this.userAnswer();
 			this.resultForm.controls['answers'].setValue( this.userAnswers );
-			this.resultForm.controls['userName'].setValue( this.userName );
+			this.resultForm.controls['username'].setValue( this.username );
 			this.quizService.postAnswers( this.resultForm.value ).subscribe( response => {
 				this.quizService.updateResultId( response.id );
 				this.viewResult( response.id );

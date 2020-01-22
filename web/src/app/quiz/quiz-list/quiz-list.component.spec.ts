@@ -1,6 +1,7 @@
 import { fakeAsync, ComponentFixture, TestBed, async, inject } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { OKTA_CONFIG, OktaAuthModule } from '@okta/okta-angular';
 import { Router, RouterModule } from "@angular/router";
 import { RouterTestingModule } from '@angular/router/testing';
 import { Quiz } from '../model/quiz';
@@ -16,9 +17,9 @@ let page: Page;
 describe( 'QuizListComponent tests', () => {
 	beforeEach( async(() => {
 		TestBed.configureTestingModule( {
-			imports: [QuizModule, RouterModule.forRoot( [] )],
+			imports: [QuizModule, OktaAuthModule.initAuth, RouterModule.forRoot( [] )],
 			providers: [
-				{ provide: QuizService, useValue: quizServiceStub },
+				{ provide: QuizService, useValue: quizServiceStub }
 			],
 		} )
 			.compileComponents()
