@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { OktaAuthService, } from '@okta/okta-angular';
+import { Subscription } from 'rxjs';
 import { QuizService } from './quiz/service/quiz.service';
 
 @Component( {
@@ -12,7 +13,8 @@ export class AppComponent {
 	title = 'iPlusplus';
 	isAuthenticated: boolean;
 	isNavbarCollapsed = true;
-	userName: string;
+	username: string;
+	private subscription: Subscription;
 
 	constructor( public oktaService: OktaAuthService, private quizService: QuizService ) {
 		this.oktaService.$authenticationState.subscribe(( isAuthenticated: boolean ) => this.isAuthenticated = isAuthenticated );
@@ -20,14 +22,17 @@ export class AppComponent {
 
 	async ngOnInit() {
 		this.isAuthenticated = await this.oktaService.isAuthenticated();
-		if ( this.isAuthenticated ) {
-			const userClaims = await this.oktaService.getUser();
-			this.userName = userClaims.name;
-			this.quizService.updateUserName(this.userName);
-		}
+	  this.subscription = this.quizService.userName.subscribe( name => {
+      this.username = name;
+	  },
+    error => console.error( error ) );
 	}
 
 	async logout() {
 		await this.oktaService.logout( 'login' );
 	}
+	
+	ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 }
