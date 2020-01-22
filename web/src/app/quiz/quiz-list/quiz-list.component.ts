@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { OktaAuthService, } from '@okta/okta-angular';
 import { QuizService } from '../service/quiz.service';
 import { Observable } from 'rxjs';
 import { Quiz } from '../model/quiz';
@@ -22,15 +23,23 @@ import { Quiz } from '../model/quiz';
 
 export class QuizListComponent implements OnInit {
 	@Input( 'quizzes' ) quizzes$: Observable<Quiz[]>;
+	isAuthenticated: boolean;
 
-	constructor( private quizService: QuizService ) { }
+	constructor( private quizService: QuizService, public oktaService: OktaAuthService ) {
+	  this.oktaService.$authenticationState.subscribe(( isAuthenticated: boolean ) => this.isAuthenticated = isAuthenticated );
+	}
 
 	trackById( index, quiz ) {
 		return quiz.id;
 	}
 
-	ngOnInit() {
+	async ngOnInit() {
 		this.quizzes$ = this.quizService.getQuizzes();
+		this.isAuthenticated = await this.oktaService.isAuthenticated();
+    if ( this.isAuthenticated ) {
+      const userClaims = await this.oktaService.getUser();
+      this.quizService.updateUserName(userClaims.name);
+    }
 	}
 
 }
