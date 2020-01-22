@@ -2,19 +2,19 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Exam } from '../model/exam';
+import { Quiz } from '../model/quiz';
 import { Option } from '../model/option';
 import { Question } from '../model/question';
 
-const examBaseUrl = `${environment.examApiUrl}`;
+const quizBaseUrl = `${environment.quizApiUrl}`;
 const resultBaseUrl = `${environment.resultApiUrl}`;
 
 @Injectable( {
 	providedIn: 'root'
 } )
-export class ExamService {
-	private examIdSubject = new BehaviorSubject<number>(0);
-	examId = this.examIdSubject.asObservable();
+export class QuizService {
+	private quizIdSubject = new BehaviorSubject<number>(0);
+	quizId = this.quizIdSubject.asObservable();
 	private resultIdSubject = new BehaviorSubject<number>( 0 );
 	resultId = this.resultIdSubject.asObservable();
 	private userNameSubject = new BehaviorSubject<string>( "" );
@@ -22,32 +22,32 @@ export class ExamService {
 
 	constructor( private http: HttpClient ) { }
 
-	getExams(): Observable<Exam[]> {
-		return this.http.get<Exam[]>( examBaseUrl );
+	getQuizzes(): Observable<Quiz[]> {
+		return this.http.get<Quiz[]>( quizBaseUrl );
 	}
 
-	getExam( id: number ): Observable<any> {
-		return this.http.get( `${examBaseUrl}/details/${id}` );
+	getQuiz( id: number ): Observable<any> {
+		return this.http.get( `${quizBaseUrl}/details/${id}` );
 	}
 
 	getQuestions( id: number ): Observable<Question[]> {
-		return this.http.get<Question[]>( `${examBaseUrl}/questions/${id}` );
+		return this.http.get<Question[]>( `${quizBaseUrl}/questions/${id}` );
 	}
 
-	getExamAnswers( id: number ): Observable<Option[]> {
-		return this.http.get<Option[]>( `${examBaseUrl}/answers/${id}` );
+	getAnswers( id: number ): Observable<Option[]> {
+		return this.http.get<Option[]>( `${quizBaseUrl}/answers/${id}` );
 	}
 
 	postAnswers( userAnswer: any ): Observable<any> {
 		return this.http.post( `${resultBaseUrl}`, userAnswer );
 	}
 
-	getExamStat( id: number ): Observable<any> {
+	getQuizStat( id: number ): Observable<any> {
 		return this.http.get( `${resultBaseUrl}/${id}` );
 	}
 
-	updateExamId( id: number ) {
-    this.examIdSubject.next( id );
+	updateQuizId( id: number ) {
+    this.quizIdSubject.next( id );
   }
 	
 	updateResultId( id: number ) {

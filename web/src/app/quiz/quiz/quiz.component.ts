@@ -1,25 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { ExamService } from '../service/exam.service';
+import { QuizService } from '../service/quiz.service';
 import { timer, Observable, Subscription } from 'rxjs';
 import { take, map } from 'rxjs/operators';
 import { Option } from '../model/option';
 import { Question } from '../model/question';
 
 @Component( {
-	selector: 'app-exam',
-	templateUrl: './exam-paper.component.html',
-	styleUrls: ['./exam-paper.component.scss']
+	selector: 'app-quiz',
+	templateUrl: './quiz.component.html',
+	styleUrls: ['./quiz.component.scss']
 } )
-export class ExamPaperComponent implements OnInit {
-  userName: string;
+export class QuizComponent implements OnInit {
+  username: string;
 	cancelSubmit: boolean = false;
 	confirmSubmit: boolean = false;
 	countDown: Observable<number>;
 	counter: number;
-	examName: string;
-	examId: number;
+	quizName: string;
+	quizId: number;
 	questions: Question[] = [];
 	pager = { index: 0, size: 1, count: 1 };
 	filteredQuestion: Question[] = [];
@@ -30,34 +30,34 @@ export class ExamPaperComponent implements OnInit {
 	userAnswers: number[] = [];
 	private subscription: Subscription;
 
-	constructor( private route: ActivatedRoute, private router: Router, private examService: ExamService, private formBuilder: FormBuilder ) {
+	constructor( private route: ActivatedRoute, private router: Router, private quizService: QuizService, private formBuilder: FormBuilder ) {
 		this.resultForm = this.formBuilder.group( {
 			id: [''],
-			examId: [''],
+			quizId: [''],
 			answers: [''],
-			userName: ['']
+			username: ['']
 		} );
 	}
 
 	ngOnInit() {
-		this.subscription = this.examService.examId.subscribe( id => {
-			this.examId = id;
+		this.subscription = this.quizService.quizId.subscribe( id => {
+			this.quizId = id;
 		},
 			error => console.error( error ) );
 		
-		this.subscription = this.examService.userName.subscribe( name => {
-      this.userName = name;
+		this.subscription = this.quizService.userName.subscribe( name => {
+      this.username = name;
     },
       error => console.error( error ) );
 		
-		this.startExam();
+		this.startQuiz();
 	}
 
-	startExam(): void {
-		this.examService.getExam( this.examId ).subscribe( exam => {
-			this.examName = exam.name
-			this.counter = exam.timer;
-			this.resultForm.setValue( exam.result );
+	startQuiz(): void {
+		this.quizService.getQuiz( this.quizId ).subscribe( quiz => {
+			this.quizName = quiz.name
+			this.counter = quiz.timer;
+			this.resultForm.setValue( quiz.result );
 			this.startTimer();
 		} );
 		this.setQuestions();
@@ -65,7 +65,7 @@ export class ExamPaperComponent implements OnInit {
 	}
 
 	setQuestions(): void {
-		this.examService.getQuestions( this.examId ).subscribe( questions => {
+		this.quizService.getQuestions( this.quizId ).subscribe( questions => {
 			this.questions = questions;
 			if ( this.questions ) this.pager.count = this.questions.length;
 			this.filteredQuestion = this.questions.slice( this.pager.index, this.pager.size );
@@ -73,9 +73,9 @@ export class ExamPaperComponent implements OnInit {
 	}
 
 	loadOptions(): void {
-		this.examService.getExamAnswers( this.examId ).subscribe( examAnswers => {
-			for ( let examAnswer of examAnswers ) {
-				this.options.push( new Option( examAnswer ) );
+		this.quizService.getAnswers( this.quizId ).subscribe( answers => {
+			for ( let answer of answers ) {
+				this.options.push( new Option( answer ) );
 			}
 			this.setOptions( this.filteredQuestion[0].id );
 		} );
@@ -120,9 +120,9 @@ export class ExamPaperComponent implements OnInit {
 		if ( this.confirmSubmit ) {
 			this.userAnswer();
 			this.resultForm.controls['answers'].setValue( this.userAnswers );
-			this.resultForm.controls['userName'].setValue( this.userName );
-			this.examService.postAnswers( this.resultForm.value ).subscribe( response => {
-				this.examService.updateResultId( response.id );
+			this.resultForm.controls['username'].setValue( this.username );
+			this.quizService.postAnswers( this.resultForm.value ).subscribe( response => {
+				this.quizService.updateResultId( response.id );
 				this.viewResult( response.id );
 			} );
 		}

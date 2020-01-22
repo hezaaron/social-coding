@@ -101,6 +101,7 @@ class RepositoryIntegrationTests {
 		
 		List<Answer> correctAnswers = answerRepository.findByQuestionQuizIdAndCorrect(fixtureQuiz.getId(),
 				fixtureAnswer.isCorrect());
+		
 		assertAll("correctAnswers",
 					() -> assertFalse(correctAnswers.isEmpty()),
 					() -> assertEquals(1, correctAnswers.size()));
@@ -113,6 +114,7 @@ class RepositoryIntegrationTests {
 		protocolRepository.save(fixtureProtocol);
 		
 		List<Protocol> protocols = protocolRepository.findAll();
+		
 		assertAll("protocols",
 					() -> assertFalse(protocols.isEmpty()),
 					() -> assertEquals(1, protocols.size()));

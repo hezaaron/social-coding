@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { ExamService } from '../service/exam.service';
+import { QuizService } from '../service/quiz.service';
 
 @Component( {
-	selector: 'app-exam-results',
+	selector: 'app-quiz-results',
 	template: `
       <div class="container">
         <ng-container *ngIf="stats; else loading">
@@ -21,20 +21,20 @@ import { ExamService } from '../service/exam.service';
 				<ng-template #loading>Loading results...</ng-template>
       </div>`
 } )
-export class ExamResultsComponent implements OnInit {
+export class QuizResultComponent implements OnInit {
 	stats: Array<any>;
 	resultId: number;
 	private subscription: Subscription;
 
-	constructor( private examService: ExamService ) { }
+	constructor( private quizService: QuizService ) { }
 
 	ngOnInit() {
-		this.subscription = this.examService.resultId.subscribe( value => {
+		this.subscription = this.quizService.resultId.subscribe( value => {
 			this.resultId = value;
 		},
 			error => console.error( error ) );
 
-		this.examService.getExamStat( this.resultId ).subscribe( stats => {
+		this.quizService.getQuizStat( this.resultId ).subscribe( stats => {
 			this.stats = stats;
 		} );
 	}

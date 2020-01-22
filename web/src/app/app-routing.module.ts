@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
-import { OktaCallbackComponent } from '@okta/okta-angular/dist';
+import { OktaCallbackComponent } from '@okta/okta-angular';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const appRoutes: Routes = [{
@@ -9,9 +9,9 @@ const appRoutes: Routes = [{
 }, {
 	path: 'implicit/callback', component: OktaCallbackComponent
 }, {
-	path: '', pathMatch: 'full', redirectTo: '/testexams'
+	path: '', pathMatch: 'full', redirectTo: '/quizzes'
 }, {
-	path: 'testexams', loadChildren: './exam/exam.module#ExamModule'
+	path: 'quizzes', loadChildren: './quiz/quiz.module#QuizModule'
 }, {
 	path: '**', component: PageNotFoundComponent
 }]

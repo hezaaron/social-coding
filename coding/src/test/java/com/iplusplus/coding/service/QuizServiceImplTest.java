@@ -64,7 +64,8 @@ public class QuizServiceImplTest {
 		given(quizRepository.findAll()).willReturn(fixtureQuizzes);
         
 		final List<Quiz> quizzes = quizService.getAllQuizzes();
-        assertAll("quizzes",
+        
+		assertAll("quizzes",
 	        		() -> assertFalse(quizzes.isEmpty()),
 	        		() -> assertEquals(3, quizzes.size()),
 	        		() -> assertNotNull(quizzes.get(1).getName()));
@@ -100,6 +101,7 @@ public class QuizServiceImplTest {
 		int quizId = fixtureQuestions.get(0).getQuiz().getId();
 		
 		final List<Question> randomQuestions = quizService.getQuestionsForQuiz(quizId);
+		
 		assertAll("randomQuestions",
 					() -> assertNotNull(randomQuestions),
 					() -> assertFalse(randomQuestions.isEmpty()),
@@ -113,6 +115,7 @@ public class QuizServiceImplTest {
 		Integer quizId = fixtureAnswers.get(0).getQuestion().getQuiz().getId();
 		
 		final List<Answer> answers = quizService.getAnswersForQuiz(quizId);
+		
 		assertAll("answers",
 					() -> assertNotNull(answers),
 					() -> assertFalse(answers.isEmpty()),

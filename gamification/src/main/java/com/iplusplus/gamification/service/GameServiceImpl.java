@@ -29,7 +29,7 @@ public class GameServiceImpl implements GameService {
 		if(pass) {
 			ScoreCard scoreCard = new ScoreCard(username, quizId);
 			scoreCardRepository.save(scoreCard);
-			log.info("User {} scored {} points for exam id {}", username, scoreCard.getScore(), quizId);
+			log.info("User {} scored {} points for quiz id {}", username, scoreCard.getScore(), quizId);
 			List<BadgeCard> badgeCards = processForBadges(username);
 			
 			return new GameStats(username, scoreCard.getScore(),
