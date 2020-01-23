@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { OktaAuthService, } from '@okta/okta-angular';
+import { OktaAuthService } from '@okta/okta-angular';
 import { QuizService } from '../service/quiz.service';
 import { Observable } from 'rxjs';
 import { Quiz } from '../model/quiz';

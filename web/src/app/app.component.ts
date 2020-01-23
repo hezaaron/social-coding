@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { OktaAuthService, } from '@okta/okta-angular';
-import { /*Observable,*/ Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { QuizService } from './quiz/service/quiz.service';
 
 @Component( {
