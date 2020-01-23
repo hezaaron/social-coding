@@ -10,16 +10,15 @@ import { QuizModule } from '../quiz.module';
 import { QuizListComponent } from '../quiz-list/quiz-list.component';
 import { quizServiceStub } from '../../shared/mock/mock-quiz-service';
 
-let component: QuizListComponent;
-let fixture: ComponentFixture<QuizListComponent>;
-let page: Page;
-
 const oktaConfig = {
     issuer: 'https://dev-193618.oktapreview.com/oauth2/default',
     clientId: '0oaj268wh6uRIKLy50h7',
-    redirectUri: `http://localhost:4200/implicit/callback`,
-    copes: ['openid', 'profile', 'email']
+    redirectUri: `http://localhost:4200/implicit/callback`
 }
+
+let component: QuizListComponent;
+let fixture: ComponentFixture<QuizListComponent>;
+let page: Page;
 
 describe( 'QuizListComponent tests', () => {
 	beforeEach( async(() => {
@@ -28,7 +27,7 @@ describe( 'QuizListComponent tests', () => {
 			providers: [
 			  OktaAuthService,
 			  { provide: OKTA_CONFIG, useValue: oktaConfig},
-				{ provide: QuizService, useValue: quizServiceStub },
+				{ provide: QuizService, useValue: quizServiceStub }
 			],
 		} )
 			.compileComponents()

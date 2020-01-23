@@ -1,5 +1,5 @@
 @import '~@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
-//@import '~@okta/okta-signin-widget/dist/css/okta-theme.css';
+@import '~highlight.js/styles/github.css';
 @import '~bootstrap/dist/css/bootstrap.css';
 
 .site-main {
@@ -10,6 +10,3 @@
 	width: 50%;
 	margin: 0 auto !important;
 }
-/*#okta-sign-in.auth-container.main-container {
-    border: 0;
-}*/

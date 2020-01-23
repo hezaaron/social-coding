@@ -7,19 +7,22 @@ import { QuizService } from './service/quiz.service';
 import { QuizResultComponent } from './quiz-result/quiz-result.component';
 import { FormatTimePipe } from './pipes/format-time.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HighlightModule } from 'ngx-highlightjs';
+import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { QuizzesComponent } from '../quiz/quizzes.component';
 import { QuizRoutingModule } from './quiz-routing.module';
 import { QuizInfoComponent } from './quiz-info/quiz-info.component';
 
+const highlightLanguage = {
+    css: `highlight.js/lib/languages/css`
+}
 
 @NgModule( {
 	imports: [
 		CommonModule,
 		FormsModule,
 		ReactiveFormsModule,
-		HighlightModule.forRoot(),
+		HighlightModule,
 		ConfirmationPopoverModule.forRoot( { confirmButtonType: 'danger' } ),
 		QuizRoutingModule
 	],
@@ -32,7 +35,8 @@ import { QuizInfoComponent } from './quiz-info/quiz-info.component';
 		QuizInfoComponent
 	],
 	providers: [
-		QuizService
-	]
+		QuizService,
+		{ provide: HIGHLIGHT_OPTIONS, useValue: {languages: highlightLanguage} }
+	],
 } )
 export class QuizModule { }
