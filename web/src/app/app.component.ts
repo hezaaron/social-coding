@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { OktaAuthService, } from '@okta/okta-angular';
 import { Subscription } from 'rxjs';
 import { QuizService } from './quiz/service/quiz.service';
+import { SharedDataService } from './quiz/service/shared-data.service';
 
 @Component( {
 	selector: 'app-root',
@@ -16,13 +17,14 @@ export class AppComponent {
 	username: string;
 	private subscription: Subscription;
 
-	constructor( public oktaService: OktaAuthService, private quizService: QuizService ) {
+	constructor( public oktaService: OktaAuthService, private quizService: QuizService,
+	             private sharedDataService: SharedDataService ) {
 		this.oktaService.$authenticationState.subscribe(( isAuthenticated: boolean ) => this.isAuthenticated = isAuthenticated );
 	}
 
 	async ngOnInit() {
 		this.isAuthenticated = await this.oktaService.isAuthenticated();
-	  this.subscription = this.quizService.userName.subscribe( name => {
+	  this.subscription = this.sharedDataService.username.subscribe( name => {
       this.username = name;
 	  },
     error => console.error( error ) );

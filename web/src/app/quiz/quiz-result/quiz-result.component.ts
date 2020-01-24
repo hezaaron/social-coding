@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { QuizService } from '../service/quiz.service';
+import { SharedDataService } from '../service/shared-data.service';
 
 @Component( {
 	selector: 'app-quiz-results',
@@ -26,10 +27,10 @@ export class QuizResultComponent implements OnInit {
 	resultId: number;
 	private subscription: Subscription;
 
-	constructor( private quizService: QuizService ) { }
+	constructor( private quizService: QuizService, private sharedDataService: SharedDataService ) { }
 
 	ngOnInit() {
-		this.subscription = this.quizService.resultId.subscribe( value => {
+		this.subscription = this.sharedDataService.resultId.subscribe( value => {
 			this.resultId = value;
 		},
 			error => console.error( error ) );

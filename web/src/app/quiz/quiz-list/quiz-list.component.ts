@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { OktaAuthService } from '@okta/okta-angular';
 import { QuizService } from '../service/quiz.service';
+import { SharedDataService } from '../service/shared-data.service';
 import { Observable } from 'rxjs';
 import { Quiz } from '../model/quiz';
 
@@ -25,7 +26,8 @@ export class QuizListComponent implements OnInit {
 	@Input( 'quizzes' ) quizzes$: Observable<Quiz[]>;
 	isAuthenticated: boolean;
 
-	constructor( private quizService: QuizService, public oktaService: OktaAuthService ) {
+	constructor( private quizService: QuizService, private sharedDataService: SharedDataService,
+	             public oktaService: OktaAuthService ) {
 	  this.oktaService.$authenticationState.subscribe(( isAuthenticated: boolean ) => this.isAuthenticated = isAuthenticated );
 	}
 
@@ -38,7 +40,7 @@ export class QuizListComponent implements OnInit {
 		this.isAuthenticated = await this.oktaService.isAuthenticated();
     if ( this.isAuthenticated ) {
       const userClaims = await this.oktaService.getUser();
-      this.quizService.updateUserName(userClaims.name);
+      this.sharedDataService.updateUsername(userClaims.name);
     }
 	}
 

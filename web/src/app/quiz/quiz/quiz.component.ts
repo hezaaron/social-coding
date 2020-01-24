@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { QuizService } from '../service/quiz.service';
+import { SharedDataService } from '../service/shared-data.service';
 import { timer, Observable, Subscription } from 'rxjs';
 import { take, map } from 'rxjs/operators';
 import { Option } from '../model/option';
@@ -30,7 +31,8 @@ export class QuizComponent implements OnInit {
 	userAnswers: number[] = [];
 	private subscription: Subscription;
 
-	constructor( private route: ActivatedRoute, private router: Router, private quizService: QuizService, private formBuilder: FormBuilder ) {
+	constructor( private route: ActivatedRoute, private router: Router, private quizService: QuizService,
+	             private formBuilder: FormBuilder, private sharedDataService: SharedDataService ) {
 		this.resultForm = this.formBuilder.group( {
 			id: [''],
 			quizId: [''],
@@ -40,12 +42,12 @@ export class QuizComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.subscription = this.quizService.quizId.subscribe( id => {
+		this.subscription = this.sharedDataService.quizId.subscribe( id => {
 			this.quizId = id;
 		},
 			error => console.error( error ) );
 		
-		this.subscription = this.quizService.userName.subscribe( name => {
+		this.subscription = this.sharedDataService.username.subscribe( name => {
       this.username = name;
     },
       error => console.error( error ) );
@@ -122,7 +124,7 @@ export class QuizComponent implements OnInit {
 			this.resultForm.controls['answers'].setValue( this.userAnswers );
 			this.resultForm.controls['username'].setValue( this.username );
 			this.quizService.postAnswers( this.resultForm.value ).subscribe( response => {
-				this.quizService.updateResultId( response.id );
+				this.sharedDataService.updateResultId( response.id );
 				this.viewResult( response.id );
 			} );
 		}

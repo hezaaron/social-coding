@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OktaAuthService } from '@okta/okta-angular';
 import * as OktaSignIn from '@okta/okta-signin-widget/dist/js/okta-sign-in.min';
-import { environment } from '../../environments/environment';
-
-const redirectUri = `${environment.redirectUri}`;
+import { oktaConfig } from '../shared/config/okta-confiq';
 
 @Component( {
 	selector: 'app-secure',
@@ -14,22 +12,22 @@ const redirectUri = `${environment.redirectUri}`;
 
 export class LoginComponent {
 	isAuthenticated: boolean;
-signIn = new OktaSignIn( {
-  baseUrl: 'https://dev-193618.oktapreview.com',
-  clientId: '0oaj268wh6uRIKLy50h7',
-  redirectUri: `${redirectUri}/implicit/callback`,
-  authParams: {
-    issuer: 'https://dev-193618.oktapreview.com/oauth2/default',
-    responseType: ['id_token', 'token'],
-    scopes: ['openid', 'profile', 'email'],
-    display: 'page'
-  },
-  i18n: {
-    en: {
-      'primaryauth.title': 'Sign in to iPlusplus Social Coding',
+  signIn = new OktaSignIn( {
+    baseUrl: 'https://dev-193618.oktapreview.com',
+    clientId: oktaConfig.clientId,
+    redirectUri: oktaConfig.redirectUri,
+    authParams: {
+      issuer: oktaConfig.issuer,
+      scopes: oktaConfig.scopes,
+      responseType: ['id_token', 'token'],
+      display: 'page'
+    },
+    i18n: {
+      en: {
+        'primaryauth.title': 'Sign in to iPlusplus Social Coding',
+      }
     }
-  }
-} );
+  } );
 
 	constructor( private oktaService: OktaAuthService ) {
 		this.oktaService.$authenticationState.subscribe(( isAuthenticated: boolean ) => this.isAuthenticated = isAuthenticated );
