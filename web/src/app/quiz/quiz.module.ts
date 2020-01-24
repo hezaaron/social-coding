@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { QuizListComponent } from './quiz-list/quiz-list.component';
 import { QuizComponent } from './quiz/quiz.component';
 import { QuizService } from './service/quiz.service';
+import { SharedDataService } from './service/shared-data.service';
 import { QuizResultComponent } from './quiz-result/quiz-result.component';
 import { FormatTimePipe } from './pipes/format-time.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -35,7 +36,7 @@ const highlightLanguage = {
 		QuizInfoComponent
 	],
 	providers: [
-		QuizService,
+		QuizService, SharedDataService,
 		{ provide: HIGHLIGHT_OPTIONS, useValue: {languages: highlightLanguage} }
 	],
 } )

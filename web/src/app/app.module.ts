@@ -14,15 +14,7 @@ import { environment } from '../environments/environment';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpErrorInterceptor } from './shared/interceptor/http-error.interceptor';
-
-const redirectUri = `${environment.redirectUri}`;
-
-const oktaConfig = {
-    issuer: 'https://dev-193618.oktapreview.com/oauth2/default',
-    clientId: '0oaj268wh6uRIKLy50h7',
-    redirectUri: `${redirectUri}/implicit/callback`,
-    copes: ['openid', 'profile', 'email']
-}
+import { oktaConfig } from './shared/config/okta-confiq';
 
 @NgModule( {
 	declarations: [

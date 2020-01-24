@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QuizService } from '../service/quiz.service';
+import { SharedDataService } from '../service/shared-data.service';
 
 @Component( {
 	selector: 'app-quiz-info',
@@ -26,7 +27,8 @@ export class QuizInfoComponent implements OnInit {
 	quizId: number;
 	quizName: string;
 
-	constructor( private route: ActivatedRoute, private router: Router, private quizService: QuizService ) { }
+	constructor( private route: ActivatedRoute, private router: Router, private quizService: QuizService,
+	             private sharedDataService: SharedDataService ) { }
 
 	ngOnInit() {
 		const id = +this.route.snapshot.paramMap.get( 'id' );
@@ -47,7 +49,7 @@ export class QuizInfoComponent implements OnInit {
 	}
 
 	startQuiz(): void {
-		this.quizService.updateQuizId( this.quizId );
+		this.sharedDataService.updateQuizId( this.quizId );
 		this.router.navigate( ['/quiz', this.quizId] );
 	}
 

@@ -9,12 +9,7 @@ import { QuizService } from '../service/quiz.service';
 import { QuizModule } from '../quiz.module';
 import { QuizListComponent } from '../quiz-list/quiz-list.component';
 import { quizServiceStub } from '../../shared/mock/mock-quiz-service';
-
-const oktaConfig = {
-    issuer: 'https://dev-193618.oktapreview.com/oauth2/default',
-    clientId: '0oaj268wh6uRIKLy50h7',
-    redirectUri: `http://localhost:4200/implicit/callback`
-}
+import { oktaConfig } from '../../shared/config/okta-confiq';
 
 let component: QuizListComponent;
 let fixture: ComponentFixture<QuizListComponent>;
