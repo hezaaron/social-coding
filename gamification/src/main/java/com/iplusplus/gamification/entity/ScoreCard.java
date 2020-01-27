@@ -24,7 +24,7 @@ public final class ScoreCard {
 	@Id @GeneratedValue
 	private final Long id;
 	private final String username;
-	private final Long examId;
+	private final Long quizId;
 	private final LocalDateTime scoreTime;
 	private final int score;
 	
@@ -32,7 +32,7 @@ public final class ScoreCard {
 		this(null, null, null, null, 0);
 	}
 	
-	public ScoreCard(final String username, final Long examId) {
-		this(null, username, examId, new BagTime(Clock.systemDefaultZone()).getTime(), DEFAULT_SCORE);
+	public ScoreCard(final String username, final Long quizId) {
+		this(null, username, quizId, new BagTime(Clock.systemDefaultZone()).getTime(), DEFAULT_SCORE);
 	}
 }

@@ -49,7 +49,7 @@ public class ResultServiceImpl implements ResultService {
 		final List<Answer> correctAnswers = answerRepository.findByQuestionQuizIdAndCorrect(quizId, true);
         final List<Long> correctAnswerIds = correctAnswers.stream().map(Answer::getId)
 	        														  .collect(Collectors.toList());
-        new Grade(protocol, correctAnswerIds, userAnswers, user).computeGrade();
+        new Grade(protocol, correctAnswerIds, userAnswers, user).compute();
 	}
 
 	@Override
