@@ -12,6 +12,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import com.iplusplus.coding.controller.ResultController;
 import com.iplusplus.coding.entity.Answer;
 import com.iplusplus.coding.entity.Protocol;
 import com.iplusplus.coding.event.EventDispatcher;
@@ -22,8 +23,9 @@ import com.iplusplus.coding.repository.AnswerRepository;
 import com.iplusplus.coding.repository.ProtocolRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
-@Service
+@Service @Slf4j
 @RequiredArgsConstructor
 public class ResultServiceImpl implements ResultService {
 
@@ -40,6 +42,7 @@ public class ResultServiceImpl implements ResultService {
 	@Transactional
     public Protocol updateProtocol(Protocol protocol) {
     	boolean isPass = protocol.getGrade() >= Mark.PASS_MARK;
+    	log.info("Sending quiz solved event for user: {}", protocol.getUser());
     	eventDispatcher.send(new QuizSolvedEvent(protocol.getId(), protocol.getUser(), isPass));
         return protocolRepository.save(protocol);
     }
@@ -49,7 +52,7 @@ public class ResultServiceImpl implements ResultService {
 		final List<Answer> correctAnswers = answerRepository.findByQuestionQuizIdAndCorrect(quizId, true);
         final List<Long> correctAnswerIds = correctAnswers.stream().map(Answer::getId)
 	        														  .collect(Collectors.toList());
-        new Grade(protocol, correctAnswerIds, userAnswers, user).computeGrade();
+        new Grade(protocol, correctAnswerIds, userAnswers, user).compute();
 	}
 
 	@Override
