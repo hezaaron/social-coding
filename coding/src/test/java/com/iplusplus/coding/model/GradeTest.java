@@ -21,7 +21,7 @@ class GradeTest {
 		String user = "hez";
 		Grade grade = new Grade(result, correctAnswers, userAnswers, user);
 		
-		grade.computeGrade();
+		grade.compute();
 		
 		assertAll("result",
 				() -> assertEquals(3, (int) result.getCorrectAnswers()),

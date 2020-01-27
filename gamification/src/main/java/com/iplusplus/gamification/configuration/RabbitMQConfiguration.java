@@ -15,11 +15,6 @@ import org.springframework.messaging.handler.annotation.support.DefaultMessageHa
 @Configuration
 public class RabbitMQConfiguration implements RabbitListenerConfigurer {
 
-	@Override
-	public void configureRabbitListeners(RabbitListenerEndpointRegistrar registrar) {
-		registrar.setMessageHandlerMethodFactory(messageHandlerMethodFactory());
-	}
-	
 	@Bean
 	public TopicExchange quizExchange(@Value("${quiz.exchange}") final String exchangeName) {
 		return new TopicExchange(exchangeName);
@@ -36,9 +31,9 @@ public class RabbitMQConfiguration implements RabbitListenerConfigurer {
 		return BindingBuilder.bind(queue).to(exchange).with(routingKey);
 	}
 	
-	@Bean
-	public MappingJackson2MessageConverter consumerJackson2MessageConverter() {
-		return new MappingJackson2MessageConverter();
+	@Override
+	public void configureRabbitListeners(RabbitListenerEndpointRegistrar registrar) {
+		registrar.setMessageHandlerMethodFactory(messageHandlerMethodFactory());
 	}
 	
 	@Bean
@@ -46,5 +41,10 @@ public class RabbitMQConfiguration implements RabbitListenerConfigurer {
 		DefaultMessageHandlerMethodFactory factory = new DefaultMessageHandlerMethodFactory();
 		factory.setMessageConverter(consumerJackson2MessageConverter());
 		return factory;
+	}
+	
+	@Bean
+	public MappingJackson2MessageConverter consumerJackson2MessageConverter() {
+		return new MappingJackson2MessageConverter();
 	}
 }

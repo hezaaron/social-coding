@@ -11,8 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +25,6 @@ public final class Protocol implements Serializable {
 	private static final long serialVersionUID = 4452128691658159963L;
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private final Long id;
-	@JsonIgnore
     private String user;
 	@ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "quiz_id")
     private final Quiz quiz;

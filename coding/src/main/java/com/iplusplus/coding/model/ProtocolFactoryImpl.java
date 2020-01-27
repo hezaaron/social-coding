@@ -14,5 +14,4 @@ public class ProtocolFactoryImpl implements ProtocolFactory {
 	public Protocol createInstance(Quiz quiz, LocalDateTime startTime, Integer questionCount) {
 		return new Protocol(null, quiz, startTime, questionCount);
 	}
-
 }

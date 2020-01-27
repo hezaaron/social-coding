@@ -38,10 +38,10 @@ export class QuizListComponent implements OnInit {
 	async ngOnInit() {
 		this.quizzes$ = this.quizService.getQuizzes();
 		this.isAuthenticated = await this.oktaService.isAuthenticated();
-    if ( this.isAuthenticated ) {
+    
+		if ( this.isAuthenticated ) {
       const userClaims = await this.oktaService.getUser();
       this.sharedDataService.updateUsername(userClaims.name);
     }
 	}
-
 }
