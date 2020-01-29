@@ -19,9 +19,9 @@ class EventHandler {
 	
 	@RabbitListener(queues = "${quiz.queue}")
 	void handleQuizSolved(final QuizSolvedEvent event) {
-		log.info("Quiz solved Event received: {}", event.getResultId());
+		log.info("Quiz solved Event received for {}", event.getUsername());
 		try {
-			gameService.newAttemptForUser(event.getUsername(), event.getResultId(), event.isSolved());
+			gameService.newAttemptForUser(event.getUsername(), event.getScore());
 		}catch (final Exception e) {
 			log.error("Error when trying to process QuizSolved Event", e);
 			throw new AmqpRejectAndDontRequeueException(e);

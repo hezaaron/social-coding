@@ -7,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 
 import java.util.Map;
 
@@ -20,10 +20,8 @@ import org.mockito.MockitoAnnotations;
 import com.iplusplus.coding.entity.Protocol;
 import com.iplusplus.coding.event.EventDispatcher;
 import com.iplusplus.coding.event.QuizSolvedEvent;
-import com.iplusplus.coding.model.Mark;
 import com.iplusplus.coding.repository.AnswerRepository;
 import com.iplusplus.coding.repository.ProtocolRepository;
-import com.iplusplus.coding.service.ResultServiceImpl;
 
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
@@ -58,8 +56,7 @@ public class ResultServiceImplTest {
 	@Test
 	void testUpdateProtocol() {
 		Protocol fixtureProtocol = Fixture.from(Protocol.class).gimme("valid");
-		boolean isPass = fixtureProtocol.getGrade() >= Mark.PASS_MARK;
-		QuizSolvedEvent event = new QuizSolvedEvent(fixtureProtocol.getId(), fixtureProtocol.getUser(), isPass);
+		QuizSolvedEvent event = new QuizSolvedEvent(fixtureProtocol.getUser(), fixtureProtocol.getGrade());
 		
 		given(protocolRepository.save(any())).willReturn(fixtureProtocol);
 		Protocol protocol = resultService.updateProtocol(fixtureProtocol);
