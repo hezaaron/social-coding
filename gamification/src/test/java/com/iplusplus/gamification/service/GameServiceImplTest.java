@@ -35,22 +35,21 @@ public class GameServiceImplTest {
 	}
 	
 	@Test
-	public void testFirstPassedAttempt() {
+	public void testFirstAttemptBadge() {
 		String username = "hezaaron";
-		Long examId = 1L;
-		int totalScore = 60;
-		ScoreCard scoreCard = new ScoreCard(username, examId);
+		int score = 10;
+		ScoreCard scoreCard = new ScoreCard(username, score);
 		
-		given(scoreCardRepository.getTotalScoreForUser(username)).willReturn(totalScore);
+		given(scoreCardRepository.getTotalScoreForUser(username)).willReturn(score);
 		given(scoreCardRepository.findByUsernameOrderByScoreTimeDesc(username))
 								 .willReturn(Collections.singletonList(scoreCard));
 		given(badgeCardRepository.findByUsernameOrderByBadgeTimeDesc(username))
 								 .willReturn(Collections.emptyList());
 		
-		GameStats stats = gameService.newAttemptForUser(username, examId, true);
+		GameStats stats = gameService.newAttemptForUser(username, score);
 		
 		assertAll("stats",
-				() -> assertEquals(scoreCard.getScore(), stats.getScore()),
+				() -> assertEquals(10, stats.getScore()),
 				() -> assertEquals(1, stats.getBadges().size()),
 				() -> assertTrue(stats.getBadges().contains(Badge.FIRST_WON)));
 	}
@@ -58,7 +57,6 @@ public class GameServiceImplTest {
 	@Test
 	public void testPassedAttemptForScoreBadge() {
 		String username = "hezaaron";
-		Long examId = 1L;
 		int totalScore = 100;
 		
 		BadgeCard firstWonBadge = new BadgeCard(username, Badge.FIRST_WON);
@@ -69,25 +67,22 @@ public class GameServiceImplTest {
 		given(badgeCardRepository.findByUsernameOrderByBadgeTimeDesc(username))
 								 .willReturn(Collections.singletonList(firstWonBadge));
 		
-		GameStats stats = gameService.newAttemptForUser(username, examId, true);
+		GameStats stats = gameService.newAttemptForUser(username, totalScore);
 		
-		assertAll("stats",
-				() -> assertEquals(ScoreCard.DEFAULT_SCORE, stats.getScore()),
-				() -> assertEquals(Badge.BRONZE, stats.getBadges().get(0)));
+		assertEquals(Badge.BRONZE, stats.getBadges().get(0));
 	}
 
 	private List<ScoreCard> createNScoreCards(int n, String username) {
 		return IntStream.range(0, n)
-					   .mapToObj(i -> new ScoreCard(username, (long)i))
+					   .mapToObj(i -> new ScoreCard(username, i))
 					   .collect(Collectors.toList());
 	}
 	
 	@Test
 	public void testFailedAttempt() {
 		String username = "hezaaron";
-		Long examId = 2L;
 		int totalScore = 20;
-		ScoreCard scoreCard = new ScoreCard(username, examId);
+		ScoreCard scoreCard = new ScoreCard(username, totalScore);
 		
 		given(scoreCardRepository.getTotalScoreForUser(username))
 								.willReturn(totalScore);
@@ -96,11 +91,11 @@ public class GameServiceImplTest {
 		given(badgeCardRepository.findByUsernameOrderByBadgeTimeDesc(username))
 								.willReturn(Collections.emptyList());
 		
-		GameStats stats = gameService.newAttemptForUser(username, examId, false);
+		GameStats stats = gameService.newAttemptForUser(username, totalScore);
 		
 		assertAll("stats",
-				() -> assertEquals(0, stats.getScore()),
-				() -> assertTrue(stats.getBadges().isEmpty()));
+				() -> assertEquals(20, stats.getScore()),
+				() -> assertTrue(stats.getBadges().size() == 1));
 	}
 	
 	@Test

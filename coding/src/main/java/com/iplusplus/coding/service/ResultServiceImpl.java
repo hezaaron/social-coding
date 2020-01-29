@@ -12,7 +12,6 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
-import com.iplusplus.coding.controller.ResultController;
 import com.iplusplus.coding.entity.Answer;
 import com.iplusplus.coding.entity.Protocol;
 import com.iplusplus.coding.event.EventDispatcher;
@@ -41,9 +40,8 @@ public class ResultServiceImpl implements ResultService {
     @Override
 	@Transactional
     public Protocol updateProtocol(Protocol protocol) {
-    	boolean isPass = protocol.getGrade() >= Mark.PASS_MARK;
     	log.info("Sending quiz solved event for user: {}", protocol.getUser());
-    	eventDispatcher.send(new QuizSolvedEvent(protocol.getId(), protocol.getUser(), isPass));
+    	eventDispatcher.send(new QuizSolvedEvent(protocol.getUser(), protocol.getGrade()));
         return protocolRepository.save(protocol);
     }
 

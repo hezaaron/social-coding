@@ -25,19 +25,17 @@ public class GameServiceImpl implements GameService {
 	private final BadgeCardRepository badgeCardRepository;
 	
 	@Override
-	public GameStats newAttemptForUser(final String username, final Long quizId, boolean pass) {
-		if(pass) {
-			ScoreCard scoreCard = new ScoreCard(username, quizId);
-			scoreCardRepository.save(scoreCard);
-			log.info("User {} scored {} points for quiz id {}", username, scoreCard.getScore(), quizId);
-			List<BadgeCard> badgeCards = processForBadges(username);
+	public GameStats newAttemptForUser(final String username, final int score) {
+		int defaultScore = ScoreCard.DEFAULT_SCORE;
+		ScoreCard scoreCard = (score < defaultScore) ? new ScoreCard(username, defaultScore):
+													   new ScoreCard(username, score);
 			
-			return new GameStats(username, scoreCard.getScore(),
-								badgeCards.stream().map(BadgeCard::getBadge)
-										  .collect(Collectors.toList()));
-		}
+		scoreCardRepository.save(scoreCard);
+		log.info("User {} scored {} points", username, scoreCard.getScore());
+		List<BadgeCard> badgeCards = processForBadges(username);
 		
-		return GameStats.emptyStats(username);
+		return (badgeCards.isEmpty()) ? GameStats.emptyStats(username) : new GameStats(username, scoreCard.getScore(),
+				badgeCards.stream().map(BadgeCard::getBadge).collect(Collectors.toList()));
 	}
 	
 	private List<BadgeCard> processForBadges(final String username) {
@@ -46,13 +44,16 @@ public class GameServiceImpl implements GameService {
 		log.info("New score for user {} is {}", username, totalScore);
 		List<ScoreCard> scoreCardList = scoreCardRepository.findByUsernameOrderByScoreTimeDesc(username);
 		List<BadgeCard> badgeCardList = badgeCardRepository.findByUsernameOrderByBadgeTimeDesc(username);
+		
 		chackAndGiveBadgeBasedOnScore(badgeCardList, Badge.BRONZE, totalScore, 100, username)
 									.ifPresent(badgeCards::add);
 		chackAndGiveBadgeBasedOnScore(badgeCardList, Badge.SILVER, totalScore, 500, username)
 									.ifPresent(badgeCards::add);
 		chackAndGiveBadgeBasedOnScore(badgeCardList, Badge.GOLD, totalScore, 999, username)
 									.ifPresent(badgeCards::add);
+		
 		log.info(String.valueOf(scoreCardList));
+		
 		if(scoreCardList.size() == 1 && !containsBadge(badgeCardList, Badge.FIRST_WON)) {
 			BadgeCard firstWonBadge = giveBadgeToUser(Badge.FIRST_WON, username);
 			badgeCards.add(firstWonBadge);

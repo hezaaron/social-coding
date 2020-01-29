@@ -20,19 +20,18 @@ import lombok.ToString;
 @RequiredArgsConstructor
 public final class ScoreCard {
 
-	public static final int DEFAULT_SCORE = 20;
+	public static final int DEFAULT_SCORE = 10;
 	@Id @GeneratedValue
 	private final Long id;
 	private final String username;
-	private final Long quizId;
 	private final LocalDateTime scoreTime;
 	private final int score;
 	
 	public ScoreCard() {
-		this(null, null, null, null, 0);
+		this(null, null, null, 0);
 	}
 	
-	public ScoreCard(final String username, final Long quizId) {
-		this(null, username, quizId, new BagTime(Clock.systemDefaultZone()).getTime(), DEFAULT_SCORE);
+	public ScoreCard(final String username, final int score) {
+		this(null, username, new BagTime(Clock.systemDefaultZone()).getTime(), score);
 	}
 }
