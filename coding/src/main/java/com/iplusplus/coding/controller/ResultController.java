@@ -40,8 +40,8 @@ public class ResultController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity <Map<String,Object>> getQuizStats(@PathVariable("id") Long resultId) {
-        return ResponseEntity.ok(resultService.getQuizStats(resultId));
+    public ResponseEntity <Map<String,Object>> getResult(@PathVariable("id") Long resultId) {
+        return ResponseEntity.ok(resultService.getResult(resultId));
     }
     
     @ExceptionHandler(RuntimeException.class)

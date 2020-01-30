@@ -54,7 +54,7 @@ public class ResultServiceImpl implements ResultService {
 	}
 
 	@Override
-	public Map<String, Object> getQuizStats(Long protocolId) {
+	public Map<String, Object> getResult(Long protocolId) {
 		final Protocol protocol = getProtocol(protocolId);
         final Map<String, Object> map = new HashMap<>();
         map.put("title", String.format("Your result for %s", protocol.getQuiz().getName()));

@@ -1,0 +1,22 @@
+server:
+  port: 8000
+
+zuul:
+  prefix: /api
+  routes:
+    quizzes:
+      path: /quizzes/**
+      url: http://localhost:5000/quizzes
+    results:
+      path: /result/**
+      url: http://localhost:5000/results
+    leaders:
+      path: /leaders/**
+      url: http://locaalhost:5001/leaders
+    stats:
+      path: /stats/**
+      url: http://localhost:5001/stats
+      
+  endpoints:
+    trace:
+      enabled: false
