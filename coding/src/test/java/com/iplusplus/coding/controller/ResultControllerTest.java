@@ -84,7 +84,7 @@ public class ResultControllerTest {
 		stats.put("grade", protocol.getGrade());
 		stats.put("maxGrade", Mark.MAX_MARK);
 
-		given(resultService.getQuizStats(anyLong())).willReturn(stats);
+		given(resultService.getResult(anyLong())).willReturn(stats);
 		
 		MockHttpServletResponse response = mockMvc.perform(get("/results/1"))
 												  .andReturn().getResponse();

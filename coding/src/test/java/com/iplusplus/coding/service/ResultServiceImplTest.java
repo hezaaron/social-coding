@@ -71,7 +71,7 @@ public class ResultServiceImplTest {
 	void testGetQuizStats() {
 		Protocol fixtureProtocol = Fixture.from(Protocol.class).gimme("valid");
 		given(protocolRepository.getOne(anyLong())).willReturn(fixtureProtocol);
-		Map<String, Object> stats = resultService.getQuizStats(fixtureProtocol.getId());
+		Map<String, Object> stats = resultService.getResult(fixtureProtocol.getId());
 		
 		assertAll("stats",
 				() -> assertFalse(stats.isEmpty()),
