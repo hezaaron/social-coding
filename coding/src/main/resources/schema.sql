@@ -25,9 +25,9 @@ ALTER TABLE answer add foreign key (question_id) references question (id);
 CREATE TABLE protocol (
   id              int      not null auto_increment primary key,
   quiz_id         int      not null,
-  start           datetime not null,
-  finish          datetime,
-  question_count  int,
+  start_time           datetime not null,
+  finish_time          datetime,
+  question_count  int      not null,
   correct_answers int,
   grade           int
 );
