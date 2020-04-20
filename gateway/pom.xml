@@ -3,8 +3,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.iplusplus</groupId>
-	<artifactId>gateway</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>gateway-v2</artifactId>
+	<version>0.2.0-SNAPSHOT</version>
 	
 	<name>api-gateway-v2</name>
 	<description>Social Coding App</description>
@@ -12,14 +12,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.1.8.RELEASE</version>
+		<version>2.2.5.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
 		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
 		<java.version>1.8</java.version>
-		<spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
+		<spring-cloud.version>Hoxton.SR3</spring-cloud.version>
 	</properties>
 	
 	<dependencyManagement>
@@ -36,9 +36,18 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-zuul</artifactId>
 		</dependency>
+		<dependency>
+            <groupId>com.okta.spring</groupId>
+            <artifactId>okta-spring-boot-starter</artifactId>
+            <version>1.4.0</version>
+        </dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

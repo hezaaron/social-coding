@@ -19,12 +19,16 @@ export class LoginComponent {
     authParams: {
       issuer: oktaConfig.issuer,
       scopes: oktaConfig.scopes,
-      responseType: ['id_token', 'token'],
-      display: 'page'
+      responseType: ['id_token'],
+      responseMode: 'fragment',
+      pkce: oktaConfig.pkce
+    },
+    features: {
+      registration: true,
     },
     i18n: {
       en: {
-        'primaryauth.title': 'Sign in to iPlusplus Social Coding',
+        'primaryauth.title': 'Sign in to iPlusplus',
       }
     }
   } );

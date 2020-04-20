@@ -26,8 +26,10 @@ import com.iplusplus.coding.repository.QuizRepository;
 import com.iplusplus.coding.repository.QuestionRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
-@Service @RequiredArgsConstructor
+@Service @Slf4j
+@RequiredArgsConstructor
 public class QuizServiceImpl implements QuizService{
 	
 	private final QuizRepository quizRepository;
@@ -46,6 +48,7 @@ public class QuizServiceImpl implements QuizService{
     public Map<String, Object> getQuizDetails(Integer quizId, HttpServletRequest request){
     	final Quiz quiz = quizRepository.getOne(quizId);
     	Protocol protocol = createProtocol(quiz);
+    	log.info("Protocol: {}", protocol.toString());
     	request.getSession().setAttribute("quizStarted", protocol.getStartTime());
         final long protocolId = getProtocolId(protocol);
         final QuizDTO quizDto = new QuizDTO(protocolId, quizId);

@@ -7,7 +7,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 const appRoutes: Routes = [{
 	path: 'login', component: LoginComponent
 }, {
-	path: 'implicit/callback', component: OktaCallbackComponent
+	path: 'callback', component: OktaCallbackComponent
 }, {
 	path: '', pathMatch: 'full', redirectTo: '/quizzes'
 }, {
