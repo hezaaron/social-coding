@@ -19,7 +19,6 @@ export class LoginComponent {
     authParams: {
       issuer: oktaConfig.issuer,
       scopes: oktaConfig.scopes,
-      responseType: ['id_token'],
       responseMode: 'fragment',
       pkce: oktaConfig.pkce
     },
