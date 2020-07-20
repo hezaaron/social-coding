@@ -8,6 +8,6 @@ Heroku: https://iplusplus-client.herokuapp.com. **To** **_login_**, use the cred
 > password: h326Otaa
 
 Running it locally now may not yield the expected result as I'm working on the second version which include
-some gamification techniques, a mobile client and social login (e.g login with your google account).
+some gamification techniques, and social login (e.g login with your google account).
 So there is a lot of changes and some refactoring going on. When it's finished, I will provide the steps to
 run it locally.
