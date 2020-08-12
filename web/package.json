@@ -50,7 +50,7 @@
     "path": "^0.12.7",
     "rxjs": "6.5.4",
     "rxjs-compat": "^6.2.2",
-    "serialize-javascript": "^2.1.2",
+    "serialize-javascript": "^3.1.0",
     "tar": "^4.4.13",
     "typescript": "^3.5.1",
     "zone.js": "~0.8.26"
