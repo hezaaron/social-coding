@@ -16,6 +16,7 @@
 *.launch
 .settings/
 *.sublime-workspace
+.editorconfig
 
 # IDE - VSCode
 .vscode/*
@@ -29,7 +30,8 @@
 /connect.lock
 /coverage
 /libpeerconnection.log
-npm-debug.log
+npm-debug.log.3337872184
+npm-debug.log.4020720760
 testem.log
 /typings
 
