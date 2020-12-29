@@ -3,7 +3,7 @@ matrix:
     - language: java
       jdk: openjdk8
       before_install:
-      - cd coding && chmod +x mvnw
+      - cd coding-quiz && chmod +x mvnw
       script:
         - ./mvnw test
     
