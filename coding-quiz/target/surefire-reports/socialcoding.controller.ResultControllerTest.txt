@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: socialcoding.controller.ResultControllerTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 14.188 s - in socialcoding.controller.ResultControllerTest

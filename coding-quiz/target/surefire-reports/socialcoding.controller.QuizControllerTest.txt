@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: socialcoding.controller.QuizControllerTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 15.278 s - in socialcoding.controller.QuizControllerTest
