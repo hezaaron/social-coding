@@ -1,8 +1,6 @@
-/target/
-!.mvn/wrapper/maven-wrapper.jar
+# Source : https://github.com/github/gitignore
 
 ### Eclipse ###
-
 .metadata
 bin/
 tmp/
@@ -100,7 +98,6 @@ pom.xml.next
 release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
-.mvn/
 
 ### Windows ###
 # Windows thumbnail cache files

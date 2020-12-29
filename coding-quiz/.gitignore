@@ -1,8 +1,6 @@
-/target/
-!.mvn/wrapper/maven-wrapper.jar
+# Source : https://github.com/github/gitignore
 
-### Eclipse ###
-
+## Eclipse ##
 .metadata
 bin/
 tmp/
@@ -42,7 +40,7 @@ local.properties
 # Annotation Processing
 .apt_generated/
 
-### Eclipse Patch ###
+## Eclipse Patch ##
 # Eclipse Core
 .project
 
@@ -54,7 +52,7 @@ local.properties
 
 .sts4-cache/
 
-### Git ###
+## Git ##
 # Created by git for backups. To disable backups in Git:
 # $ git config --global mergetool.keepBackup false
 *.orig
@@ -69,7 +67,7 @@ local.properties
 *_LOCAL_*.txt
 *_REMOTE_*.txt
 
-### Java ###
+## Java ##
 # Compiled class file
 *.class
 
@@ -91,7 +89,7 @@ local.properties
 *.tar.gz
 *.rar
 
-### Maven ###
+## Maven ##
 target/
 pom.xml.tag
 pom.xml.releaseBackup
@@ -100,9 +98,8 @@ pom.xml.next
 release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
-.mvn/
 
-### Windows ###
+## Windows ##
 # Windows thumbnail cache files
 Thumbs.db
 ehthumbs.db
