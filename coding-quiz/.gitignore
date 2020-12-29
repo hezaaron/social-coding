@@ -98,7 +98,6 @@ pom.xml.next
 release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
-.mvn/
 
 ### Windows ###
 # Windows thumbnail cache files
