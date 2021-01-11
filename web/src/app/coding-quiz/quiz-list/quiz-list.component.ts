@@ -13,7 +13,7 @@ import { Quiz } from '../model/quiz';
         <div class="py-sm-5 px-sm-4 mt-3">
           <ng-container *ngIf="quizzes$ | async; else loading">
           <div style="border-bottom: 1px solid #C6C6C6" *ngFor="let quiz of quizzes$ | async; trackBy: trackById"> 
-            <h6><a [routerLink]="[quiz.id]">{{quiz.name}}</a></h6>
+            <h6><a routerLink="{{quiz.id}}/instructions">{{quiz.name}}</a></h6>
             <p>{{quiz.description}}</p>
           </div>
           </ng-container>
@@ -40,8 +40,8 @@ export class QuizListComponent implements OnInit {
 		this.isAuthenticated = await this.oktaService.isAuthenticated();
     
 		if ( this.isAuthenticated ) {
-      const userClaims = await this.oktaService.getUser();
-      this.sharedDataService.updateUsername(userClaims.name);
-    }
+            const userClaims = await this.oktaService.getUser();
+            this.sharedDataService.updateUsername(userClaims.name);
+        }
 	}
 }

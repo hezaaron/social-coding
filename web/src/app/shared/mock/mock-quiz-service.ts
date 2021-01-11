@@ -1,5 +1,5 @@
 import { Observable, of } from 'rxjs';
-import { Quiz } from '../../quiz/model/quiz';
+import { Quiz } from '../../coding-quiz/model/quiz';
 
 export const quizServiceStub = {
 	quizList: [{
