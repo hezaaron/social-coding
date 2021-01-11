@@ -1,5 +1,5 @@
 import { QuizzesComponent } from './quizzes.component';
-import { Quiz } from "src/app/quiz/model/quiz";
+import { Quiz } from "./model/quiz";
 
 describe( 'QuizzesComponent Tests', () => {
 	let quizzesComponent: QuizzesComponent = null;

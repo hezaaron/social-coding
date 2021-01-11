@@ -12,23 +12,18 @@ import { oktaConfig } from '../shared/config/okta-confiq';
 
 export class LoginComponent {
 	isAuthenticated: boolean;
-  signIn = new OktaSignIn( {
+    signIn = new OktaSignIn( {
     baseUrl: 'https://dev-193618.oktapreview.com',
     clientId: oktaConfig.clientId,
     redirectUri: oktaConfig.redirectUri,
     authParams: {
-      issuer: oktaConfig.issuer,
-      scopes: oktaConfig.scopes,
-      responseMode: 'fragment',
-      pkce: oktaConfig.pkce
+        issuer: oktaConfig.issuer,
+        scopes: oktaConfig.scopes,
+        responseMode: 'fragment',
+        pkce: oktaConfig.pkce
     },
     features: {
       registration: true,
-    },
-    i18n: {
-      en: {
-        'primaryauth.title': 'Sign in to iPlusplus',
-      }
     }
   } );
 

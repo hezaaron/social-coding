@@ -11,7 +11,7 @@ const appRoutes: Routes = [{
 }, {
 	path: '', pathMatch: 'full', redirectTo: '/quizzes'
 }, {
-	path: 'quizzes', loadChildren: './quiz/quiz.module#QuizModule'
+	path: 'quizzes', loadChildren: './coding-quiz/quiz.module#QuizModule'
 }, {
 	path: '**', component: PageNotFoundComponent
 }]

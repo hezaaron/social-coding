@@ -10,8 +10,7 @@ import { Question } from '../model/question';
 
 @Component( {
 	selector: 'app-quiz',
-	templateUrl: './quiz.component.html',
-	styleUrls: ['./quiz.component.scss']
+	templateUrl: './quiz.component.html'
 } )
 export class QuizComponent implements OnInit {
   username: string;
@@ -45,10 +44,10 @@ export class QuizComponent implements OnInit {
 		this.subscription = this.sharedDataService.quizId.subscribe( id => {
 			this.quizId = id;
 		},
-			error => console.error( error ) );
+		error => console.error( error ) );
 		
 		this.subscription = this.sharedDataService.username.subscribe( name => {
-      this.username = name;
+        this.username = name;
     },
       error => console.error( error ) );
 		
@@ -56,10 +55,10 @@ export class QuizComponent implements OnInit {
 	}
 
 	startQuiz(): void {
-		this.quizService.getQuiz( this.quizId ).subscribe( quiz => {
+		this.quizService.setQuiz( this.quizId ).subscribe( quiz => {
 			this.quizName = quiz.name
 			this.counter = quiz.timer;
-			this.resultForm.setValue( quiz.result );
+			this.resultForm.setValue( quiz.quizDto );
 			this.startTimer();
 		} );
 		this.setQuestions();
@@ -125,7 +124,7 @@ export class QuizComponent implements OnInit {
 			this.resultForm.controls['username'].setValue( this.username );
 			this.quizService.postAnswers( this.resultForm.value ).subscribe( response => {
 				this.sharedDataService.updateResultId( response.id );
-				this.viewResult( response.id );
+				this.viewReport(this.quizId);
 			} );
 		}
 	}
@@ -134,8 +133,8 @@ export class QuizComponent implements OnInit {
 		this.filteredOptions[this.optionIndex].selected = true;
 	}
 
-	private viewResult( id: number ): void {
-		this.router.navigate( ['/resultstat', id] );
+	private viewReport( id: number ): void {
+		this.router.navigate( [`/quizzes/${id}/report`] );
 	}
 
 	ngOnDestroy() {

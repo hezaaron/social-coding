@@ -20,23 +20,23 @@ export class QuizService {
 		return this.http.get<Quiz[]>( quizBaseUrl );
 	}
 
-	getQuiz( id: number ): Observable<any> {
-		return this.http.get( `${quizBaseUrl}/details/${id}` );
+	setQuiz( quizId: number ): Observable<any> {
+		return this.http.get( `${quizBaseUrl}/${quizId}/quiz-setter` );
 	}
 
-	getQuestions( id: number ): Observable<Question[]> {
-		return this.http.get<Question[]>( `${quizBaseUrl}/questions/${id}` );
+	getQuestions( quizId: number ): Observable<Question[]> {
+		return this.http.get<Question[]>( `${quizBaseUrl}/${quizId}/questions` );
 	}
 
-	getAnswers( id: number ): Observable<Option[]> {
-		return this.http.get<Option[]>( `${quizBaseUrl}/answers/${id}` );
+	getAnswers( quizId: number ): Observable<Option[]> {
+		return this.http.get<Option[]>( `${quizBaseUrl}/${quizId}/answers` );
 	}
 
-	postAnswers( userAnswer: any ): Observable<any> {
+	postAnswers( userAnswer: number ): Observable<any> {
 		return this.http.post( `${resultBaseUrl}`, userAnswer );
 	}
 
-	getQuizStat( id: number ): Observable<any> {
+	getReport( id: number ): Observable<any> {
 		return this.http.get( `${resultBaseUrl}/${id}` );
 	}
 }

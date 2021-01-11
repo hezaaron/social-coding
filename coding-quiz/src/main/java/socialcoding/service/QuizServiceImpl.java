@@ -37,7 +37,7 @@ public class QuizServiceImpl implements QuizService {
     }
     
     @Override
-    public QuizSetter setQuiz(final Integer quizId, final HttpServletRequest request){
+    public QuizSetter setQuiz(final Integer quizId, final HttpServletRequest request) {
     	final QuizAttempt quizAttempt = createQuizAttempt(quizId);
     	request.getSession().setAttribute("quizStarted", quizAttempt.getStartTime());
         final long quizAttemptId = getQuizAttemptId(quizAttempt);
