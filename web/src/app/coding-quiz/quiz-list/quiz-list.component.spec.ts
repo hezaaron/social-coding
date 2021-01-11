@@ -44,7 +44,7 @@ describe( 'QuizListComponent tests', () => {
 
 	it( 'should render route as /:id', fakeAsync(() => {
 		const link = fixture.debugElement.query( By.css( 'a' ) ).nativeElement.getAttribute( 'href' );
-		expect( link ).toEqual( '/1' );
+		expect( link ).toEqual( '/1/instructions' );
 	} ) );
 
 } );
