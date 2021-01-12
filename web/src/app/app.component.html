@@ -21,8 +21,13 @@
         </div>
     </nav>
 	
-	<main class="site-main mt-5 flex-grow-1"> 
-		<router-outlet></router-outlet>
+	<main class="site-main mt-5 row flex-grow-1"> 
+	   <div class="col-8 p-2">
+	       <router-outlet></router-outlet>
+	   </div>
+	   <div class="col-4 p-2" *ngIf="isAuthenticated">
+	       <app-leaderboard></app-leaderboard>
+	   </div>
 	</main>
 	
 	<footer class="page-footer font-small stylish-color">

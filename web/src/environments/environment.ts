@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   redirectUri: 'https://localhost:4200',
   quizApiUrl: 'http://localhost:8080/api/quizzes',
-  resultApiUrl: 'http://localhost:8080/api/results'
+  resultApiUrl: 'http://localhost:8080/api/results',
+  leadersApiUrl: 'http://localhost:8080/api/leaders'
 };
 
 /*
