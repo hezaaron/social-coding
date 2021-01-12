@@ -12,7 +12,7 @@ zuul:
       url: http://localhost:5000/results
     leaders:
       path: /leaders/**
-      url: http://locaalhost:5001/leaders
+      url: http://localhost:5001/leaders
     stats:
       path: /stats/**
       url: http://localhost:5001/stats

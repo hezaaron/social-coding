@@ -15,12 +15,15 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { AppRoutingModule } from './app-routing.module';
 import { HttpErrorInterceptor } from './shared/interceptor/http-error.interceptor';
 import { oktaConfig } from './shared/config/okta-confiq';
+import { LeaderBoardComponent } from './leaderboard/leaderboard.component';
+import { LeaderBoardService } from './leaderboard/leaderboard.service';
 
 @NgModule( {
 	declarations: [
 		AppComponent,
 		LoginComponent,
-		PageNotFoundComponent
+		PageNotFoundComponent,
+        LeaderBoardComponent
 	],
 	imports: [
 		BrowserModule,
@@ -33,6 +36,7 @@ import { oktaConfig } from './shared/config/okta-confiq';
 		AppRoutingModule
 	],
 	providers: [
+        LeaderBoardService,
 	    { provide: OKTA_CONFIG, useValue: oktaConfig },
 		{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
 		{ provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }
