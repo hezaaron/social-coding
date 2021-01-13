@@ -13,7 +13,7 @@ import { Question } from '../model/question';
 	templateUrl: './quiz.component.html'
 } )
 export class QuizComponent implements OnInit {
-  username: string;
+    username: string;
 	cancelSubmit: boolean = false;
 	confirmSubmit: boolean = false;
 	countDown: Observable<number>;
@@ -47,9 +47,9 @@ export class QuizComponent implements OnInit {
 		error => console.error( error ) );
 		
 		this.subscription = this.sharedDataService.username.subscribe( name => {
-        this.username = name;
-    },
-      error => console.error( error ) );
+            this.username = name;
+        },
+        error => console.error( error ) );
 		
 		this.startQuiz();
 	}

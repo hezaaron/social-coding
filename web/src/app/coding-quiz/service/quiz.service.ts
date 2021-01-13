@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Quiz } from '../model/quiz';
 import { Option } from '../model/option';
 import { Question } from '../model/question';
+import { Report } from '../model/report';
 
 const quizBaseUrl = `${environment.quizApiUrl}`;
 const resultBaseUrl = `${environment.resultApiUrl}`;
@@ -36,7 +37,7 @@ export class QuizService {
 		return this.http.post( `${resultBaseUrl}`, userAnswer );
 	}
 
-	getReport( id: number ): Observable<any> {
-		return this.http.get( `${resultBaseUrl}/${id}` );
+	getReport( id: number ): Observable<Report> {
+		return this.http.get<Report>( resultBaseUrl + '?attemptId=' + id );
 	}
 }

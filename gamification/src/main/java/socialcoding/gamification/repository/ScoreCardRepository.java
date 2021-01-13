@@ -13,7 +13,7 @@ public interface ScoreCardRepository extends JpaRepository<ScoreCard, Long> {
 
 	@Query("SELECT SUM(s.score) FROM socialcoding.gamification.entity.ScoreCard s "
 			+ "where s.username = :username GROUP BY s.username")
-	int getTotalScoreForUser(@Param("username") final String username);
+	Integer getTotalScoreForUser(@Param("username") final String username);
 	
 	@Query("SELECT NEW socialcoding.gamification.model.LeaderBoardRow(s.username, SUM(s.score))"
 			+ "FROM socialcoding.gamification.entity.ScoreCard s "

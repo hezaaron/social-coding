@@ -11,7 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { QuizzesComponent } from './quizzes.component';
-import { QuizRoutingModule } from './quiz-routing.module';
+import { QuizRoutingModule } from './coding-quiz-routing.module';
 import { QuizInfoComponent } from './quiz-info/quiz-info.component';
 
 const highlightLanguage = {

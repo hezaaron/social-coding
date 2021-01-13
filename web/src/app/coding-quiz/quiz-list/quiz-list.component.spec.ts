@@ -1,12 +1,9 @@
 import { fakeAsync, ComponentFixture, TestBed, async, inject } from '@angular/core/testing';
-import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { OktaAuthService, OKTA_CONFIG } from '@okta/okta-angular';
-import { Router, RouterModule } from "@angular/router";
-import { RouterTestingModule } from '@angular/router/testing';
-import { Quiz } from '../model/quiz';
+import { RouterModule } from '@angular/router';
 import { QuizService } from '../service/quiz.service';
-import { QuizModule } from '../quiz.module';
+import { QuizModule } from '../coding-quiz.module';
 import { QuizListComponent } from '../quiz-list/quiz-list.component';
 import { quizServiceStub } from '../../shared/mock/mock-quiz-service';
 import { oktaConfig } from '../../shared/config/okta-confiq';
