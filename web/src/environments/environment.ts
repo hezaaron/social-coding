@@ -7,7 +7,8 @@ export const environment = {
   redirectUri: 'https://localhost:4200',
   quizApiUrl: 'http://localhost:8080/api/quizzes',
   resultApiUrl: 'http://localhost:8080/api/results',
-  leadersApiUrl: 'http://localhost:8080/api/leaders'
+  leadersApiUrl: 'http://localhost:8080/api/leaders',
+  userStatsApiUrl: 'http://localhost:8080/api/stats'
 };
 
 /*

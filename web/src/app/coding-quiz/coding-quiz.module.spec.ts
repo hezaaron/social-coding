@@ -1,4 +1,4 @@
-import { QuizModule } from './quiz.module';
+import { QuizModule } from './coding-quiz.module';
 
 describe( 'QuizModule', () => {
 	let quizModule: QuizModule;

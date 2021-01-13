@@ -25,8 +25,13 @@
 	   <div class="col-8 p-2">
 	       <router-outlet></router-outlet>
 	   </div>
-	   <div class="col-4 p-2" *ngIf="isAuthenticated">
-	       <app-leaderboard></app-leaderboard>
+	   <div class="col-4 p-2 border-left" *ngIf="isAuthenticated">
+	       <div>
+	           <app-leaderboard></app-leaderboard>
+	       </div>
+	       <div>
+               <app-userstats></app-userstats>
+           </div>
 	   </div>
 	</main>
 	

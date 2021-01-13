@@ -16,10 +16,10 @@ import { LeaderBoardService } from './leaderboard.service';
               </tr>
             </thead>
             <tbody *ngFor="let leader of leaders">
-              <tr>
-                <td>{{leader.username}}</td>
-                <td>{{leader.totalScore}}</td>
-              </tr>
+            <tr>
+              <td>{{leader.username}}</td>
+              <td>{{leader.totalScore}}</td>
+            </tr>
             </tbody>
           </table>
           </ng-container>
@@ -30,7 +30,7 @@ import { LeaderBoardService } from './leaderboard.service';
 export class LeaderBoardComponent {
   leaders: Leader[] = [];
 
-    constructor( private leaderService: LeaderBoardService) { }
+    constructor( private leaderService: LeaderBoardService ) { }
 
     async ngOnInit() {
         this.leaderService.getLeaderBoard().subscribe(leaders => {

@@ -8,10 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
@@ -39,9 +39,9 @@ public final class ResultController {
         return ResponseEntity.ok(resultService.updateQuizAttempt(quizAttempt));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity <QuizReport> getResult(@PathVariable("id") final Long resultId) {
-        return ResponseEntity.ok(resultService.getResult(resultId));
+    @GetMapping
+    public ResponseEntity <QuizReport> getResult(@RequestParam("attemptId") final Long attemptId) {
+        return ResponseEntity.ok(resultService.getResult(attemptId));
     }
     
     @ExceptionHandler(RuntimeException.class)

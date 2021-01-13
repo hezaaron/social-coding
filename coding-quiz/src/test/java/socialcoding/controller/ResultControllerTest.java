@@ -83,7 +83,7 @@ public class ResultControllerTest {
 
 		given(resultService.getResult(anyLong())).willReturn(quizReport);
 		
-		MockHttpServletResponse response = mockMvc.perform(get("/results/1"))
+		MockHttpServletResponse response = mockMvc.perform(get("/results?attemptId=" + 1))
 												  .andReturn().getResponse();
 		assertAll("quizStats",
 					() -> assertEquals(HttpStatus.OK.value(), response.getStatus()),
