@@ -34,7 +34,7 @@ export class QuizResultComponent implements OnInit {
 		this.subscription = this.sharedDataService.resultId.subscribe( value => {
 			this.resultId = value;
 		},
-			error => console.error( error ) );
+		error => console.error( error ) );
 
 		this.quizService.getReport( this.resultId ).subscribe( report => {
 			this.report = report;

@@ -47,8 +47,6 @@ export class UserStatsComponent {
             this.username = userClaims.name;
         }
         
-        console.log(this.username);
-        
         this.userstatsService.getUserStats(this.username).subscribe(userstats => {
             this.userstats = userstats;
         });
