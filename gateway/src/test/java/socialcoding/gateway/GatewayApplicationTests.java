@@ -1,4 +1,4 @@
-package com.iplusplus.gateway;
+package socialcoding.gateway;
 
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
