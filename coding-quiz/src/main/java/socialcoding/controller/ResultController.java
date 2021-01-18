@@ -24,7 +24,7 @@ import socialcoding.service.ResultService;
 
 @RestController
 @RequestMapping("/results")
-@Slf4j @RequiredArgsConstructor
+@RequiredArgsConstructor @Slf4j
 public final class ResultController {
 
 	private final ResultService resultService;

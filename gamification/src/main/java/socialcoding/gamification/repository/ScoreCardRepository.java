@@ -18,7 +18,7 @@ public interface ScoreCardRepository extends JpaRepository<ScoreCard, Long> {
 	@Query("SELECT NEW socialcoding.gamification.model.LeaderBoardRow(s.username, SUM(s.score))"
 			+ "FROM socialcoding.gamification.entity.ScoreCard s "
 			+ "GROUP BY s.username ORDER BY SUM(s.score) DESC")
-	List<LeaderBoardRow> findFirst10();
+	List<LeaderBoardRow> findFirst5();
 	
 	List<ScoreCard> findByUsernameOrderByScoreTimeDesc(String username);
 }

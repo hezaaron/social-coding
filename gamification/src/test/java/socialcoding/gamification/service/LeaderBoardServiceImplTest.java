@@ -13,8 +13,6 @@ import org.mockito.MockitoAnnotations;
 
 import socialcoding.gamification.model.LeaderBoardRow;
 import socialcoding.gamification.repository.ScoreCardRepository;
-import socialcoding.gamification.service.LeaderBoardService;
-import socialcoding.gamification.service.LeaderBoardServiceImpl;
 
 public class LeaderBoardServiceImplTest {
 
@@ -33,7 +31,7 @@ public class LeaderBoardServiceImplTest {
 		LeaderBoardRow leaderBoardRow = new LeaderBoardRow(username, 300L);
 		List<LeaderBoardRow> expectedLeaderBoardRows = Collections.singletonList(leaderBoardRow);
 		
-		given(scoreCardRepository.findFirst10()).willReturn(expectedLeaderBoardRows);
+		given(scoreCardRepository.findFirst5()).willReturn(expectedLeaderBoardRows);
 		
 		List<LeaderBoardRow> leaderBoardRows = leaderBoardService.getCurrentLeaderBoard();
 		

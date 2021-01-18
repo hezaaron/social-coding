@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { QuizService } from '../service/quiz.service';
 import { SharedDataService } from '../service/shared-data.service';
 import { Report } from '../model/report';
+
 
 @Component( {
 	selector: 'app-quiz-results',
@@ -19,6 +21,9 @@ import { Report } from '../model/report';
               <tr><td>Max Score:</td><td>{{report.maxGrade}}</td></tr> 
             </table>
           </div>
+          <div class="float-right d-inline-block">
+            <button class="btn mt-sm-3" (click)="quizzes()">Return to Quiz List</button>
+          </div>
 		</ng-container>
 		<ng-template #loading>Loading results...</ng-template>
       </div>`
@@ -28,7 +33,8 @@ export class QuizResultComponent implements OnInit {
 	resultId: number;
 	private subscription: Subscription;
 
-	constructor( private quizService: QuizService, private sharedDataService: SharedDataService ) { }
+	constructor( private quizService: QuizService, private sharedDataService: SharedDataService,
+                 private router: Router ) { }
 
 	ngOnInit() {
 		this.subscription = this.sharedDataService.resultId.subscribe( value => {
@@ -40,6 +46,10 @@ export class QuizResultComponent implements OnInit {
 			this.report = report;
 		} );
 	}
+    
+    quizzes() {
+        this.router.navigate( ['/quizzes'] );
+    }
 
 	ngOnDestroy() {
 		this.subscription.unsubscribe();

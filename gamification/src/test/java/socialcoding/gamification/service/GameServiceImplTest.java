@@ -21,8 +21,6 @@ import socialcoding.gamification.model.Badge;
 import socialcoding.gamification.model.GameStats;
 import socialcoding.gamification.repository.BadgeCardRepository;
 import socialcoding.gamification.repository.ScoreCardRepository;
-import socialcoding.gamification.service.GameService;
-import socialcoding.gamification.service.GameServiceImpl;
 
 public class GameServiceImplTest {
 

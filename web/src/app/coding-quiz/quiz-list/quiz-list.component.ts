@@ -9,7 +9,7 @@ import { Quiz } from '../model/quiz';
 	selector: 'app-quiz-list',
 	template: `
       <div class="container">
-        <h4 class="text-sm-center text-info">Social Coding</h4>
+        <h5 class="text-sm-center text-info">Java Coding Quiz</h5>
         <div class="py-sm-5 px-sm-4 mt-3">
           <ng-container *ngIf="quizzes$ | async; else loading">
           <div style="border-bottom: 1px solid #C6C6C6" *ngFor="let quiz of quizzes$ | async; trackBy: trackById"> 

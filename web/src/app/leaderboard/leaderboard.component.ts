@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Leader } from './leader.model';
 import { LeaderBoardService } from './leaderboard.service';
 
@@ -28,7 +28,7 @@ import { LeaderBoardService } from './leaderboard.service';
     `
 } )
 export class LeaderBoardComponent {
-  leaders: Leader[] = [];
+  @Input() leaders: Leader[] = [];
 
     constructor( private leaderService: LeaderBoardService ) { }
 
