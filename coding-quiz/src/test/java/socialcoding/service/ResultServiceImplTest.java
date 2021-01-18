@@ -59,7 +59,7 @@ public class ResultServiceImplTest {
 		given(quizAttemptRepository.save(any())).willReturn(fixtureQuizAttempt);
 		QuizAttempt quizAttempt = resultService.updateQuizAttempt(fixtureQuizAttempt);
 		
-		assertAll("protocol",
+		assertAll("quizAttempt",
 					() -> assertNotNull(quizAttempt),
 					() -> assertNotNull(quizAttempt.getQuiz()));
 		verify(eventDispatcher).send(eq(event));

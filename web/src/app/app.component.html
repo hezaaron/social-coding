@@ -21,16 +21,19 @@
         </div>
     </nav>
 	
-	<main class="site-main mt-5 row flex-grow-1"> 
+	<main class="site-main mt-5 row flex-grow-1">
 	   <div class="col-8 p-2">
 	       <router-outlet></router-outlet>
 	   </div>
 	   <div class="col-4 p-2 border-left" *ngIf="isAuthenticated">
 	       <div>
-	           <app-leaderboard></app-leaderboard>
+	           <app-leaderboard [leaders]="leaders"></app-leaderboard>
 	       </div>
 	       <div>
-               <app-userstats></app-userstats>
+               <app-userstats [userstats]="userstats"></app-userstats>
+           </div>
+           <div class="text-center">
+               <button (click) = "refresh()">Refresh</button>
            </div>
 	   </div>
 	</main>

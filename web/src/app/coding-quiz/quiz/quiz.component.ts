@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { QuizService } from '../service/quiz.service';
 import { SharedDataService } from '../service/shared-data.service';
@@ -30,8 +30,8 @@ export class QuizComponent implements OnInit {
 	userAnswers: number[] = [];
 	private subscription: Subscription;
 
-	constructor( private route: ActivatedRoute, private router: Router, private quizService: QuizService,
-	             private formBuilder: FormBuilder, private sharedDataService: SharedDataService ) {
+	constructor( private router: Router, private quizService: QuizService, private formBuilder: FormBuilder,
+                 private sharedDataService: SharedDataService ) {
 		this.resultForm = this.formBuilder.group( {
 			id: [''],
 			quizId: [''],

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { UserStats } from './user-stats.model';
 import { UserStatsService } from './user-stats.service';
 import { OktaAuthService } from '@okta/okta-angular';
@@ -31,9 +31,9 @@ import { OktaAuthService } from '@okta/okta-angular';
     `
 } )
 export class UserStatsComponent {
-  userstats: UserStats;
-  username: string;
-  isAuthenticated: boolean;
+    @Input() userstats: UserStats;
+    username: string;
+    isAuthenticated: boolean;
 
     constructor( private userstatsService: UserStatsService, private oktaService: OktaAuthService ) {
         this.oktaService.$authenticationState.subscribe(( isAuthenticated: boolean ) => this.isAuthenticated = isAuthenticated );

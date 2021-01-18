@@ -11,7 +11,7 @@ export class UserStatsService {
     
     constructor( private http: HttpClient ) {}
     
-    getUserStats(name: string): Observable<UserStats> {
+    getUserStats( name: string ): Observable<UserStats> {
         return this.http.get<UserStats>( baseUrl + '?username=' + name );
     }
 }

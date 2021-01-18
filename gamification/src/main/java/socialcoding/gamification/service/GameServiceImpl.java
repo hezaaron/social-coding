@@ -26,15 +26,16 @@ public class GameServiceImpl implements GameService {
 	@Override
 	public GameStats newAttemptForUser(final String username, final int score) {
 		int defaultScore = ScoreCard.DEFAULT_SCORE;
-		ScoreCard scoreCard = (score < defaultScore) ? new ScoreCard(username, defaultScore):
-													   new ScoreCard(username, score);
+		ScoreCard scoreCard = (score < defaultScore) ? new ScoreCard(username, defaultScore): new ScoreCard(username, score);
 			
 		scoreCardRepository.save(scoreCard);
 		log.info("User {} scored {} points", username, scoreCard.getScore());
 		List<BadgeCard> badgeCards = processForBadges(username);
 		
 		return (badgeCards.isEmpty()) ? GameStats.emptyStats(username) : new GameStats(username, scoreCard.getScore(),
-				badgeCards.stream().map(BadgeCard::getBadge).collect(Collectors.toList()));
+				                                                                       badgeCards.stream()
+				                                                                                 .map(BadgeCard::getBadge)
+				                                                                                 .collect(Collectors.toList()));
 	}
 	
 	private List<BadgeCard> processForBadges(final String username) {
@@ -57,6 +58,7 @@ public class GameServiceImpl implements GameService {
 			BadgeCard firstWonBadge = giveBadgeToUser(Badge.FIRST_WON, username);
 			badgeCards.add(firstWonBadge);
 		}
+		
 		return badgeCards;
 	}
 	
@@ -65,6 +67,7 @@ public class GameServiceImpl implements GameService {
 		if(score >= scoreThreshold && !containsBadge(badgeCards, badge)) {
 			return Optional.of(giveBadgeToUser(badge, username));
 		}
+		
 		return Optional.empty();
 	}
 	
@@ -81,12 +84,11 @@ public class GameServiceImpl implements GameService {
 
 	@Override
 	public GameStats retrieveStatsForUser(final String username) {
-		Integer score = scoreCardRepository.getTotalScoreForUser(username);
-		if(score == null) score = 0;
 		List<BadgeCard> badgeCards = badgeCardRepository.findByUsernameOrderByBadgeTimeDesc(username);
-		return new GameStats(username, score, badgeCards.stream()
-														.map(BadgeCard::getBadge)
-														.collect(Collectors.toList()));
+		Integer score = scoreCardRepository.getTotalScoreForUser(username);
+        return (score == null) ? GameStats.emptyStats(username) : new GameStats(username, score, badgeCards.stream()
+                                                                                                           .map(BadgeCard::getBadge)
+                                                                                                           .collect(Collectors.toList()));
 	}
 
 }

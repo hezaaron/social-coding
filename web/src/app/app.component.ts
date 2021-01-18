@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { OktaAuthService, } from '@okta/okta-angular';
 import { Subscription } from 'rxjs';
 import { SharedDataService } from './coding-quiz/service/shared-data.service';
+import { UserStats } from './statistics/user-stats.model';
+import { UserStatsService } from './statistics/user-stats.service';
+import { Leader } from './leaderboard/leader.model';
+import { LeaderBoardService } from './leaderboard/leaderboard.service';
 
 @Component( {
 	selector: 'app-root',
@@ -13,9 +17,12 @@ export class AppComponent {
 	isAuthenticated: boolean;
 	isNavbarCollapsed = true;
 	username: string;
+    userstats: UserStats;
+    leaders: Leader[] = [];
 	private subscription: Subscription;
 
-	constructor( public oktaService: OktaAuthService, private sharedDataService: SharedDataService ) {
+	constructor( public oktaService: OktaAuthService, private sharedDataService: SharedDataService,
+                 private statsService: UserStatsService, private leaderService: LeaderBoardService ) {
 		this.oktaService.$authenticationState.subscribe(( isAuthenticated: boolean ) => this.isAuthenticated = isAuthenticated );
 	}
 
@@ -26,6 +33,16 @@ export class AppComponent {
 	    },
         error => console.error( error ) );
 	}
+    
+    refresh() {
+        this.leaderService.getLeaderBoard().subscribe( leaders => {
+            this.leaders = leaders;
+        })
+        
+        this.statsService.getUserStats(this.username).subscribe(userstats => {
+            this.userstats = userstats;
+        })
+    }
 
 	async logout() {
 		await this.oktaService.logout( 'login' );

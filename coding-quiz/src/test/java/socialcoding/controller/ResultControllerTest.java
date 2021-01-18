@@ -17,7 +17,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -27,6 +26,8 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -37,19 +38,20 @@ import socialcoding.entity.QuizAttempt;
 import socialcoding.model.QuizReport;
 import socialcoding.service.ResultService;
 
-@AutoConfigureMockMvc(addFilters=false)
-@ContextConfiguration(classes=ResultController.class)
+@ContextConfiguration(classes = ResultController.class)
 @WebMvcTest @WithMockUser
 public class ResultControllerTest {
 	
+	@Autowired private WebApplicationContext webApplicationContext;
 	@MockBean private ResultService resultService;
-	@Autowired private MockMvc mockMvc;
 	@Mock private HttpServletRequest request;
+	private MockMvc mockMvc;
 	private JacksonTester<QuizDTO> jsonQuizDto;
 	private JacksonTester<QuizReport> jsonQuizReport;
 	
 	@BeforeEach
 	void setUp() throws Exception {
+	    mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 		JacksonTester.initFields(this, new ObjectMapper());
 		FixtureFactoryLoader.loadTemplates("socialcoding.template");
 	}
@@ -85,7 +87,7 @@ public class ResultControllerTest {
 		
 		MockHttpServletResponse response = mockMvc.perform(get("/results?attemptId=" + 1))
 												  .andReturn().getResponse();
-		assertAll("quizStats",
+		assertAll("quizReport",
 					() -> assertEquals(HttpStatus.OK.value(), response.getStatus()),
 					() -> assertEquals(jsonQuizReport.write(quizReport).getJson(), response.getContentAsString()));
 	}
