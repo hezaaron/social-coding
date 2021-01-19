@@ -15,10 +15,10 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { AppRoutingModule } from './app-routing.module';
 import { HttpErrorInterceptor } from './shared/interceptor/http-error.interceptor';
 import { oktaConfig } from './shared/config/okta-confiq';
-import { LeaderBoardComponent } from './leaderboard/leaderboard.component';
-import { LeaderBoardService } from './leaderboard/leaderboard.service';
-import { UserStatsComponent } from './statistics/user-stats.component';
-import { UserStatsService } from './statistics/user-stats.service';
+import { LeaderBoardComponent } from './gamification/leaderboard/leaderboard.component';
+import { LeaderBoardService } from './gamification/leaderboard/leaderboard.service';
+import { UserStatsComponent } from './gamification/statistics/user-stats.component';
+import { UserStatsService } from './gamification/statistics/user-stats.service';
 
 @NgModule( {
 	declarations: [

@@ -13,7 +13,7 @@
     "webdriver-update": "webdriver-manager update",
     "e2e_headless": "ng e2e --protractor-config='e2e/ci.protractor.conf.js'",
     "heroku-postbuild": "ng build --configuration=production",
-    "stats": "webpack-bundle-analyzer dist/web/stats.json"
+    "bundle:report": "source-map-explorer dist/web/**/*.js"
   },
   "private": true,
   "dependencies": {
@@ -51,6 +51,7 @@
     "rxjs": "6.5.4",
     "rxjs-compat": "^6.2.2",
     "serialize-javascript": "^3.1.0",
+    "source-map-explorer": "^2.5.2",
     "tar": "^4.4.13",
     "typescript": "^3.5.1",
     "zone.js": "~0.8.26"
@@ -75,7 +76,6 @@
     "ts-loader": "^5.4.5",
     "ts-node": "~5.0.1",
     "tslint": "~5.9.1",
-    "webpack-bundle-analyzer": "^3.6.0",
     "webpack-cli": "^3.3.10"
   }
 }

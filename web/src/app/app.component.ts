@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { OktaAuthService, } from '@okta/okta-angular';
 import { Subscription } from 'rxjs';
 import { SharedDataService } from './coding-quiz/service/shared-data.service';
-import { UserStats } from './statistics/user-stats.model';
-import { UserStatsService } from './statistics/user-stats.service';
-import { Leader } from './leaderboard/leader.model';
-import { LeaderBoardService } from './leaderboard/leaderboard.service';
+import { UserStats } from './gamification/statistics/user-stats.model';
+import { UserStatsService } from './gamification/statistics/user-stats.service';
+import { Leader } from './gamification/leaderboard/leader.model';
+import { LeaderBoardService } from './gamification/leaderboard/leaderboard.service';
 
 @Component( {
 	selector: 'app-root',

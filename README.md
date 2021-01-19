@@ -5,7 +5,7 @@ The ***social-coding*** application is a system, based on microservices with an 
 
 #### To install the application locally, run the following commands:
 
-**Prerequisites:** [RabbitMQ](https://www.rabbitmq.com/download.html), [Node.js](https://nodejs.org/), and internet connection
+**_Prerequisites_**: [RabbitMQ](https://www.rabbitmq.com/download.html), [Node.js](https://nodejs.org/), and internet connection
 
 ```
 git clone https://github.com/hezaaron/social-coding.git
@@ -14,12 +14,9 @@ cd social-coding
 
 #### To install dependencies and start each microservice, follow the instructions below:
 
-Enable [rabbitmq_management plugin](https://www.rabbitmq.com/management.html). From your RabbitMQ installation directory,
+Start the `RabbitMQ` Server:
 
-```
-cd sbin 
-rabbitmq-plugins enable rabbitmq_management
-```
+Depending on your operating system, the server might have been started automatically when RabbitMQ is installed. Otherwise, follow the instruction on the installation page for your [operating system](https://www.rabbitmq.com/admin-guide.html)
 
 Start the `coding-quiz` service:
 

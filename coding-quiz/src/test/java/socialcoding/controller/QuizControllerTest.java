@@ -61,6 +61,7 @@ public class QuizControllerTest {
 	void testGetAllQuizzes() throws Exception {
 		List<Quiz> quizzes = Fixture.from(Quiz.class).gimme(5, "valid");
 		given(quizService.getAllQuiz()).willReturn(quizzes);
+		
 		MockHttpServletResponse response = mockMvc.perform(get("/quizzes"))
 												  .andReturn().getResponse();
 		assertAll("quizzes",
@@ -74,7 +75,6 @@ public class QuizControllerTest {
 		QuizDTO quizDto = Fixture.from(QuizDTO.class).gimme("valid");
 		int remainingTime = 60;
 		QuizSetter quizSetter = new QuizSetter(quiz.getName(), remainingTime, quizDto);
-	
 		given(request.getSession()).willReturn(session);
 		given(quizService.setQuiz(anyInt(), any())).willReturn(quizSetter);
 		
