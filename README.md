@@ -1,7 +1,7 @@
 ## social-coding
 [![Build Status](https://travis-ci.org/hezaaron/social-coding.svg?branch=master)](https://travis-ci.org/hezaaron/social-coding)
 
-The ***social-coding*** application is a system, based on microservices with an event-driven architecture using Springboot and Angular, that encourages users to train their programming skills and improve their level understanding of the Java language.
+The ***social-coding*** application is a system, based on microservices with an event-driven architecture, that encourages users to train their programming skills and improve their level understanding of the Java language.
 
 #### To install the application locally, run the following commands:
 
@@ -16,7 +16,7 @@ cd social-coding
 
 Start the `RabbitMQ` Server:
 
-Depending on your operating system, the server might have been started automatically when RabbitMQ is installed. Otherwise, follow the instruction on the installation page for your [operating system](https://www.rabbitmq.com/admin-guide.html)
+Depending on your operating system, the server might have started automatically when RabbitMQ is installed. Otherwise, follow the instructions on the installation page for your [operating system](https://www.rabbitmq.com/admin-guide.html)
 
 Start the `coding-quiz` service:
 
