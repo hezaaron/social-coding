@@ -51,6 +51,7 @@
     "rxjs": "6.5.4",
     "rxjs-compat": "^6.2.2",
     "serialize-javascript": "^3.1.0",
+    "socket.io": "^2.1.1",
     "source-map-explorer": "^2.5.2",
     "tar": "^4.4.13",
     "typescript": "^3.5.1",
