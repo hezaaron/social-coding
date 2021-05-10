@@ -44,7 +44,7 @@
     "jquery": "^3.5.0",
     "js-yaml": "^3.13.1",
     "kind-of": "^6.0.3",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "lodash.mergewith": "^4.6.2",
     "minimist": "^1.2.5",
     "ngx-highlightjs": "^4.0.2",
