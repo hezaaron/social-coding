@@ -55,7 +55,7 @@
     "socket.io": "^2.1.1",
     "source-map-explorer": "^2.5.2",
     "ssri": "^8.0.1",
-    "tar": "^4.4.13",
+    "tar": "^4.4.18",
     "typescript": "^3.5.1",
     "y18n": "^4.0.0",
     "zone.js": "~0.8.26"
