@@ -46,7 +46,7 @@
     "kind-of": "^6.0.3",
     "lodash": "^4.17.19",
     "lodash.mergewith": "^4.6.2",
-    "minimist": "^1.2.5",
+    "minimist": "^1.2.6",
     "ngx-highlightjs": "^4.0.2",
     "path": "^0.12.7",
     "rxjs": "6.5.4",
